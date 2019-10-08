@@ -13,10 +13,10 @@ public class Collector
 
     public Collector(OpMode teleOpClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
+        this.teleOpClass = teleOpClass;
+        this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
-        this.robot = robot;
-        this.teleOpClass = teleOpClass;
         init();
     }
 

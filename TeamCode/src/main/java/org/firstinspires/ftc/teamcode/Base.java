@@ -5,21 +5,21 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Base
 {
-    OpMode teleOpClass; //Used for telemetry.
-    HardwareMecanum robot; //Used to move robot parts.
+    private OpMode teleOpClass; //Used for telemetry.
+    private HardwareMecanum robot; //Used to move robot parts.
 
-    Gamepad gamepad1; //Driver
-    Gamepad gamepad2; //Gunner
+    private Gamepad gamepad1; //Driver
+    private Gamepad gamepad2; //Gunner
 
     public Base(OpMode teleOpClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
+        this.teleOpClass = teleOpClass;
+        this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
-        this.robot = robot;
         init();
     }
 
-    //
     public void init()
     {
 
