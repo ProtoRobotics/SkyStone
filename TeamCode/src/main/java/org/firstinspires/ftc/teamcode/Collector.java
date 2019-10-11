@@ -12,6 +12,7 @@ public class Collector
     Gamepad gamepad2; //Gunner
 
     final double COLLECTOR_SPEED = 1;
+    final double COLLECTOR_OFF_SPEED = 0;
 
 
     public Collector(OpMode teleOpClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
@@ -31,19 +32,26 @@ public class Collector
 
     public void doLoop()
     {
-        if (gamepad2.right_trigger>0) {
+        if (gamepad2.right_trigger > 0) //intake
+        {
             teleOpClass.telemetry.addLine("Hello, you are pressing the right trigger button.");
             teleOpClass.telemetry.update();
             robot.leftCollector.setPower(COLLECTOR_SPEED);
             robot.rightCollector.setPower(-COLLECTOR_SPEED);
         }
-            // intake
-            else if(gamepad2.left_trigger>0){
+        else if (gamepad2.left_trigger > 0) //outtake
+        {
             robot.leftCollector.setPower(-COLLECTOR_SPEED);
             robot.rightCollector.setPower(COLLECTOR_SPEED);
-            // outtake
         }
-
-
+        else if(gamepad2.right_trigger == 0)
+        {
+            robot.leftCollector.setPower(COLLECTOR_OFF_SPEED);
+            robot.rightCollector.setPower(COLLECTOR_OFF_SPEED);
         }
-    }
+        else if(gamepad2.left_trigger == 0)
+        {
+            robot.leftCollector.setPower(COLLECTOR_OFF_SPEED);
+            robot.rightCollector.setPower(COLLECTOR_OFF_SPEED);
+        }
+}
