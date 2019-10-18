@@ -61,20 +61,20 @@ public class Arm
 
         if (gamepad2.dpad_down)
         {
-            robot.gripperRotater.setPosition(GRIPPER_ROTATOR_POS_1);
+            robot.gripperRotator.setPosition(GRIPPER_ROTATOR_POS_1);
         }
         else if(gamepad2.dpad_up)
         {
-            robot.gripperRotater.setPosition(GRIPPER_ROTATOR_POS_2);
+            robot.gripperRotator.setPosition(GRIPPER_ROTATOR_POS_2);
         }
 
         if (gamepad2.dpad_left)
         {
-            robot.gripperRotater.setPosition(robot.gripperRotater.getPosition() + GRIPPER_ROTATOR_SPEED);
+            robot.gripperRotator.setPosition(robot.gripperRotator.getPosition() + GRIPPER_ROTATOR_SPEED);
         }
         else if (gamepad2.dpad_right)
         {
-            robot.gripperRotater.setPosition(robot.gripperRotater.getPosition() - GRIPPER_ROTATOR_SPEED);
+            robot.gripperRotator.setPosition(robot.gripperRotator.getPosition() - GRIPPER_ROTATOR_SPEED);
         }
     }
 }
