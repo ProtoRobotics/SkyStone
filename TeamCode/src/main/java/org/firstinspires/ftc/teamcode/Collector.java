@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-        import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Collector
 {
@@ -15,8 +15,7 @@ public class Collector
     final double COLLECTOR_OFF_SPEED = 0;
 
 
-    public Collector(OpMode teleOpClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
-    {
+    public Collector(OpMode teleOpClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2) {
         this.teleOpClass = teleOpClass;
         this.robot = robot;
         this.gamepad1 = gamepad1;
@@ -25,33 +24,33 @@ public class Collector
     }
 
     //
-    public void init()
-    {
+    public void init() {
 
     }
 
-    public void doLoop()
-    {
-        if (gamepad2.right_trigger > 0) //intake
+    public void doLoop() {
+        if (gamepad1.right_trigger > 0) //intake
         {
             teleOpClass.telemetry.addLine("Hello, you are pressing the right trigger button.");
             teleOpClass.telemetry.update();
             robot.leftCollector.setPower(COLLECTOR_SPEED);
             robot.rightCollector.setPower(-COLLECTOR_SPEED);
         }
-        else if (gamepad2.left_trigger > 0) //outtake
+        else if (gamepad1.left_trigger > 0) //outtake
         {
             robot.leftCollector.setPower(-COLLECTOR_SPEED);
             robot.rightCollector.setPower(COLLECTOR_SPEED);
         }
-        else if(gamepad2.right_trigger == 0)
+        else if (gamepad1.right_trigger == 0)
         {
             robot.leftCollector.setPower(COLLECTOR_OFF_SPEED);
             robot.rightCollector.setPower(COLLECTOR_OFF_SPEED);
         }
-        else if(gamepad2.left_trigger == 0)
+        else if (gamepad1.left_trigger == 0)
         {
             robot.leftCollector.setPower(COLLECTOR_OFF_SPEED);
             robot.rightCollector.setPower(COLLECTOR_OFF_SPEED);
         }
+
+    }
 }

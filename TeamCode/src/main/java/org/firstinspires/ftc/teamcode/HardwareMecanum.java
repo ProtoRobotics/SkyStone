@@ -25,7 +25,7 @@ public class HardwareMecanum
 
     //Arm
     public CRServo armExtender;
-    public Servo armRotater;
+    public Servo gripperRotater;
     public Servo gripper;
 
     public HardwareMap hwMap;
@@ -49,7 +49,7 @@ public class HardwareMecanum
 
         //ARM
         armExtender = hwMap.get(CRServo.class, "armExtender");
-        armRotater = hwMap.get(Servo.class, "armRotater");
+        gripperRotater = hwMap.get(Servo.class, "gripperRotater");
         gripper = hwMap.get(Servo.class, "gripper");
 
     }
