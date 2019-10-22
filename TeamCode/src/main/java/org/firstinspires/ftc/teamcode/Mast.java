@@ -29,10 +29,24 @@ public class Mast
 
     public void doLoop()
     {
-        if (Math.abs(gamepad2.left_stick_y)>=.2)
+        if (Math.abs(gamepad2.left_stick_y) >= .15)
         {
             double speed = gamepad2.left_stick_y * .5;
             this.moveSpeed(speed);
+        }
+        else
+        {
+            this.moveSpeed(0);
+        }
+
+        if (Math.abs(gamepad2.right_stick_x) >= .15)
+        {
+            double speed = gamepad2.right_stick_x * .5;
+            this.rotateSpeed(speed);
+        }
+        else
+        {
+            this.rotateSpeed(0);
         }
     }
 
@@ -41,9 +55,8 @@ public class Mast
         robot.mastVertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.mastVertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.mastVertical.setPower(speed);
-
     }
-
+    //Move counts
     public void moveCounts(int counts, double speed)
     {
         robot.mastVertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -51,13 +64,19 @@ public class Mast
         robot.mastVertical.setTargetPosition(counts);
         robot.mastVertical.setPower(speed);
     }
-
+    //Rotate (degrees) positive right, negative left
     public void rotateCounts(int counts, double speed)
+    {
+        robot.mastRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.mastRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.mastRotator.setTargetPosition(counts);
+        robot.mastRotator.setPower(speed);
+    }
+
+    public void rotateSpeed(double speed)
     {
         robot.mastRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.mastRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.mastRotator.setPower(speed);
     }
-    //Move counts
-    //Rotate (degrees) positive right, negative left
 }
