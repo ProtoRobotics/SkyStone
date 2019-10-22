@@ -27,8 +27,15 @@ public class Teleop2019 extends OpMode
     @Override
     public void loop()
     {
-        base.doLoop();
-        collector.doLoop();
-        mast.doLoop();
+        try
+        {
+            base.doLoop();
+            collector.doLoop();
+            mast.doLoop();
+        }
+        catch (NullPointerException e)
+        {
+            //If missing hardware is not connected, ignore it.
+        }
     }
 }
