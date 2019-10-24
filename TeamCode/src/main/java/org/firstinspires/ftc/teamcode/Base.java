@@ -37,21 +37,19 @@ public class Base
         double lRearDrive = 0;
         double rRearDrive = 0;
 
-        if (Math.abs(gamepad1.left_stick_y) > 0 || Math.abs(gamepad1.right_stick_y) > 0)
+        if (Math.abs(gamepad1.left_stick_y) > 0 || Math.abs(gamepad1.right_stick_y) > 0) // forward/reverse
         {
-            // forward/reverse
             lFrontDrive = gamepad1.left_stick_y;
             lRearDrive = gamepad1.left_stick_y;
             rFrontDrive = -gamepad1.right_stick_y;
             rRearDrive = -gamepad1.right_stick_y;
         }
-        else if (Math.abs(gamepad1.left_stick_x) > 0)
+        else if (Math.abs(gamepad1.left_stick_x) > 0) // left/right shift
         {
-            // left/right shift
-            lFrontDrive = gamepad1.left_stick_y;
-            lRearDrive = -gamepad1.left_stick_y;
-            rFrontDrive = gamepad1.left_stick_y;
-            rRearDrive = -gamepad1.left_stick_y;
+            lFrontDrive = gamepad1.left_stick_x;
+            lRearDrive = -gamepad1.left_stick_x;
+            rFrontDrive = gamepad1.left_stick_x;
+            rRearDrive = -gamepad1.left_stick_x;
         }
 
         robot.leftFront.setPower(lFrontDrive);
