@@ -29,7 +29,5 @@ public class AutonomousBox extends LinearOpMode
         collector = new Collector(this, robot, gamepad1, gamepad2);
         mast = new Mast(this, robot, gamepad1, gamepad2);
         arm = new Arm(this, robot, gamepad1, gamepad2);
-
-        base.
     }
 }
