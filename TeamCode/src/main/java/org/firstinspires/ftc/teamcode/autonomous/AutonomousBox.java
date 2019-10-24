@@ -29,5 +29,30 @@ public class AutonomousBox extends LinearOpMode
         collector = new Collector(this, robot, gamepad1, gamepad2);
         mast = new Mast(this, robot, gamepad1, gamepad2);
         arm = new Arm(this, robot, gamepad1, gamepad2);
+
+        base.crabsteer(-22);
+        base.encoderDriveInches(20, 20, .7, true);
+
+        //Pick skystone
+        Thread.sleep(2000);
+
+        base.encoderDriveInches(-24, -24, .7, true);
+        Thread.sleep(300); //Fully stop the robot by waiting .3 seconds.
+
+        base.rotateIMU(90);
+
+        base.encoderDriveInches(132, 132, 1, true);
+
+        base.rotateIMU(-90);
+        base.encoderDriveInches(24, 24, .7, true);
+
+        //lower hook
+
+        base.encoderDriveInches(-22, 22, 1, true);
+
+        //raise hook
+
+        base.rotateIMU(-90);
+        base.encoderDriveInches(22, 22, .7, true);
     }
 }
