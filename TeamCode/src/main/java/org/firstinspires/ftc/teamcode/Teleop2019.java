@@ -9,7 +9,7 @@ public class Teleop2019 extends OpMode
     Base base;
     Collector collector;
     Mast mast;
-    //Arm
+    Arm arm;
 
     HardwareMecanum robot;
 
@@ -22,6 +22,7 @@ public class Teleop2019 extends OpMode
         base = new Base(this, robot, gamepad1, gamepad2);
         collector = new Collector(this, robot, gamepad1, gamepad2);
         mast = new Mast(this, robot, gamepad1, gamepad2);
+        arm = new Arm(this, robot, gamepad1, gamepad2);
     }
 
     @Override
@@ -32,6 +33,7 @@ public class Teleop2019 extends OpMode
             base.doLoop();
             collector.doLoop();
             mast.doLoop();
+            arm.doLoop();
         }
         catch (NullPointerException e)
         {
