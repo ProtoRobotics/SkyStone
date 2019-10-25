@@ -28,16 +28,16 @@ public class AutonomousBar extends LinearOpMode
         mast = new Mast(this, robot, gamepad1, gamepad2);
         arm = new Arm(this, robot, gamepad1, gamepad2);
 
-        base.encoderDriveInches(21,21,1,true);
+        base.encoderDriveInches(21,21,.7,true);
         base.crabsteer(-23, .7);
 
         Thread.sleep(2000);
         //rotate robot and pick up skystone
-        base.encoderDriveInches(74,74,1,true);
+        base.encoderDriveInches(74,74,.7,true);
 
         Thread.sleep(2000);
         //put skystone on base
-        base.encoderDriveInches(-61,-61,1,true);
+        base.encoderDriveInches(-61,-61,.7,true);
 
     }
 }
