@@ -32,6 +32,7 @@ public class AutonomousBar extends LinearOpMode
         base.crabsteer(-23, .7);
 
         Thread.sleep(2000);
+        base.rotateIMU(90);
         //rotate robot and pick up skystone
         base.encoderDriveInches(74,74,.7,true);
 
