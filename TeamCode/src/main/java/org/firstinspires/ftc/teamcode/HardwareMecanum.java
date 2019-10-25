@@ -14,6 +14,7 @@ public class HardwareMecanum
     public DcMotor rightBack;
     public DcMotor rightFront;
     public BNO055IMU imu;
+    public Servo hook;
 
     //Collector
     public CRServo leftCollector;
@@ -40,6 +41,7 @@ public class HardwareMecanum
             leftBack = hwMap.get(DcMotor.class, "leftBack");
             rightBack = hwMap.get(DcMotor.class, "rightBack");
             rightFront = hwMap.get(DcMotor.class, "rightFront");
+            hook = hwMap.get(Servo.class, "hook");
 
             //COLLECTOR
             leftCollector = hwMap.get(CRServo.class, "leftCollector");

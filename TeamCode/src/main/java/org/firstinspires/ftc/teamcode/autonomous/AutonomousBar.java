@@ -29,7 +29,7 @@ public class AutonomousBar extends LinearOpMode
         arm = new Arm(this, robot, gamepad1, gamepad2);
 
         base.encoderDriveInches(21,21,1,true);
-        base.crabsteer(-23);
+        base.crabsteer(-23, .7);
 
         Thread.sleep(2000);
         //rotate robot and pick up skystone
