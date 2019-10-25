@@ -14,7 +14,8 @@ public class Base
     private Gamepad gamepad1; //Driver
     private Gamepad gamepad2; //Gunner
 
-    public static final int COUNTS_PER_INCH = 10; //TODO
+    public static final double WHEEL_DIAMETER = 100.0/25.4; //Wheels are 100mm, converted to inches is ~4.
+    public static final int COUNTS_PER_INCH = (int) (784.0 / WHEEL_DIAMETER);
 
     public Base(OpMode teleOpClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
@@ -116,7 +117,7 @@ public class Base
 
     }
 
-    public void crabsteer(double inches) //TODO add power
+    public void crabsteer(double inches, double power) //TODO add power
     {
 
     }

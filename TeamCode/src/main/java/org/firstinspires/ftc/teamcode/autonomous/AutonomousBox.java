@@ -30,7 +30,7 @@ public class AutonomousBox extends LinearOpMode
         mast = new Mast(this, robot, gamepad1, gamepad2);
         arm = new Arm(this, robot, gamepad1, gamepad2);
 
-        base.crabsteer(-22);
+        base.crabsteer(-22, .7);
         base.encoderDriveInches(20, 20, .7, true);
 
         //Pick skystone
