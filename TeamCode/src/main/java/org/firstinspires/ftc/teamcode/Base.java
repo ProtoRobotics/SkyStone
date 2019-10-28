@@ -117,8 +117,49 @@ public class Base
 
     }
 
-    public void crabsteer(double inches, double power) //TODO add power
+    public void crabsteer(double inches, double power)  throws InterruptedException//TODO add power
     {
+        robot.leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        robot.leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        double powerFinal = Math.abs(power);
+
+        double countsToMove = inches * COUNTS_PER_INCH;
+
+        //if (direction == 0) {
+            robot.leftFront.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() + countsToMove));
+            robot.leftBack.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() - countsToMove));
+            robot.rightFront.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() + countsToMove));
+            robot.rightBack.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() - countsToMove));
+
+            robot.leftFront.setPower(powerFinal);
+            robot.leftBack.setPower(-powerFinal);
+            robot.rightFront.setPower(powerFinal);
+            robot.rightBack.setPower(-powerFinal);
+        /*
+        }
+        else if (direction == 1) {
+            robot.leftFront.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() - countsToMove));
+            robot.leftBack.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() + countsToMove));
+            robot.rightFront.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() - countsToMove));
+            robot.rightBack.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() + countsToMove));
+
+            robot.leftFront.setPower(-powerFinal);
+            robot.leftBack.setPower(powerFinal);
+            robot.rightFront.setPower(-powerFinal);
+            robot.rightBack.setPower(powerFinal);
+        }
+        */
+        //autonomousClass.telemetry.addData("is it running?", "YEAH!");
+
+        //autonomousClass.telemetry.addData("EXITING", "YEAH!");
+        Thread.sleep(1000);
     }
 }
