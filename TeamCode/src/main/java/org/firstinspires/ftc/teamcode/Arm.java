@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Arm
 {
-    private OpMode teleOpClass; //Used for telemetry.
+    private OpMode opModeClass; //Used for telemetry.
     private HardwareMecanum robot; //Used to move robot parts.
 
     private Gamepad gamepad1; //Driver
@@ -21,9 +21,9 @@ public class Arm
     final double GRIPPER_OPEN = 1;
     final double GRIPPER_CLOSE = 0;
 
-    public Arm(OpMode teleOpClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
+    public Arm(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
-        this.teleOpClass = teleOpClass;
+        this.opModeClass = opModeClass;
         this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;

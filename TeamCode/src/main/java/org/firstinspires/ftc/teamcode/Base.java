@@ -8,7 +8,7 @@ import static java.lang.Thread.sleep;
 
 public class Base
 {
-    private OpMode teleOpClass; //Used for telemetry.
+    private OpMode opModeClass; //Used for telemetry.
     private HardwareMecanum robot; //Used to move robot parts.
 
     private Gamepad gamepad1; //Driver
@@ -17,9 +17,9 @@ public class Base
     public static final double WHEEL_DIAMETER = 100.0/25.4; //Wheels are 100mm, converted to inches is ~4.
     public static final int COUNTS_PER_INCH = (int) (784.0 / WHEEL_DIAMETER);
 
-    public Base(OpMode teleOpClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
+    public Base(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
-        this.teleOpClass = teleOpClass;
+        this.opModeClass = opModeClass;
         this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;

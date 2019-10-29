@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Collector
 {
-    OpMode teleOpClass; //Used for telemetry.
+    OpMode opModeClass; //Used for telemetry.
     HardwareMecanum robot; //Used to move robot parts.
 
     Gamepad gamepad1; //Driver
@@ -15,8 +15,9 @@ public class Collector
     final double COLLECTOR_OFF_SPEED = 0;
 
 
-    public Collector(OpMode teleOpClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2) {
-        this.teleOpClass = teleOpClass;
+    public Collector(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
+    {
+        this.opModeClass = opModeClass;
         this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
@@ -31,8 +32,8 @@ public class Collector
     public void doLoop() {
         if (gamepad1.right_trigger > 0) //intake
         {
-            teleOpClass.telemetry.addLine("Hello, you are pressing the right trigger button.");
-            teleOpClass.telemetry.update();
+            opModeClass.telemetry.addLine("Hello, you are pressing the right trigger button.");
+            opModeClass.telemetry.update();
             robot.leftCollector.setPower(COLLECTOR_SPEED);
             robot.rightCollector.setPower(-COLLECTOR_SPEED);
         }
