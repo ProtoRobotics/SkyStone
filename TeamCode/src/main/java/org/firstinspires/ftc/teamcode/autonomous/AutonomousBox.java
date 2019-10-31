@@ -38,7 +38,7 @@ public class AutonomousBox
 
     public void runOpMode() throws InterruptedException
     {
-        base.crabsteer(-22, .7);
+        base.crabsteer(-22, .7, true);
         base.encoderDriveInches(20, 20, .7, true);
 
         //Pick skystone
@@ -47,11 +47,11 @@ public class AutonomousBox
         base.encoderDriveInches(-24, -24, .7, true);
         Thread.sleep(300); //Fully stop the robot by waiting .3 seconds.
 
-        base.rotateIMU(90);
+        base.rotateDegreesEncoder(90, .4, true);
 
         base.encoderDriveInches(132, 132, 1, true);
 
-        base.rotateIMU(-90);
+        base.rotateDegreesEncoder(-90, .4, true);
         base.encoderDriveInches(24, 24, .7, true);
 
         //lower hook
@@ -60,7 +60,7 @@ public class AutonomousBox
 
         //raise hook
 
-        base.rotateIMU(-90);
+        base.rotateDegreesEncoder(-90, .4, true);
         base.encoderDriveInches(22, 22, .7, true);
     }
 }

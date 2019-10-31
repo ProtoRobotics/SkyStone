@@ -39,10 +39,10 @@ public class AutonomousBar
     public void runOpMode() throws InterruptedException
     {
         base.encoderDriveInches(21,21,.7,true);
-        base.crabsteer(-23, .7);
+        base.crabsteer(-23, .7, true);
 
         Thread.sleep(2000);
-        base.rotateIMU(90);
+        base.rotateDegreesEncoder(90, .4, true);
         //rotate robot and pick up skystone
         base.encoderDriveInches(74,74,.7,true);
 
