@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -30,7 +31,14 @@ public class Base
 
     public void init()
     {
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled = false;
+
+        robot.imu.initialize(parameters);
     }
 
     public void doLoop()
@@ -124,13 +132,8 @@ public class Base
         }
     }
 
-    public void crabsteer(double inches, double power, boolean sequential)  throws InterruptedException//TODO add power
+    public void crabsteer(double inches, double power, boolean sequential)  throws InterruptedException
     {
-        //robot.leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //robot.rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //robot.leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //robot.rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
         robot.leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);

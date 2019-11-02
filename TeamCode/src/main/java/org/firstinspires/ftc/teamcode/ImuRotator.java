@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -18,9 +17,6 @@ public class ImuRotator
     double ERROR_THRESHOLD = 40;
     double MIN_SPEED = 0.15;
 
-    //TODO Current implementation only supports use of 1 rotation.
-
-    //ImuRotator myImuRotator = new ImuRotator(myRobotVariable);
     public ImuRotator(HardwareMecanum robot)
     {
         this.robot = robot;
@@ -28,6 +24,9 @@ public class ImuRotator
 
     public void rotateIMU(double speed, double angle)
     {
+        angles = robot.imu.getAngularOrientation();
+        double targetAngle = angles.firstAngle + angle;
+
         robot.leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -38,7 +37,8 @@ public class ImuRotator
         robot.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        while (!onHeading(speed, angle)) {}
+        //This will continuously execute onHeading until the robot is within a 1 degree threshold of the target.
+        while (!onHeading(speed, targetAngle)) {}
     }
 
     public boolean onHeading(double speed, double angle)
@@ -82,10 +82,11 @@ public class ImuRotator
         angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         robotError = targetAngle - angles.firstAngle;
 
-        return getAbsoluteAngle(robotError);
+        return getCoterminalAngle(robotError);
     }
 
-    public double getAbsoluteAngle(double angle)
+    //Returns the shortest angle coterminal to the input. If 240 is input as the angle value, returns -120.
+    public double getCoterminalAngle(double angle)
     {
         if (angle > 180) angle -= 360;
         if (angle <= -180) angle += 360;
