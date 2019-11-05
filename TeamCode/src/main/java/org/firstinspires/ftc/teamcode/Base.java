@@ -20,6 +20,9 @@ public class Base
     public static final int COUNTS_PER_INCH_CRAB = COUNTS_PER_INCH; //TODO
     public static final int COUNTS_PER_DEGREE = COUNTS_PER_INCH; //TODO
 
+    public static final double HOOK_UP_POSITION = .87;
+    public static final double HOOK_DOWN_POSITION = .52;
+
     public Base(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
         this.opModeClass = opModeClass;
@@ -67,6 +70,16 @@ public class Base
         robot.rightFront.setPower(rFrontDrive);
         robot.leftBack.setPower(lRearDrive);
         robot.rightBack.setPower(rRearDrive);
+
+        if (gamepad1.a)
+        {
+            hookDown();
+        }
+
+        if (gamepad1.b)
+        {
+            hookUp();
+        }
     }
 
     /*
@@ -181,5 +194,15 @@ public class Base
         robot.leftBack.setPower(0);
         robot.rightFront.setPower(0);
         robot.rightBack.setPower(0);
+    }
+
+    public void hookUp()
+    {
+        robot.hook.setPosition(HOOK_UP_POSITION);
+    }
+
+    public void hookDown()
+    {
+        robot.hook.setPosition(HOOK_DOWN_POSITION);
     }
 }

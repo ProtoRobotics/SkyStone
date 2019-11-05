@@ -25,7 +25,7 @@ public class HardwareMecanum
     public DcMotor mastRotator;
 
     //Arm
-    public CRServo armExtender;
+    public Servo armExtender;
     public Servo gripperRotator;
     public Servo gripper;
 
@@ -33,34 +33,26 @@ public class HardwareMecanum
 
     public void init(HardwareMap hwMap)
     {
-        try
-        {
-            //BASE
-            this.hwMap = hwMap;
-            leftFront = hwMap.get(DcMotor.class, "leftFront");
-            leftBack = hwMap.get(DcMotor.class, "leftBack");
-            rightBack = hwMap.get(DcMotor.class, "rightBack");
-            rightFront = hwMap.get(DcMotor.class, "rightFront");
-            imu = hwMap.get(BNO055IMU.class, "imu");
-            hook = hwMap.get(Servo.class, "hook");
+        //BASE
+        this.hwMap = hwMap;
+        leftFront = hwMap.get(DcMotor.class, "leftFront");
+        leftBack = hwMap.get(DcMotor.class, "leftBack");
+        rightBack = hwMap.get(DcMotor.class, "rightBack");
+        rightFront = hwMap.get(DcMotor.class, "rightFront");
+        imu = hwMap.get(BNO055IMU.class, "imu");
+        hook = hwMap.get(Servo.class, "hook");
 
-            //COLLECTOR
-            leftCollector = hwMap.get(CRServo.class, "leftCollector");
-            rightCollector = hwMap.get(CRServo.class, "rightCollector");
+        //COLLECTOR
+        //leftCollector = hwMap.get(CRServo.class, "leftCollector");
+        //rightCollector = hwMap.get(CRServo.class, "rightCollector");
 
-            //MAST
-            mastVertical = hwMap.get(DcMotor.class, "mastVertical");
-            mastRotator = hwMap.get(DcMotor.class, "mastRotator");
+        //MAST
+        //mastVertical = hwMap.get(DcMotor.class, "mastVertical");
+        mastRotator = hwMap.get(DcMotor.class, "mastRotator");
 
-            //ARM
-            armExtender = hwMap.get(CRServo.class, "armExtender");
-            gripperRotator = hwMap.get(Servo.class, "gripperRotator");
-            gripper = hwMap.get(Servo.class, "gripper");
-        }
-        catch (IllegalArgumentException e)
-        {
-            //Ignore that we don't have all hardware plugged in.
-            //TODO Remove.
-        }
+        //ARM
+        armExtender = hwMap.get(Servo.class, "armExtender");
+        gripperRotator = hwMap.get(Servo.class, "gripperRotator");
+        gripper = hwMap.get(Servo.class, "gripper");
     }
 }

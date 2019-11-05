@@ -29,7 +29,8 @@ public class Collector
 
     }
 
-    public void doLoop() {
+    public void doLoop()
+    {
         if (gamepad1.right_trigger > 0) //intake
         {
             opModeClass.telemetry.addLine("Hello, you are pressing the right trigger button.");

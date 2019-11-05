@@ -20,7 +20,7 @@ public class Teleop2019 extends OpMode
         robot.init(hardwareMap);
 
         base = new Base(this, robot, gamepad1, gamepad2);
-        collector = new Collector(this, robot, gamepad1, gamepad2);
+        //collector = new Collector(this, robot, gamepad1, gamepad2);
         mast = new Mast(this, robot, gamepad1, gamepad2);
         arm = new Arm(this, robot, gamepad1, gamepad2);
     }
@@ -28,16 +28,9 @@ public class Teleop2019 extends OpMode
     @Override
     public void loop()
     {
-        try
-        {
-            base.doLoop();
-            collector.doLoop();
-            mast.doLoop();
-            arm.doLoop();
-        }
-        catch (NullPointerException e)
-        {
-            //If missing hardware is not connected, ignore it.
-        }
+        base.doLoop();
+        //collector.doLoop();
+        mast.doLoop();
+        arm.doLoop();
     }
 }

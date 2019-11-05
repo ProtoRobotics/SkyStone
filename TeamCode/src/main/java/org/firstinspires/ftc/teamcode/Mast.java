@@ -29,6 +29,7 @@ public class Mast
 
     public void doLoop()
     {
+        /*
         if (Math.abs(gamepad2.left_stick_y) >= .15)
         {
             double speed = gamepad2.left_stick_y * .5;
@@ -38,15 +39,17 @@ public class Mast
         {
             this.moveSpeed(0);
         }
-
+         */
         if (Math.abs(gamepad2.right_stick_x) >= .15)
         {
+            opModeClass.telemetry.update();
             double speed = gamepad2.right_stick_x * .5;
-            this.rotateSpeed(speed);
+            rotateSpeed(speed);
         }
         else
         {
-            this.rotateSpeed(0);
+            opModeClass.telemetry.update();
+            rotateSpeed(0);
         }
     }
 
