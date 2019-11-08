@@ -23,11 +23,23 @@ public class Teleop2019 extends OpMode
         //collector = new Collector(this, robot, gamepad1, gamepad2);
         mast = new Mast(this, robot, gamepad1, gamepad2);
         arm = new Arm(this, robot, gamepad1, gamepad2);
+
+        base.initializeIMU();
     }
+
+
+    boolean started = false;
 
     @Override
     public void loop()
     {
+        if (!started) //This code runs once after the start button is pressed.
+        {
+            arm.init();
+            mast.init();
+            started = true;
+        }
+
         base.doLoop();
         //collector.doLoop();
         mast.doLoop();

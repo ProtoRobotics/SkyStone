@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -23,6 +25,7 @@ public class HardwareMecanum
     //Mast
     public DcMotor mastVertical;
     public DcMotor mastRotator;
+    public Rev2mDistanceSensor mastDistanceSensor;
 
     //Arm
     public Servo armExtender;
@@ -49,6 +52,7 @@ public class HardwareMecanum
         //MAST
         //mastVertical = hwMap.get(DcMotor.class, "mastVertical");
         mastRotator = hwMap.get(DcMotor.class, "mastRotator");
+        mastDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "mastDistaceSensor");
 
         //ARM
         armExtender = hwMap.get(Servo.class, "armExtender");

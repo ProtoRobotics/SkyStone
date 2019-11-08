@@ -29,10 +29,9 @@ public class Base
         this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
-        init();
     }
 
-    public void init()
+    public void initializeIMU()
     {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 

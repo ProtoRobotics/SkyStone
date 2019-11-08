@@ -21,7 +21,6 @@ public class Collector
         this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
-        init();
     }
 
     //

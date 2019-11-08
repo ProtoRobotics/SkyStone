@@ -29,14 +29,17 @@ public class Arm
         this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
-        init();
     }
 
     public void init()
     {
-        robot.gripper.setPosition(GRIPPER_INITALIZATION_POINT);
-        robot.gripperRotator.setPosition(GRIPPER_ROTATOR_POS_1);
-        robot.armExtender.setPosition(EXTENDER_MIN);
+        //robot.gripper.setPosition(GRIPPER_INITALIZATION_POINT);
+        //robot.gripperRotator.setPosition(GRIPPER_ROTATOR_POS_1);
+        //robot.armExtender.setPosition(EXTENDER_MIN);
+
+        robot.armExtender.setPosition(robot.armExtender.getPosition());
+        robot.gripperRotator.setPosition(robot.gripperRotator.getPosition());
+        robot.gripper.setPosition(robot.gripper.getPosition());
     }
 
     public void doLoop()
