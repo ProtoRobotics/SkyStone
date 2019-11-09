@@ -12,7 +12,7 @@ public class Arm
     private Gamepad gamepad2; //Gunner
 
     final double EXTENDER_MAX = .78;
-    final double EXTENDER_MIN = .26; //.21 is furthest physically possible
+    final double EXTENDER_MIN = .21; //.21 is furthest physically possible
     final double EXTENDER_RATE_OF_CHANGE = 1.5 / 280;
 
     final double GRIPPER_ROTATOR_POS_1 = .12; //Also the gripper rotator initialization point

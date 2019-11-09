@@ -38,16 +38,24 @@ public class AutonomousBar
 
     public void runOpMode() throws InterruptedException
     {
-        base.encoderDriveInches(21,21,.7,true);
-        base.crabsteer(-23, .7, true);
+        if(direction == 0)
+        {
+            base.crabsteer(-20,.7,true);
+        }
+        else if(direction == 1)
+        {
+            base.crabsteer(20,.7,true);
+        }
 
-        Thread.sleep(2000);
-        base.rotateDegreesEncoder(90, .4, true);
+        //base.crabsteer(-23, .7, true);
+
+        //Thread.sleep(2000);
+        //base.rotateDegreesEncoder(90, .4, true);
         //rotate robot and pick up skystone
-        base.encoderDriveInches(74,74,.7,true);
+        //base.encoderDriveInches(74,74,.7,true);
 
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         //put skystone on base
-        base.encoderDriveInches(-61,-61,.7,true);
+        //base.encoderDriveInches(-61,-61,.7,true);
     }
 }
