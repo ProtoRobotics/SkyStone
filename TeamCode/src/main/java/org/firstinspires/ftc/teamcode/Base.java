@@ -21,7 +21,7 @@ public class Base
     public static final int COUNTS_PER_DEGREE = COUNTS_PER_INCH; //TODO
 
     public static final double HOOK_UP_POSITION = .87;
-    public static final double HOOK_DOWN_POSITION = .52;
+    public static final double HOOK_DOWN_POSITION = .48;
 
     public Base(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
@@ -50,6 +50,8 @@ public class Base
         double lRearDrive = 0;
         double rRearDrive = 0;
 
+        double powerReduction = 3.0/4.0;
+
         if (Math.abs(gamepad1.left_stick_y) > 0 || Math.abs(gamepad1.right_stick_y) > 0) // forward/reverse
         {
             lFrontDrive = gamepad1.left_stick_y;
@@ -59,16 +61,16 @@ public class Base
         }
         else if (Math.abs(gamepad1.left_stick_x) > 0) // left/right shift
         {
-            lFrontDrive = gamepad1.left_stick_x;
-            lRearDrive = -gamepad1.left_stick_x;
-            rFrontDrive = gamepad1.left_stick_x;
-            rRearDrive = -gamepad1.left_stick_x;
+            lFrontDrive = -gamepad1.left_stick_x;
+            lRearDrive = gamepad1.left_stick_x;
+            rFrontDrive = -gamepad1.left_stick_x;
+            rRearDrive = gamepad1.left_stick_x;
         }
 
-        robot.leftFront.setPower(lFrontDrive);
-        robot.rightFront.setPower(rFrontDrive);
-        robot.leftBack.setPower(lRearDrive);
-        robot.rightBack.setPower(rRearDrive);
+        robot.leftFront.setPower(lFrontDrive * powerReduction);
+        robot.rightFront.setPower(rFrontDrive * powerReduction);
+        robot.leftBack.setPower(lRearDrive * powerReduction);
+        robot.rightBack.setPower(rRearDrive * powerReduction);
 
         if (gamepad1.a)
         {

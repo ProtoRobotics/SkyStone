@@ -12,14 +12,14 @@ public class Arm
     private Gamepad gamepad2; //Gunner
 
     final double EXTENDER_MAX = .78;
-    final double EXTENDER_MIN = .21;
-    final double EXTENDER_RATE_OF_CHANGE = .3 / 280;
+    final double EXTENDER_MIN = .26; //.21 is furthest physically possible
+    final double EXTENDER_RATE_OF_CHANGE = 1.5 / 280;
 
     final double GRIPPER_ROTATOR_POS_1 = .12; //Also the gripper rotator initialization point
-    final double GRIPPER_ROTATOR_POS_2 = 90 / 280;
-    final double GRIPPER_ROTATOR_SPEED = .5 / 280;
+    final double GRIPPER_ROTATOR_POS_2 = .51;
+    final double GRIPPER_ROTATOR_SPEED = 1.5 / 280;
 
-    final double GRIPPER_OPEN = .23;
+    final double GRIPPER_OPEN = .29;
     final double GRIPPER_CLOSE = .55;
     final double GRIPPER_INITALIZATION_POINT = .332; //Where we want the gripper to be on init
 
@@ -65,12 +65,16 @@ public class Arm
             targetExtenderPosition = EXTENDER_MIN;
         }
 
-        if (targetExtenderPosition != extenderPosition)
+        if (targetExtenderPosition != extenderPosition && (gamepad2.x || gamepad2.b))
         {
             robot.armExtender.setPosition(targetExtenderPosition);
         }
+        else if (!(gamepad2.x || gamepad2.b))
+        {
+            robot.armExtender.setPosition(robot.armExtender.getPosition());
+        }
 
-        opModeClass.telemetry.addData("Servo position", robot.armExtender.getPosition());
+        opModeClass.telemetry.addData("Servo positionn", robot.gripperRotator.getPosition());
         opModeClass.telemetry.update();
 
         if (gamepad2.left_bumper)

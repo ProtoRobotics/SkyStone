@@ -29,28 +29,27 @@ public class Mast
 
     public void init()
     {
-        robot.mastDistanceSensor.initialize();
+        //robot.mastDistanceSensor.initialize();
     }
 
 
     public void doLoop()
     {
-        /*
         if (Math.abs(gamepad2.left_stick_y) >= .15)
         {
-            double speed = gamepad2.left_stick_y * .5;
+            double speed = -gamepad2.left_stick_y;
             this.moveSpeed(speed);
         }
         else
         {
             this.moveSpeed(0);
         }
-         */
+
         if (Math.abs(gamepad2.right_stick_x) >= .15)
         {
             opModeClass.telemetry.update();
-            double speed = gamepad2.right_stick_x * .5;
-            rotateSpeed(speed);
+            double speed = gamepad2.right_stick_x * .8;
+            rotateSpeed(-speed);
         }
         else
         {
@@ -63,7 +62,8 @@ public class Mast
     {
         robot.mastVertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.mastVertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.mastVertical.setPower(getAdjustedSpeed(speed));
+        robot.mastVertical.setPower(speed);
+        //robot.mastVertical.setPower(getAdjustedSpeed(speed));
     }
 
     //Move counts
@@ -101,14 +101,14 @@ public class Mast
         }
 
         //We have to check which direction we are going so that we can reverse course after throttling the mast.
-        if (robot.mastDistanceSensor.getDistance(DistanceUnit.CM) < MIN_STOP_DISTANCE && !goingUp)
-            return 0; //Stop mast if it is
+       //if (robot.mastDistanceSensor.getDistance(DistanceUnit.CM) < MIN_STOP_DISTANCE && !goingUp)
+         /*   return 0; //Stop mast if it is
         if (robot.mastDistanceSensor.getDistance(DistanceUnit.CM) < MIN_THROTTLE_DISTANCE && !goingUp)
             return (speed / 2.0);
         if (robot.mastDistanceSensor.getDistance(DistanceUnit.CM) > MAX_STOP_DISTANCE & goingUp)
             return 0;
         if (robot.mastDistanceSensor.getDistance(DistanceUnit.CM) > MAX_THROTTLE_DISTANCE && goingUp)
-            return (speed / 2.0);
+            return (speed / 2.0);*/
 
         return speed;
     }

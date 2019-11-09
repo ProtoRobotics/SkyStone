@@ -25,7 +25,7 @@ public class HardwareMecanum
     //Mast
     public DcMotor mastVertical;
     public DcMotor mastRotator;
-    public Rev2mDistanceSensor mastDistanceSensor;
+    //public Rev2mDistanceSensor mastDistanceSensor;
 
     //Arm
     public Servo armExtender;
@@ -46,13 +46,13 @@ public class HardwareMecanum
         hook = hwMap.get(Servo.class, "hook");
 
         //COLLECTOR
-        //leftCollector = hwMap.get(CRServo.class, "leftCollector");
-        //rightCollector = hwMap.get(CRServo.class, "rightCollector");
+        leftCollector = hwMap.get(CRServo.class, "leftCollector");
+        rightCollector = hwMap.get(CRServo.class, "rightCollector");
 
         //MAST
-        //mastVertical = hwMap.get(DcMotor.class, "mastVertical");
+        mastVertical = hwMap.get(DcMotor.class, "mastVertical");
         mastRotator = hwMap.get(DcMotor.class, "mastRotator");
-        mastDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "mastDistaceSensor");
+        //mastDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "mastDistaceSensor");
 
         //ARM
         armExtender = hwMap.get(Servo.class, "armExtender");
