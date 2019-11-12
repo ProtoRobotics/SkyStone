@@ -38,7 +38,7 @@ public class AutonomousBox
 
     public void runOpMode() throws InterruptedException
     {
-        base.encoderCrabsteer(-22, .7, 0);
+        base.encoderCrabsteer(-22, .7, 0, true);
         base.encoderDriveInches(20, 20, .7, true);
 
         //Pick skystone

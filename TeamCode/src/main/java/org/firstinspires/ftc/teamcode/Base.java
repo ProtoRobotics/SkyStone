@@ -15,10 +15,11 @@ public class Base
     private Gamepad gamepad1; //Driver
     private Gamepad gamepad2; //Gunner
 
-    public static final double WHEEL_DIAMETER = 100.0/25.4; //Wheels are 100mm, converted to inches is ~4.
-    public static final int COUNTS_PER_INCH = (int) (784.0 / WHEEL_DIAMETER); //784 counts per wheel rotation, divided by diameter yeilds cpi.
+    //public static final double WHEEL_DIAMETER = 100.0/25.4; //Wheels are 100mm, converted to inches is ~4.
+    //public static final int COUNTS_PER_INCH = (int) (784.0 / WHEEL_DIAMETER); //784 counts per wheel rotation, divided by diameter yeilds cpi.
+    public static final double COUNTS_PER_INCH = 61.38;
     public static final int COUNTS_PER_INCH_CRAB = 1; //TODO
-    public static final int COUNTS_PER_DEGREE = COUNTS_PER_INCH; //TODO
+    public static final double COUNTS_PER_DEGREE = COUNTS_PER_INCH; //TODO
 
     public static final double HOOK_UP_POSITION = .87;
     public static final double HOOK_DOWN_POSITION = .48;
@@ -111,20 +112,25 @@ public class Base
      */
     public void encoderDriveCounts(int leftCounts, int rightCounts, double power, boolean sequential) throws InterruptedException
     {
-        int leftBackTarget = robot.leftBack.getCurrentPosition() + leftCounts;
-        int leftFrontTarget = robot.leftFront.getCurrentPosition() + leftCounts;
+        int leftBackTarget = robot.leftBack.getCurrentPosition() - leftCounts;
+        int leftFrontTarget = robot.leftFront.getCurrentPosition() - leftCounts;
         int rightBackTarget = robot.rightBack.getCurrentPosition() + rightCounts;
         int rightFrontTarget = robot.rightFront.getCurrentPosition() + rightCounts;
-
-        robot.leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         robot.leftBack.setTargetPosition(leftBackTarget);
         robot.leftFront.setTargetPosition(leftFrontTarget);
         robot.rightBack.setTargetPosition(rightBackTarget);
         robot.rightFront.setTargetPosition(rightFrontTarget);
+
+        robot.leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        robot.leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         robot.leftBack.setPower(power);
         robot.leftFront.setPower(power);
@@ -150,46 +156,61 @@ public class Base
 
     public void encoderDriveInches(double leftInches, double rightInches, double power, boolean sequential) throws InterruptedException
     {
-        encoderDriveCounts((int) leftInches * COUNTS_PER_INCH, (int) rightInches * COUNTS_PER_INCH, power, sequential);
+        encoderDriveCounts((int) (leftInches * COUNTS_PER_INCH), (int) (rightInches * COUNTS_PER_INCH), power, sequential);
     }
 
     public void rotateDegreesEncoder(double degrees, double power, boolean sequential) throws InterruptedException
     {
         if (degrees > 0) //Clockwise rotation
         {
-            encoderDriveCounts((int) degrees * COUNTS_PER_DEGREE, (int) -degrees * COUNTS_PER_DEGREE, power, sequential);
+            encoderDriveCounts((int) (degrees * COUNTS_PER_DEGREE), (int) (-degrees * COUNTS_PER_DEGREE), power, sequential);
         }
         if (degrees < 0) //Counter-clockwise rotation
         {
-            encoderDriveCounts((int) -degrees * COUNTS_PER_DEGREE, (int) degrees * COUNTS_PER_DEGREE, power, sequential);
+            encoderDriveCounts((int) (-degrees * COUNTS_PER_DEGREE), (int) (degrees * COUNTS_PER_DEGREE), power, sequential);
         }
     }
 
-    /*
-    public void crabsteer(double inches, double power, boolean sequential)  throws InterruptedException
+    public void encoderCrabsteer(int direction, double inches, double power, boolean sequential) throws InterruptedException //left = 0, right = 1
     {
-        final double powerFinal = Math.abs(power);
+        //TODO Make signature = double inches, double power, boolean sequential
+        robot.leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        final double countsToMove = inches;
+        double powerFinal = Math.abs(power);
 
-        if (inches < 0)
+        double countsToMove = inches;
+
+        if (direction == 0)
         {
             robot.leftFront.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() + countsToMove));
             robot.leftBack.setTargetPosition((int) Math.round(robot.leftBack.getCurrentPosition() - countsToMove));
             robot.rightFront.setTargetPosition((int) Math.round(robot.rightFront.getCurrentPosition() + countsToMove));
             robot.rightBack.setTargetPosition((int) Math.round(robot.rightBack.getCurrentPosition() - countsToMove));
 
+            robot.leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
             robot.leftFront.setPower(powerFinal);
             robot.leftBack.setPower(-powerFinal);
             robot.rightFront.setPower(powerFinal);
             robot.rightBack.setPower(-powerFinal);
         }
-        else if (inches > 0)
+        else if (direction == 1)
         {
             robot.leftFront.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() - countsToMove));
             robot.leftBack.setTargetPosition((int) Math.round(robot.leftBack.getCurrentPosition() + countsToMove));
             robot.rightFront.setTargetPosition((int) Math.round(robot.rightFront.getCurrentPosition() - countsToMove));
             robot.rightBack.setTargetPosition((int) Math.round(robot.rightBack.getCurrentPosition() + countsToMove));
+
+            robot.leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             robot.leftFront.setPower(-powerFinal);
             robot.leftBack.setPower(powerFinal);
@@ -205,57 +226,6 @@ public class Base
                 sleep(100);
             }
         }
-
-
-        robot.leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        robot.leftFront.setPower(0);
-        robot.leftBack.setPower(0);
-        robot.rightFront.setPower(0);
-        robot.rightBack.setPower(0);
-    }*/
-
-    public void encoderCrabsteer(int direction, double inches, double power) throws InterruptedException //left = 0, right = 1
-    {
-        robot.leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        robot.leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        double powerFinal = Math.abs(power);
-
-        double countsToMove = inches;
-
-        if (direction == 0) {
-            robot.leftFront.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() + countsToMove));
-            robot.leftBack.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() - countsToMove));
-            robot.rightFront.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() + countsToMove));
-            robot.rightBack.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() - countsToMove));
-
-            robot.leftFront.setPower(powerFinal);
-            robot.leftBack.setPower(-powerFinal);
-            robot.rightFront.setPower(powerFinal);
-            robot.rightBack.setPower(-powerFinal);
-        } else if (direction == 1) {
-            robot.leftFront.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() - countsToMove));
-            robot.leftBack.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() + countsToMove));
-            robot.rightFront.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() - countsToMove));
-            robot.rightBack.setTargetPosition((int) Math.round(robot.leftFront.getCurrentPosition() + countsToMove));
-
-            robot.leftFront.setPower(-powerFinal);
-            robot.leftBack.setPower(powerFinal);
-            robot.rightFront.setPower(-powerFinal);
-            robot.rightBack.setPower(powerFinal);
-        }
-        sleep(1000);
     }
 
     public void hookUp()
