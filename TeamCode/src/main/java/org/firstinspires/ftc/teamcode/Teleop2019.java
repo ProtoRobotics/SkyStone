@@ -24,7 +24,7 @@ public class Teleop2019 extends OpMode
         mast = new Mast(this, robot, gamepad1, gamepad2);
         arm = new Arm(this, robot, gamepad1, gamepad2);
 
-        base.initializeIMU();
+        base.initializeTeleop();
     }
 
 

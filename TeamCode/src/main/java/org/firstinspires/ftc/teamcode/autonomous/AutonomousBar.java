@@ -40,11 +40,11 @@ public class AutonomousBar
     {
         if(direction == 0)
         {
-            base.crabsteer(-20,.7,true);
+            base.encoderCrabsteer(-20,.7,0);
         }
         else if(direction == 1)
         {
-            base.crabsteer(20,.7,true);
+            base.encoderCrabsteer(20,.7,0);
         }
 
         //base.crabsteer(-23, .7, true);
