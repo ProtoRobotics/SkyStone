@@ -29,7 +29,7 @@ public class Mast
 
     public void init()
     {
-        //robot.mastDistanceSensor.initialize();
+        robot.mastDistanceSensor.initialize();
     }
 
 
