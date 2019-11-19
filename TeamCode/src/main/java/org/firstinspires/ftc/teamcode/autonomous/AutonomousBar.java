@@ -33,6 +33,8 @@ public class AutonomousBar
         mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
         arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
 
+        autonomousClass.waitForStart();
+
         runOpMode();
     }
 

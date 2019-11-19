@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.HardwareMecanum;
 
 @Autonomous(name = "distanceSensorTest")
 
-public class distanceSensorTest extends OpMode {
+public class DistanceSensorTest extends OpMode {
 
     HardwareMecanum robot;
 

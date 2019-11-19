@@ -24,7 +24,16 @@ public class ImuRotator
     {
         this.opModeClass = opMode;
         this.robot = robot;
-        initializeIMU();
+    }
+
+    public ImuRotator(OpMode opMode, HardwareMecanum robot, boolean initializeIMU)
+    {
+        this.opModeClass = opMode;
+        this.robot = robot;
+        if (initializeIMU)
+        {
+            initializeIMU();
+        }
     }
 
     public void initializeIMU()
@@ -77,7 +86,8 @@ public class ImuRotator
         {
             if (error < 0)
                 speed *= -1;
-            else if (Math.abs(error) <= ERROR_THRESHOLD * 0.25)
+
+            if (Math.abs(error) <= ERROR_THRESHOLD * 0.25)
                 speed = (speed > 0) ? MIN_SPEED : -(MIN_SPEED);
             else if (Math.abs(error) <= ERROR_THRESHOLD * 0.50)
                 speed = (speed > 0) ? MIN_SPEED + 0.05 : -(MIN_SPEED + 0.05);
@@ -110,6 +120,7 @@ public class ImuRotator
         opModeClass.telemetry.addData("Error Coterminal", "" + getCoterminalAngle(robotError));
         return getCoterminalAngle(robotError);
     }
+
 
     //Returns the shortest angle coterminal to the input. If 240 is input as the angle value, returns -120.
     public double getCoterminalAngle(double angle)

@@ -30,6 +30,9 @@ public class Base
         this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
+
+        initializeIMU();
+        initializeEncoders();
     }
 
     public void initializeIMU()
@@ -44,10 +47,8 @@ public class Base
         robot.imu.initialize(parameters);
     }
 
-    public void initializeTeleop()
+    public void initializeEncoders()
     {
-        initializeIMU();
-
         robot.leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -159,6 +160,7 @@ public class Base
         encoderDriveCounts((int) (leftInches * COUNTS_PER_INCH), (int) (rightInches * COUNTS_PER_INCH), power, sequential);
     }
 
+    @Deprecated
     public void rotateDegreesEncoder(double degrees, double power, boolean sequential) throws InterruptedException
     {
         if (degrees > 0) //Clockwise rotation

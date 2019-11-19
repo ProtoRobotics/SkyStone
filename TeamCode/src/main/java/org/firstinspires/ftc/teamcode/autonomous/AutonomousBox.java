@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.Arm;
 import org.firstinspires.ftc.teamcode.Base;
 import org.firstinspires.ftc.teamcode.Collector;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
+import org.firstinspires.ftc.teamcode.ImuRotator;
 import org.firstinspires.ftc.teamcode.Mast;
 
 public class AutonomousBox
@@ -16,6 +17,7 @@ public class AutonomousBox
     Arm arm;
 
     HardwareMecanum robot;
+    ImuRotator imuRotator;
 
     LinearOpMode autonomousClass;
     int direction;
@@ -33,34 +35,51 @@ public class AutonomousBox
         mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
         arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
 
+        imuRotator = new ImuRotator(autonomousClass, robot);
+
+        autonomousClass.waitForStart();
+
         runOpMode();
     }
 
     public void runOpMode() throws InterruptedException
     {
-        base.encoderCrabsteer(-22, .7, 0, true);
+        base.encoderDriveInches(4, 4, .7, true);
+        Thread.sleep(500); //Pause for .5 seconds to ensure full stop.
+
+        base.encoderCrabsteer(0, 22, .5, true);
+        Thread.sleep(500);
+
         base.encoderDriveInches(20, 20, .7, true);
 
         //Pick skystone
         Thread.sleep(2000);
 
-        base.encoderDriveInches(-24, -24, .7, true);
-        Thread.sleep(300); //Fully stop the robot by waiting .3 seconds.
+        base.encoderDriveInches(-23, -23, .7, true);
+        Thread.sleep(500); //Fully stop the robot by waiting .3 seconds.
 
-        base.rotateDegreesEncoder(90, .4, true);
+        imuRotator.rotateIMU(.5, -90);
+        Thread.sleep(500);
 
-        base.encoderDriveInches(132, 132, 1, true);
+        base.encoderDriveInches(112, 112, 1, true);
 
-        base.rotateDegreesEncoder(-90, .4, true);
+        imuRotator.rotateIMU(.5, 90);
+        Thread.sleep(500);
+
         base.encoderDriveInches(24, 24, .7, true);
+        Thread.sleep(500);
 
-        //lower hook
+        base.hookDown();
+        Thread.sleep(500);
 
         base.encoderDriveInches(-22, 22, 1, true);
+        Thread.sleep(500);
 
-        //raise hook
+        base.hookUp();
 
-        base.rotateDegreesEncoder(-90, .4, true);
+        imuRotator.rotateIMU(.5, 90);
+        Thread.sleep(500);
+
         base.encoderDriveInches(22, 22, .7, true);
     }
 }

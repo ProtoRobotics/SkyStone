@@ -23,8 +23,6 @@ public class Teleop2019 extends OpMode
         collector = new Collector(this, robot, gamepad1, gamepad2);
         mast = new Mast(this, robot, gamepad1, gamepad2);
         arm = new Arm(this, robot, gamepad1, gamepad2);
-
-        base.initializeTeleop();
     }
 
 
