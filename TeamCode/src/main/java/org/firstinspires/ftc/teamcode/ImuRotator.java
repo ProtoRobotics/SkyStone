@@ -51,7 +51,7 @@ public class ImuRotator
     public void rotateIMU(double speed, double angle)
     {
         angles = robot.imu.getAngularOrientation();
-        double targetAngle = angles.firstAngle + angle;
+        double targetAngle = angles.firstAngle - angle;
 
         robot.leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

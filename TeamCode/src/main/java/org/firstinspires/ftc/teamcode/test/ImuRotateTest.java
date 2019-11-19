@@ -22,10 +22,10 @@ public class ImuRotateTest extends LinearOpMode
         imuRotator.rotateIMU(.5, 90);
 
         Thread.sleep(1000);
-        imuRotator.rotateIMU(.5, -180);
+        imuRotator.rotateIMU(.5, -90);
 
         Thread.sleep(1000);
-        imuRotator.rotateIMU(.5, 270);
+        imuRotator.rotateIMU(.5, 120);
 
 
     }
