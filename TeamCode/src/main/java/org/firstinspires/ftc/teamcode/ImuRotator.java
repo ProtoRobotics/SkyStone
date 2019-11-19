@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -9,17 +11,32 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class ImuRotator
 {
+    OpMode opModeClass;
     HardwareMecanum robot;
 
     Orientation angles;
 
-    int HEADING_THRESHOLD = 1;
+    int HEADING_THRESHOLD = 3;
     double ERROR_THRESHOLD = 40;
     double MIN_SPEED = 0.15;
 
-    public ImuRotator(HardwareMecanum robot)
+    public ImuRotator(OpMode opMode, HardwareMecanum robot)
     {
+        this.opModeClass = opMode;
         this.robot = robot;
+        initializeIMU();
+    }
+
+    public void initializeIMU()
+    {
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled = false;
+
+        robot.imu.initialize(parameters);
     }
 
     public void rotateIMU(double speed, double angle)
@@ -38,7 +55,10 @@ public class ImuRotator
         robot.rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //This will continuously execute onHeading until the robot is within a 1 degree threshold of the target.
-        while (!onHeading(speed, targetAngle)) {}
+        while (!onHeading(speed, targetAngle))
+        {
+            opModeClass.telemetry.update();
+        }
     }
 
     public boolean onHeading(double speed, double angle)
@@ -72,6 +92,8 @@ public class ImuRotator
         robot.rightFront.setPower(speed);
         robot.rightBack.setPower(speed);
 
+        opModeClass.telemetry.addData("speed", speed);
+        opModeClass.telemetry.addData("onTarget", onTarget);
         return onTarget;
     }
 
@@ -82,6 +104,10 @@ public class ImuRotator
         angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         robotError = targetAngle - angles.firstAngle;
 
+        opModeClass.telemetry.addData("targetAngle", targetAngle);
+        opModeClass.telemetry.addData("angles.firstAngle", angles.firstAngle);
+        opModeClass.telemetry.addData("Error", robotError);
+        opModeClass.telemetry.addData("Error Coterminal", "" + getCoterminalAngle(robotError));
         return getCoterminalAngle(robotError);
     }
 

@@ -18,7 +18,7 @@ public class Base
     //public static final double WHEEL_DIAMETER = 100.0/25.4; //Wheels are 100mm, converted to inches is ~4.
     //public static final int COUNTS_PER_INCH = (int) (784.0 / WHEEL_DIAMETER); //784 counts per wheel rotation, divided by diameter yeilds cpi.
     public static final double COUNTS_PER_INCH = 61.38;
-    public static final int COUNTS_PER_INCH_CRAB = 1; //TODO
+    public static final double COUNTS_PER_INCH_CRAB = 1000.0/15; //TODO
     public static final double COUNTS_PER_DEGREE = COUNTS_PER_INCH; //TODO
 
     public static final double HOOK_UP_POSITION = .87;
@@ -181,7 +181,7 @@ public class Base
 
         double powerFinal = Math.abs(power);
 
-        double countsToMove = inches;
+        double countsToMove = inches * COUNTS_PER_INCH_CRAB;
 
         if (direction == 0)
         {

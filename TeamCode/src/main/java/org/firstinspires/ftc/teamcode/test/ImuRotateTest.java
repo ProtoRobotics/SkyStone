@@ -17,7 +17,7 @@ public class ImuRotateTest extends LinearOpMode
         HardwareMecanum robot = new HardwareMecanum();
         robot.init(hardwareMap);
 
-        ImuRotator imuRotator = new ImuRotator(robot);
+        ImuRotator imuRotator = new ImuRotator(this, robot);
         imuRotator.rotateIMU(.5, 90);
     }
 }

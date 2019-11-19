@@ -22,7 +22,7 @@ public class TempCrabLeft extends LinearOpMode
 
         Base base = new Base(this, robot, gamepad1, gamepad2);
 
-        base.encoderDriveInches(24, 24, .5, true);
+        base.encoderCrabsteer(1, 24, .5, true);
 
         robot.leftCollector.setPower(1);
 
