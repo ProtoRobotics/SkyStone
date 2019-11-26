@@ -3,10 +3,13 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorColor;
 
 public class HardwareMecanum
 {
@@ -17,6 +20,8 @@ public class HardwareMecanum
     public DcMotor rightFront;
     public BNO055IMU imu;
     public Servo hook;
+    public ColorSensor sensorColorRight;
+    public ColorSensor sensorColorLeft;
 
     //Collector
     public CRServo leftCollector;
@@ -44,6 +49,8 @@ public class HardwareMecanum
         rightFront = hwMap.get(DcMotor.class, "rightFront");
         imu = hwMap.get(BNO055IMU.class, "imu");
         hook = hwMap.get(Servo.class, "hook");
+        sensorColorLeft = hwMap.get(ColorSensor.class,"sensorColorLeft");
+        sensorColorRight = hwMap.get(ColorSensor.class,"sensorColorRight");
 
         //COLLECTOR
         leftCollector = hwMap.get(CRServo.class, "leftCollector");

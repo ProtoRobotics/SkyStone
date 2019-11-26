@@ -239,4 +239,24 @@ public class Base
     {
         robot.hook.setPosition(HOOK_DOWN_POSITION);
     }
+
+    public int scanStone(int location)
+    {
+        boolean colorSensorRight;
+        boolean colorSensorLeft;
+
+
+        if(colorSensorRight == true && colorSensorLeft == false){
+            location = 2;//Sky Stone on Right
+        }
+        else if(colorSensorLeft == true && colorSensorRight == false){
+            location = 0;//Sky Stone on Left
+        }
+        else if(colorSensorLeft == false && colorSensorRight == false){
+            location = 1;//Sky Stone in Middle
+        }
+        return location;
+
+    }
+
 }
