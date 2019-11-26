@@ -44,6 +44,8 @@ public class AutonomousBox
 
     public void runOpMode() throws InterruptedException
     {
+        base.hookUp();
+
         base.encoderDriveInches(4, 4, .7, true);
         Thread.sleep(500); //Pause for .5 seconds to ensure full stop.
 
@@ -55,15 +57,15 @@ public class AutonomousBox
         //Pick skystone
         Thread.sleep(2000);
 
-        base.encoderDriveInches(-23, -23, .7, true);
-        Thread.sleep(500); //Fully stop the robot by waiting .3 seconds.
+        base.encoderDriveInches(-20, -20, .7, true);
+        Thread.sleep(500); //Fully stop the robot by waiting .5 seconds.
 
-        imuRotator.rotateIMU(.5, 90);
+        imuRotator.rotateIMU(.5, 85); //90 is always overrotating
         Thread.sleep(500);
 
-        base.encoderDriveInches(100, 100, 1, true);
+        base.encoderDriveInches(115, 115, .7, true);
 
-        imuRotator.rotateIMU(.5, -90);
+        imuRotator.rotateIMU(.5, -85);
         Thread.sleep(500);
 
         base.encoderDriveInches(24, 24, .7, true);
@@ -72,14 +74,14 @@ public class AutonomousBox
         base.hookDown();
         Thread.sleep(500);
 
-        base.encoderDriveInches(-22, 22, 1, true);
+        base.encoderDriveInches(-20, -30, .7, true);
         Thread.sleep(500);
 
         base.hookUp();
 
-        imuRotator.rotateIMU(.5, -90);
+        imuRotator.rotateIMU(.3, -85);
         Thread.sleep(500);
 
-        base.encoderDriveInches(22, 22, .7, true);
+        base.encoderDriveInches(44, 44, .7, true);
     }
 }

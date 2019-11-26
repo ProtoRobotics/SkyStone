@@ -46,17 +46,17 @@ public class HardwareMecanum
         hook = hwMap.get(Servo.class, "hook");
 
         //COLLECTOR
-        leftCollector = hwMap.get(CRServo.class, "leftCollector");
-        rightCollector = hwMap.get(CRServo.class, "rightCollector");
+        //leftCollector = hwMap.get(CRServo.class, "leftCollector");
+        //rightCollector = hwMap.get(CRServo.class, "rightCollector");
 
         //MAST
-        mastVertical = hwMap.get(DcMotor.class, "mastVertical");
-        mastRotator = hwMap.get(DcMotor.class, "mastRotator");
-        mastDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "mastDistaceSensor");
+        //mastVertical = hwMap.get(DcMotor.class, "mastVertical");
+        //mastRotator = hwMap.get(DcMotor.class, "mastRotator");
+        //mastDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "mastDistaceSensor");
 
         //ARM
-        armExtender = hwMap.get(Servo.class, "armExtender");
-        gripperRotator = hwMap.get(Servo.class, "gripperRotator");
-        gripper = hwMap.get(Servo.class, "gripper");
+        //armExtender = hwMap.get(Servo.class, "armExtender");
+        //gripperRotator = hwMap.get(Servo.class, "gripperRotator");
+        //gripper = hwMap.get(Servo.class, "gripper");
     }
 }

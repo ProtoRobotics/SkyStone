@@ -16,9 +16,9 @@ public class ImuRotator
 
     Orientation angles;
 
-    int HEADING_THRESHOLD = 3;
+    int HEADING_THRESHOLD = 1;
     double ERROR_THRESHOLD = 40;
-    double MIN_SPEED = 0.15;
+    double MIN_SPEED = 0.1;
 
     public ImuRotator(OpMode opMode, HardwareMecanum robot)
     {
@@ -52,6 +52,28 @@ public class ImuRotator
     {
         angles = robot.imu.getAngularOrientation();
         double targetAngle = angles.firstAngle - angle;
+
+        robot.leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        robot.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        //This will continuously execute onHeading until the robot is within a 1 degree threshold of the target.
+        while (!onHeading(speed, targetAngle))
+        {
+            opModeClass.telemetry.update();
+        }
+    }
+
+    public void rotateToAngle(double speed, double angle)
+    {
+        angles = robot.imu.getAngularOrientation();
+        double targetAngle = -angle;
 
         robot.leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
