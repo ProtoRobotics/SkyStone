@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 
 import static java.lang.Thread.sleep;
 
@@ -242,17 +244,33 @@ public class Base
 
     public int scanStone(int location)
     {
+        // Read the sensor
+        NormalizedRGBA colorsRight = robot.sensorColorRight.getNormalizedColors();
+        NormalizedRGBA colorsLeft = robot.sensorColorLeft.getNormalizedColors();
+
+        // declare and init booleans
         boolean colorSensorRight;
         boolean colorSensorLeft;
+        colorSensorRight = false;
+        colorSensorLeft = false;
 
+        // Set booleans to true or false depending on values read by sensors.
+        if(colorsRight.alpha <= 0.003 && colorsRight.red <= 0.003 && colorsRight.blue <= 0.003){
+            colorSensorRight = true;
+        }
 
+        if(colorsLeft.alpha <= 0.003 && colorsLeft.red <= 0.003 && colorsLeft.blue <= 0.003){
+            colorSensorLeft = true;
+        }
+
+        // output location of Sky Stone
         if(colorSensorRight == true && colorSensorLeft == false){
             location = 2;//Sky Stone on Right
         }
         else if(colorSensorLeft == true && colorSensorRight == false){
             location = 0;//Sky Stone on Left
         }
-        else if(colorSensorLeft == false && colorSensorRight == false){
+        else {
             location = 1;//Sky Stone in Middle
         }
         return location;
@@ -260,3 +278,6 @@ public class Base
     }
 
 }
+
+
+
