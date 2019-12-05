@@ -234,15 +234,17 @@ public class Base
 
     public void hookUp()
     {
+
         robot.hook.setPosition(HOOK_UP_POSITION);
     }
 
     public void hookDown()
     {
+
         robot.hook.setPosition(HOOK_DOWN_POSITION);
     }
 
-    public int scanStone(int location)
+    public Location scanStone()
     {
         // Read the sensor
         NormalizedRGBA colorsRight = robot.sensorColorRight.getNormalizedColors();
@@ -251,29 +253,38 @@ public class Base
         // declare and init booleans
         boolean colorSensorRight;
         boolean colorSensorLeft;
-        colorSensorRight = false;
-        colorSensorLeft = false;
 
-        // Set booleans to true or false depending on values read by sensors.
+        // The base has 2 color sensors - 1 over left wheel and 1 over right wheel (referenced from driver position)
+        // Boolean sensor value is set to 'TRUE' if it detects 'BLACK' (i.e. SkyStone)
+        // Based on trials, we find that 2 of the RGB values were consistently above 0.002 when viewing the yellow block
+        // whereas all values were around 0.002 when viewing BLACK block (i.e.) SkyStone.
+
         if(colorsRight.alpha <= 0.003 && colorsRight.red <= 0.003 && colorsRight.blue <= 0.003){
             colorSensorRight = true;
         }
+        else
+            colorSensorRight = false;
 
         if(colorsLeft.alpha <= 0.003 && colorsLeft.red <= 0.003 && colorsLeft.blue <= 0.003){
             colorSensorLeft = true;
         }
+        else
+            colorSensorLeft = false;
 
-        // output location of Sky Stone
+        // Based on color found by each sensor, this method outputs the location of the Skystone given
+        // row of 3 stones.
+        //      0 = left stone
+        //      1 = middle stone
+        //      2 = right stone        // output location of Sky Stone
         if(colorSensorRight == true && colorSensorLeft == false){
-            location = 2;//Sky Stone on Right
+            return Location.RIGHT;
         }
         else if(colorSensorLeft == true && colorSensorRight == false){
-            location = 0;//Sky Stone on Left
+            return Location.LEFT;
         }
         else {
-            location = 1;//Sky Stone in Middle
+            return Location.CENTER;
         }
-        return location;
 
     }
 

@@ -8,6 +8,8 @@ import org.firstinspires.ftc.teamcode.Collector;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 import org.firstinspires.ftc.teamcode.ImuRotator;
 import org.firstinspires.ftc.teamcode.Mast;
+import org.firstinspires.ftc.teamcode.Location; //JAD 12/3/19
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp; //JAD 12/3/19
 
 public class AutonomousBox
 {
@@ -53,8 +55,14 @@ public class AutonomousBox
         Thread.sleep(500);
 
         base.encoderDriveInches(20, 20, .7, true);
+        Thread.sleep(500);  //JAD 12/3/19
 
         //Pick skystone
+        Location loc = base.scanStone();
+        this.autonomousClass.telemetry.addData("Location = ", loc.toString());
+        this.autonomousClass.telemetry.update();
+        mast.setMastonSkystone(loc);
+
         Thread.sleep(2000);
 
         base.encoderDriveInches(-20, -20, .7, true);

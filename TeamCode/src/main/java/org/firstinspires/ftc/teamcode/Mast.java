@@ -18,6 +18,12 @@ public class Mast
     private final double MIN_THROTTLE_DISTANCE = 20;
     private final double MAX_STOP_DISTANCE = 40;
     private final double MAX_THROTTLE_DISTANCE = 33;
+    private final double LEFT_ANGLE = -25;
+    private final double LEFT_ARM_LENGHT = 12;
+    private final double CENTER_ANGLE = 0;
+    private final double CENTER_ARM_LENGTH = 6;
+    private final double RIGHT_ANGLE = 25;
+    private final double RIGHT_ARM_LENGTH = 12;
 
     public Mast(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
@@ -29,7 +35,7 @@ public class Mast
 
     public void init()
     {
-        robot.mastDistanceSensor.initialize();
+        //robot.mastDistanceSensor.initialize();
     }
 
 
@@ -111,5 +117,20 @@ public class Mast
             return (speed / 2.0);*/
 
         return speed;
+    }
+
+    public void setMastonSkystone (Location loc) {
+        switch (loc) {
+            case LEFT:
+                //set mast and arm to the LEFT position
+                break;
+            case CENTER:
+                //set mast and arm to the CENTER position
+                break;
+            case RIGHT:
+                //set mast and arm to the RIGHT position
+                break;
+        }
+
     }
 }

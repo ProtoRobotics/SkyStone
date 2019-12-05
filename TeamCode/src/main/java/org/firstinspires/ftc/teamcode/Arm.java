@@ -11,8 +11,10 @@ public class Arm
     private Gamepad gamepad1; //Driver
     private Gamepad gamepad2; //Gunner
 
-    final double EXTENDER_MAX = .78;
-    final double EXTENDER_MIN = .21; //.21 is furthest physically possible
+    // final double EXTENDER_MAX = .78;
+    //final double EXTENDER_MIN = .21; //.21 is furthest physically possible
+    final double EXTENSION_MAX = 3;  //MAX DISTANCE ARM (INCHES) CAN BE EXTENDED MEASURED BY ARM DISTANCE SENSOR
+    final double EXTENSION_MIN = 12;  //MIN DISTANCE ARM (INCHES) CAN BE EXTENDED MEASURED BY ARM DISTANCE SENSOR
     final double EXTENDER_RATE_OF_CHANGE = 1.5 / 280;
 
     final double GRIPPER_ROTATOR_POS_1 = .12; //Also the gripper rotator initialization point
@@ -36,15 +38,16 @@ public class Arm
         //robot.gripper.setPosition(GRIPPER_INITALIZATION_POINT);
         //robot.gripperRotator.setPosition(GRIPPER_ROTATOR_POS_1);
         //robot.armExtender.setPosition(EXTENDER_MIN);
+        //robot.armExtender.setPosition(robot.armExtender.getPosition());
 
-        robot.armExtender.setPosition(robot.armExtender.getPosition());
+        robot.armDistSensor.initialize();
         robot.gripperRotator.setPosition(robot.gripperRotator.getPosition());
         robot.gripper.setPosition(robot.gripper.getPosition());
     }
 
     public void doLoop()
     {
-        double extenderPosition = robot.armExtender.getPosition();
+        /*double extenderPosition = robot.armExtender.getPosition();
         double targetExtenderPosition = extenderPosition;
         if (gamepad2.x)
         {
@@ -73,6 +76,7 @@ public class Arm
         {
             robot.armExtender.setPosition(robot.armExtender.getPosition());
         }
+        */
 
         opModeClass.telemetry.addData("Servo positionn", robot.gripperRotator.getPosition());
         opModeClass.telemetry.update();
