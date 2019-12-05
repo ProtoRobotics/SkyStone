@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
@@ -247,8 +246,8 @@ public class Base
     public Location scanStone()
     {
         // Read the sensor
-        NormalizedRGBA colorsRight = robot.sensorColorRight.getNormalizedColors();
-        NormalizedRGBA colorsLeft = robot.sensorColorLeft.getNormalizedColors();
+        NormalizedRGBA colorsRight = robot.rightColorSensor.getNormalizedColors();
+        NormalizedRGBA colorsLeft = robot.leftColorSensor.getNormalizedColors();
 
         // declare and init booleans
         boolean colorSensorRight;

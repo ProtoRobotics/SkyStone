@@ -53,15 +53,17 @@ public class Mast
 
         if (Math.abs(gamepad2.right_stick_x) >= .15)
         {
-            opModeClass.telemetry.update();
+            //opModeClass.telemetry.update();
             double speed = gamepad2.right_stick_x * .8;
             rotateSpeed(-speed);
         }
         else
         {
-            opModeClass.telemetry.update();
+            //opModeClass.telemetry.update();
             rotateSpeed(0);
         }
+        opModeClass.telemetry.addData("Mast Distance = ",robot.mastDistanceSensor.getDistance(DistanceUnit.CM));
+        opModeClass.telemetry.update();
     }
 
     public void moveSpeed(double speed)

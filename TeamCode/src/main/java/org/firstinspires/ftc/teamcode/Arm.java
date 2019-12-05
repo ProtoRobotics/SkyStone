@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 public class Arm
 {
     private OpMode opModeClass; //Used for telemetry.
@@ -40,45 +42,27 @@ public class Arm
         //robot.armExtender.setPosition(EXTENDER_MIN);
         //robot.armExtender.setPosition(robot.armExtender.getPosition());
 
-        robot.armDistSensor.initialize();
+        robot.armDistanceSensor.initialize();
         robot.gripperRotator.setPosition(robot.gripperRotator.getPosition());
         robot.gripper.setPosition(robot.gripper.getPosition());
     }
 
     public void doLoop()
     {
-        /*double extenderPosition = robot.armExtender.getPosition();
-        double targetExtenderPosition = extenderPosition;
         if (gamepad2.x)
         {
-            targetExtenderPosition += EXTENDER_RATE_OF_CHANGE;
+            robot.armExtender.setPower(.3);
         }
-        else if(gamepad2.b)
+        else if (gamepad2.b)
         {
-            targetExtenderPosition -= EXTENDER_RATE_OF_CHANGE;
+            robot.armExtender.setPower(-.3);
+        }
+        else
+        {
+            robot.armExtender.setPower(0);
         }
 
-        if (targetExtenderPosition > EXTENDER_MAX)
-        {
-            targetExtenderPosition = EXTENDER_MAX;
-        }
-
-        if (targetExtenderPosition < EXTENDER_MIN)
-        {
-            targetExtenderPosition = EXTENDER_MIN;
-        }
-
-        if (targetExtenderPosition != extenderPosition && (gamepad2.x || gamepad2.b))
-        {
-            robot.armExtender.setPosition(targetExtenderPosition);
-        }
-        else if (!(gamepad2.x || gamepad2.b))
-        {
-            robot.armExtender.setPosition(robot.armExtender.getPosition());
-        }
-        */
-
-        opModeClass.telemetry.addData("Servo positionn", robot.gripperRotator.getPosition());
+        opModeClass.telemetry.addData("Servo position", robot.gripperRotator.getPosition());
         opModeClass.telemetry.update();
 
         if (gamepad2.left_bumper)
@@ -107,5 +91,8 @@ public class Arm
         {
             robot.gripperRotator.setPosition(robot.gripperRotator.getPosition() - GRIPPER_ROTATOR_SPEED);
         }
+        opModeClass.telemetry.addData("Arm Distance = ", robot.armDistanceSensor.getDistance(DistanceUnit.CM));
+        opModeClass.telemetry.addData("Gripper Position = ", robot.gripperRotator.getPosition());
+        opModeClass.telemetry.update();
     }
 }
