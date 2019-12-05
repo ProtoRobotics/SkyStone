@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 import static java.lang.Thread.sleep;
 
 public class Base
@@ -68,7 +70,6 @@ public class Base
         double rFrontDrive = 0;
         double lRearDrive = 0;
         double rRearDrive = 0;
-
         double powerReduction = 3.0/4.0;
 
         if (Math.abs(gamepad1.left_stick_y) > 0 || Math.abs(gamepad1.right_stick_y) > 0) // forward/reverse
@@ -101,7 +102,9 @@ public class Base
             hookUp();
         }
 
-        opModeClass.telemetry.addData("Encoder position: ", robot.leftFront.getCurrentPosition());
+        opModeClass.telemetry.addData("BASE:  Left Front POS = ", robot.leftFront.getCurrentPosition());
+        opModeClass.telemetry.addData("BASE:  Distance = ", robot.baseDistanceSensor.getDistance(DistanceUnit.CM));
+        opModeClass.telemetry.addData("BASE:  Location = " + this.scanStone().toString(), null);
         opModeClass.telemetry.update();
     }
 
