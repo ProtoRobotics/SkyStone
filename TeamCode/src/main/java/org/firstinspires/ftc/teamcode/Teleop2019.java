@@ -42,5 +42,6 @@ public class Teleop2019 extends OpMode
         collector.doLoop();
         mast.doLoop();
         arm.doLoop();
+        telemetry.update();
     }
 }

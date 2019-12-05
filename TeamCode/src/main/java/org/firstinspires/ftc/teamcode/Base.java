@@ -102,10 +102,10 @@ public class Base
             hookUp();
         }
 
-        opModeClass.telemetry.addData("BASE:  Left Front POS = ", robot.leftFront.getCurrentPosition());
+        //opModeClass.telemetry.addData("BASE:  Left Front POS = ", robot.leftFront.getCurrentPosition());
         opModeClass.telemetry.addData("BASE:  Distance = ", robot.baseDistanceSensor.getDistance(DistanceUnit.CM));
         opModeClass.telemetry.addData("BASE:  Location = " + this.scanStone().toString(), null);
-        opModeClass.telemetry.update();
+        //opModeClass.telemetry.update();
     }
 
     /*
