@@ -13,19 +13,18 @@ public class Arm
     private Gamepad gamepad1; //Driver
     private Gamepad gamepad2; //Gunner
 
-    // final double EXTENDER_MAX = .78;
-    //final double EXTENDER_MIN = .21; //.21 is furthest physically possible
-    final double EXTENSION_MAX = 3;  //MAX DISTANCE ARM (INCHES) CAN BE EXTENDED MEASURED BY ARM DISTANCE SENSOR
-    final double EXTENSION_MIN = 12;  //MIN DISTANCE ARM (INCHES) CAN BE EXTENDED MEASURED BY ARM DISTANCE SENSOR
-    final double EXTENDER_RATE_OF_CHANGE = 1.5 / 280;
-
     final double GRIPPER_ROTATOR_POS_1 = .12; //Also the gripper rotator initialization point
     final double GRIPPER_ROTATOR_POS_2 = .51;
     final double GRIPPER_ROTATOR_SPEED = 1.5 / 280;
 
-    final double GRIPPER_OPEN = .29;
-    final double GRIPPER_CLOSE = .55;
-    final double GRIPPER_INITALIZATION_POINT = .332; //Where we want the gripper to be on init
+    final double GRIPPER_OPEN = .542;
+    final double GRIPPER_CLOSE = 1.0;
+
+    //TODO Find actual positions.
+    private final double MIN_STOP_DISTANCE = 13;
+    private final double MIN_THROTTLE_DISTANCE = 20;
+    private final double MAX_STOP_DISTANCE = 40;
+    private final double MAX_THROTTLE_DISTANCE = 33;
 
     public Arm(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
@@ -49,13 +48,13 @@ public class Arm
 
     public void doLoop()
     {
-        if (gamepad2.x)
-        {
-            robot.armExtender.setPower(.3);
-        }
-        else if (gamepad2.b)
+        if (gamepad2.x) //arm out
         {
             robot.armExtender.setPower(-.3);
+        }
+        else if (gamepad2.b) //arm in
+        {
+            robot.armExtender.setPower(.3);
         }
         else
         {
@@ -63,7 +62,6 @@ public class Arm
         }
 
         opModeClass.telemetry.addData("Servo position", robot.gripperRotator.getPosition());
-        opModeClass.telemetry.update();
 
         if (gamepad2.left_bumper)
         {
@@ -93,6 +91,29 @@ public class Arm
         }
         opModeClass.telemetry.addData("Arm Distance = ", robot.armDistanceSensor.getDistance(DistanceUnit.CM));
         opModeClass.telemetry.addData("Gripper Position = ", robot.gripperRotator.getPosition());
-        opModeClass.telemetry.update();
+    }
+
+    //This method will return an adjusted vertical speed based on how far away the arm is from the mast.
+    public double getAdjustedSpeed(double speed)
+    {
+        boolean goingUp = true;
+        if (speed < 0)
+        {
+            goingUp = false;
+        }
+
+        double distance = robot.armDistanceSensor.getDistance(DistanceUnit.CM);
+
+        //We have to check which direction we are going so that we can reverse course after throttling the mast.
+        if (distance < MIN_STOP_DISTANCE && !goingUp)
+            return 0; //Stop mast if it is
+        if (distance < MIN_THROTTLE_DISTANCE && !goingUp)
+            return (speed / 2.0);
+        if (distance > MAX_STOP_DISTANCE & goingUp)
+            return 0;
+        if (distance > MAX_THROTTLE_DISTANCE && goingUp)
+            return (speed / 2.0);
+
+        return speed;
     }
 }

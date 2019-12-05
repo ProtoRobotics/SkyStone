@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.HardwareMecanum;
 import org.firstinspires.ftc.teamcode.ImuRotator;
 import org.firstinspires.ftc.teamcode.Mast;
 import org.firstinspires.ftc.teamcode.Location; //JAD 12/3/19
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp; //JAD 12/3/19
+
 
 public class AutonomousBox
 {
@@ -61,7 +61,7 @@ public class AutonomousBox
         Location loc = base.scanStone();
         this.autonomousClass.telemetry.addData("Location = ", loc.toString());
         this.autonomousClass.telemetry.update();
-        mast.setMastonSkystone(loc);
+        mast.setMastOnSkystone(loc);
 
         Thread.sleep(2000);
 

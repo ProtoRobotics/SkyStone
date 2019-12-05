@@ -14,10 +14,12 @@ public class Mast
     private Gamepad gamepad1; //Driver
     private Gamepad gamepad2; //Gunner
 
-    private final double MIN_STOP_DISTANCE = 13;
+    private final double MIN_STOP_DISTANCE = 12;
     private final double MIN_THROTTLE_DISTANCE = 20;
     private final double MAX_STOP_DISTANCE = 40;
     private final double MAX_THROTTLE_DISTANCE = 33;
+
+
     private final double LEFT_ANGLE = -25;
     private final double LEFT_ARM_LENGHT = 12;
     private final double CENTER_ANGLE = 0;
@@ -41,6 +43,8 @@ public class Mast
 
     public void doLoop()
     {
+        opModeClass.telemetry.addData("Gamepad1.leftSticky", gamepad1.left_stick_y);
+
         if (Math.abs(gamepad2.left_stick_y) >= .15)
         {
             double speed = -gamepad2.left_stick_y;
@@ -53,25 +57,21 @@ public class Mast
 
         if (Math.abs(gamepad2.right_stick_x) >= .15)
         {
-            //opModeClass.telemetry.update();
             double speed = gamepad2.right_stick_x * .8;
             rotateSpeed(-speed);
         }
         else
         {
-            //opModeClass.telemetry.update();
             rotateSpeed(0);
         }
         opModeClass.telemetry.addData("Mast Distance = ",robot.mastDistanceSensor.getDistance(DistanceUnit.CM));
-        opModeClass.telemetry.update();
     }
 
     public void moveSpeed(double speed)
     {
-        robot.mastVertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.mastVertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.mastVertical.setPower(speed);
-        //robot.mastVertical.setPower(getAdjustedSpeed(speed));
+        //robot.mastVertical.setPower(speed);
+        robot.mastVertical.setPower(getAdjustedSpeed(speed));
     }
 
     //Move counts
@@ -108,20 +108,22 @@ public class Mast
             goingUp = false;
         }
 
+        double distance = robot.mastDistanceSensor.getDistance(DistanceUnit.CM);
+
         //We have to check which direction we are going so that we can reverse course after throttling the mast.
-       //if (robot.mastDistanceSensor.getDistance(DistanceUnit.CM) < MIN_STOP_DISTANCE && !goingUp)
-         /*   return 0; //Stop mast if it is
-        if (robot.mastDistanceSensor.getDistance(DistanceUnit.CM) < MIN_THROTTLE_DISTANCE && !goingUp)
+        if (distance < MIN_STOP_DISTANCE && !goingUp)
+            return 0; //Stop mast if it is
+        if (distance < MIN_THROTTLE_DISTANCE && !goingUp)
             return (speed / 2.0);
-        if (robot.mastDistanceSensor.getDistance(DistanceUnit.CM) > MAX_STOP_DISTANCE & goingUp)
+        if (distance > MAX_STOP_DISTANCE & goingUp)
             return 0;
-        if (robot.mastDistanceSensor.getDistance(DistanceUnit.CM) > MAX_THROTTLE_DISTANCE && goingUp)
-            return (speed / 2.0);*/
+        if (distance > MAX_THROTTLE_DISTANCE && goingUp)
+            return (speed / 2.0);
 
         return speed;
     }
 
-    public void setMastonSkystone (Location loc) {
+    public void setMastOnSkystone(Location loc) {
         switch (loc) {
             case LEFT:
                 //set mast and arm to the LEFT position
