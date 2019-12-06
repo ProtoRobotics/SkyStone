@@ -14,11 +14,12 @@ public class Mast
     private Gamepad gamepad1; //Driver
     private Gamepad gamepad2; //Gunner
 
+    private final double MAST_ROTATE_SPEED = .4;
+
     private final double MIN_STOP_DISTANCE = 12;
     private final double MIN_THROTTLE_DISTANCE = 20;
     private final double MAX_STOP_DISTANCE = 40;
     private final double MAX_THROTTLE_DISTANCE = 33;
-
 
     private final double LEFT_ANGLE = -25;
     private final double LEFT_ARM_LENGHT = 12;
@@ -57,7 +58,7 @@ public class Mast
 
         if (Math.abs(gamepad2.right_stick_x) >= .15)
         {
-            double speed = gamepad2.right_stick_x * .8;
+            double speed = gamepad2.right_stick_x * MAST_ROTATE_SPEED;
             rotateSpeed(-speed);
         }
         else
@@ -115,7 +116,7 @@ public class Mast
             return 0; //Stop mast if it is
         if (distance < MIN_THROTTLE_DISTANCE && !goingUp)
             return (speed / 2.0);
-        if (distance > MAX_STOP_DISTANCE & goingUp)
+        if (distance > MAX_STOP_DISTANCE && goingUp)
             return 0;
         if (distance > MAX_THROTTLE_DISTANCE && goingUp)
             return (speed / 2.0);

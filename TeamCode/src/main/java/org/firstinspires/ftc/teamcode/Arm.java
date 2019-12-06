@@ -21,10 +21,10 @@ public class Arm
     final double GRIPPER_CLOSE = 1.0;
 
     //TODO Find actual positions.
-    private final double MIN_STOP_DISTANCE = 13;
-    private final double MIN_THROTTLE_DISTANCE = 20;
-    private final double MAX_STOP_DISTANCE = 40;
-    private final double MAX_THROTTLE_DISTANCE = 33;
+    private final double MIN_STOP_DISTANCE = 26.0;
+    private final double MIN_THROTTLE_DISTANCE = 29.0;
+    private final double MAX_STOP_DISTANCE = 43.0;
+    private final double MAX_THROTTLE_DISTANCE = 42.0;
 
     public Arm(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
@@ -50,11 +50,11 @@ public class Arm
     {
         if (gamepad2.x) //arm out
         {
-            robot.armExtender.setPower(-.3);
+            robot.armExtender.setPower(getAdjustedSpeed(-.5));
         }
         else if (gamepad2.b) //arm in
         {
-            robot.armExtender.setPower(.3);
+            robot.armExtender.setPower(getAdjustedSpeed(.5));
         }
         else
         {
@@ -96,22 +96,22 @@ public class Arm
     //This method will return an adjusted vertical speed based on how far away the arm is from the mast.
     public double getAdjustedSpeed(double speed)
     {
-        boolean goingUp = true;
-        if (speed < 0)
+        boolean goingOut = true;
+        if (speed > 0)
         {
-            goingUp = false;
+            goingOut = false;
         }
 
         double distance = robot.armDistanceSensor.getDistance(DistanceUnit.CM);
 
         //We have to check which direction we are going so that we can reverse course after throttling the mast.
-        if (distance < MIN_STOP_DISTANCE && !goingUp)
+        if (distance < MIN_STOP_DISTANCE && !goingOut)
             return 0; //Stop mast if it is
-        if (distance < MIN_THROTTLE_DISTANCE && !goingUp)
+        if (distance < MIN_THROTTLE_DISTANCE && !goingOut)
             return (speed / 2.0);
-        if (distance > MAX_STOP_DISTANCE & goingUp)
+        if (distance > MAX_STOP_DISTANCE && goingOut)
             return 0;
-        if (distance > MAX_THROTTLE_DISTANCE && goingUp)
+        if (distance > MAX_THROTTLE_DISTANCE && goingOut)
             return (speed / 2.0);
 
         return speed;
