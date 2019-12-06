@@ -263,13 +263,13 @@ public class Base
         // Based on trials, we find that 2 of the RGB values were consistently above 0.002 when viewing the yellow block
         // whereas all values were around 0.002 when viewing BLACK block (i.e.) SkyStone.
 
-        if(colorsRight.alpha <= 0.003 && colorsRight.red <= 0.003 && colorsRight.blue <= 0.003){
+        if(colorsRight.red <= 0.003 && colorsRight.green <= 0.003 && colorsRight.blue <= 0.003){
             colorSensorRight = true;
         }
         else
             colorSensorRight = false;
 
-        if(colorsLeft.alpha <= 0.003 && colorsLeft.red <= 0.003 && colorsLeft.blue <= 0.003){
+        if(colorsLeft.red <= 0.003 && colorsLeft.green <= 0.003 && colorsLeft.blue <= 0.003){
             colorSensorLeft = true;
         }
         else
