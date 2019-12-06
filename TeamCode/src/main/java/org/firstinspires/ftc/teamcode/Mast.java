@@ -148,7 +148,7 @@ public class Mast
                 //set mast and arm to the LEFT position
 
                 //call function to turn mast
-                this.moveToPos();
+                this.moveToPos(25);
                 break;
             case CENTER:
                 //set mast and arm to the CENTER position
