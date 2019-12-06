@@ -104,7 +104,9 @@ public class Base
 
         //opModeClass.telemetry.addData("BASE:  Left Front POS = ", robot.leftFront.getCurrentPosition());
         opModeClass.telemetry.addData("BASE:  Distance = ", robot.baseDistanceSensor.getDistance(DistanceUnit.CM));
-        opModeClass.telemetry.addData("BASE:  Location = " + this.scanStone().toString(), null);
+        Location loc;
+        loc = this.scanStone();
+        opModeClass.telemetry.addData("BASE:  Location = ", loc);
         //opModeClass.telemetry.update();
     }
 
@@ -272,6 +274,15 @@ public class Base
         }
         else
             colorSensorLeft = false;
+
+        opModeClass.telemetry.addLine()
+                .addData("BASE: Color Sensor LEFT = r", "%.3f", colorsLeft.red)
+                .addData("g", "%.3f", colorsLeft.green)
+                .addData("b", "%.3f", colorsLeft.blue);
+        opModeClass.telemetry.addLine()
+                .addData("BASE: Color Sensor RIGHT = r", "%.3f", colorsRight.red)
+                .addData("g", "%.3f", colorsRight.green)
+                .addData("b", "%.3f", colorsRight.blue);
 
         // Based on color found by each sensor, this method outputs the location of the Skystone given
         // row of 3 stones.
