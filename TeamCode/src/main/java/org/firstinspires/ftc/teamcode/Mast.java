@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+import static java.lang.Math.abs;
+
 public class Mast
 {
     private OpMode opModeClass; //Used for telemetry.
@@ -19,9 +21,9 @@ public class Mast
     private final double MAX_STOP_DISTANCE = 40;
     private final double MAX_THROTTLE_DISTANCE = 33;
 
-
+    private final double SPEED = 0.5;
     private final double LEFT_ANGLE = -25;
-    private final double LEFT_ARM_LENGHT = 12;
+    private final double LEFT_ARM_LENGTH = 12;
     private final double CENTER_ANGLE = 0;
     private final double CENTER_ARM_LENGTH = 6;
     private final double RIGHT_ANGLE = 25;
@@ -45,7 +47,7 @@ public class Mast
     {
         opModeClass.telemetry.addData("Gamepad1.leftSticky", gamepad1.left_stick_y);
 
-        if (Math.abs(gamepad2.left_stick_y) >= .15)
+        if (abs(gamepad2.left_stick_y) >= .15)
         {
             double speed = -gamepad2.left_stick_y;
             this.moveSpeed(speed);
@@ -55,7 +57,7 @@ public class Mast
             this.moveSpeed(0);
         }
 
-        if (Math.abs(gamepad2.right_stick_x) >= .15)
+        if (abs(gamepad2.right_stick_x) >= .15)
         {
             double speed = gamepad2.right_stick_x * .8;
             rotateSpeed(-speed);
@@ -123,10 +125,30 @@ public class Mast
         return speed;
     }
 
+    public void moveToPos(double pos) {
+
+        double error;
+        //double speed = SPEED;
+
+        error = pos - robot.mastDistanceSensor.getDistance(DistanceUnit.CM);
+        while (abs(error) > 0.5) {
+            if (error < 0) {
+                this.moveSpeed(SPEED * -1);
+            }
+            else {
+                this.moveSpeed(SPEED);
+            }
+            error = pos - robot.mastDistanceSensor.getDistance(DistanceUnit.CM);
+        }
+    }
+
     public void setMastOnSkystone(Location loc) {
         switch (loc) {
             case LEFT:
                 //set mast and arm to the LEFT position
+
+                //call function to turn mast
+                this.moveToPos();
                 break;
             case CENTER:
                 //set mast and arm to the CENTER position
