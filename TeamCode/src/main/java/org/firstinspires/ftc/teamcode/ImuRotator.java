@@ -18,7 +18,7 @@ public class ImuRotator
 
     int HEADING_THRESHOLD = 1;
     double ERROR_THRESHOLD = 40;
-    double MIN_SPEED = 0.1;
+    double MIN_SPEED = 0.15;
 
     public ImuRotator(OpMode opMode, HardwareMecanum robot)
     {

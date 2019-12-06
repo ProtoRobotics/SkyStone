@@ -21,6 +21,7 @@ public class Mast
     private final double MAX_STOP_DISTANCE = 40;
     private final double MAX_THROTTLE_DISTANCE = 33;
 
+    private final double MAST_ROTATE_SPEED = .5;
     private final double SPEED = 0.5;
     private final double LEFT_ANGLE = -25;
     private final double LEFT_ARM_LENGTH = 12;
@@ -45,8 +46,6 @@ public class Mast
 
     public void doLoop()
     {
-        opModeClass.telemetry.addData("Gamepad1.leftSticky", gamepad1.left_stick_y);
-
         if (abs(gamepad2.left_stick_y) >= .15)
         {
             double speed = -gamepad2.left_stick_y;
@@ -59,7 +58,7 @@ public class Mast
 
         if (abs(gamepad2.right_stick_x) >= .15)
         {
-            double speed = gamepad2.right_stick_x * .8;
+            double speed = gamepad2.right_stick_x * MAST_ROTATE_SPEED;
             rotateSpeed(-speed);
         }
         else
@@ -117,7 +116,7 @@ public class Mast
             return 0; //Stop mast if it is
         if (distance < MIN_THROTTLE_DISTANCE && !goingUp)
             return (speed / 2.0);
-        if (distance > MAX_STOP_DISTANCE & goingUp)
+        if (distance > MAX_STOP_DISTANCE && goingUp)
             return 0;
         if (distance > MAX_THROTTLE_DISTANCE && goingUp)
             return (speed / 2.0);

@@ -68,22 +68,24 @@ public class AutonomousBox
         base.encoderDriveInches(-20, -20, .7, true);
         Thread.sleep(500); //Fully stop the robot by waiting .5 seconds.
 
-        imuRotator.rotateIMU(.5, 85); //90 is always overrotating
+        imuRotator.rotateIMU(.5, 83); //90 is always overrotating
         Thread.sleep(500);
 
-        base.encoderDriveInches(115, 115, .7, true);
+        base.encoderDriveInches(110, 110, .7, true);
 
         imuRotator.rotateIMU(.5, -85);
         Thread.sleep(500);
 
-        base.encoderDriveInches(24, 24, .7, true);
+        base.encoderDriveInches(23.5, 23.5, .2, true);
         Thread.sleep(500);
 
         base.hookDown();
         Thread.sleep(500);
 
-        base.encoderDriveInches(-20, -30, .7, true);
-        Thread.sleep(500);
+        base.encoderDriveInches(-35, -35, .5, true);
+        Thread.sleep(1000);
+
+        autonomousClass.stop();
 
         base.hookUp();
 
