@@ -16,12 +16,12 @@ public class Mast
     private Gamepad gamepad1; //Driver
     private Gamepad gamepad2; //Gunner
 
-    private final double MIN_STOP_DISTANCE = 12;
-    private final double MIN_THROTTLE_DISTANCE = 20;
-    private final double MAX_STOP_DISTANCE = 40;
-    private final double MAX_THROTTLE_DISTANCE = 33;
+    private final double MIN_STOP_DISTANCE = 5.5;
+    private final double MIN_THROTTLE_DISTANCE = 16;
+    private final double MAX_STOP_DISTANCE = 60;
+    private final double MAX_THROTTLE_DISTANCE = 55;
 
-    private final double MAST_ROTATE_SPEED = .5;
+    private final double MAST_ROTATE_SPEED = .2;
     private final double SPEED = 0.5;
     private final double LEFT_ANGLE = -25;
     private final double LEFT_ARM_LENGTH = 12;
@@ -56,16 +56,19 @@ public class Mast
             this.moveSpeed(0);
         }
 
-        if (abs(gamepad2.right_stick_x) >= .15)
+        if (gamepad2.b) //rotate right
         {
-            double speed = gamepad2.right_stick_x * MAST_ROTATE_SPEED;
-            rotateSpeed(-speed);
+            rotateSpeed(-MAST_ROTATE_SPEED);
+        }
+        else if (gamepad2.x) //rotate left
+        {
+            rotateSpeed(MAST_ROTATE_SPEED);
         }
         else
         {
             rotateSpeed(0);
         }
-        opModeClass.telemetry.addData("Mast Distance = ",robot.mastDistanceSensor.getDistance(DistanceUnit.CM));
+        //opModeClass.telemetry.addData("Mast Distance = ",robot.mastDistanceSensor.getDistance(DistanceUnit.CM));
     }
 
     public void moveSpeed(double speed)
@@ -115,11 +118,11 @@ public class Mast
         if (distance < MIN_STOP_DISTANCE && !goingUp)
             return 0; //Stop mast if it is
         if (distance < MIN_THROTTLE_DISTANCE && !goingUp)
-            return (speed / 2.0);
+            return (speed / 3.5);
         if (distance > MAX_STOP_DISTANCE && goingUp)
             return 0;
         if (distance > MAX_THROTTLE_DISTANCE && goingUp)
-            return (speed / 2.0);
+            return (speed / 3.5);
 
         return speed;
     }

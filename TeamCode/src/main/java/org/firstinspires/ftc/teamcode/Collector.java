@@ -33,13 +33,13 @@ public class Collector
         if (gamepad1.right_trigger > 0) //intake
         {
             opModeClass.telemetry.addLine("Hello, you are pressing the right trigger button.");
-            robot.leftCollector.setPower(COLLECTOR_SPEED);
-            robot.rightCollector.setPower(-COLLECTOR_SPEED);
+            robot.leftCollector.setPower(-COLLECTOR_SPEED);
+            robot.rightCollector.setPower(COLLECTOR_SPEED);
         }
         else if (gamepad1.left_trigger > 0) //outtake
         {
-            robot.leftCollector.setPower(-COLLECTOR_SPEED);
-            robot.rightCollector.setPower(COLLECTOR_SPEED);
+            robot.leftCollector.setPower(COLLECTOR_SPEED);
+            robot.rightCollector.setPower(-COLLECTOR_SPEED);
         }
         else if (gamepad1.right_trigger == 0)
         {

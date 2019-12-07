@@ -17,12 +17,12 @@ public class Arm
     final double GRIPPER_ROTATOR_POS_2 = .51;
     final double GRIPPER_ROTATOR_SPEED = 1.5 / 280;
 
-    final double GRIPPER_OPEN = .542;
-    final double GRIPPER_CLOSE = 1.0;
+    final double GRIPPER_OPEN = .56;
+    final double GRIPPER_CLOSE = .71;
 
     //TODO Find actual positions.
-    private final double MIN_STOP_DISTANCE = 26.0;
-    private final double MIN_THROTTLE_DISTANCE = 29.0;
+    private final double MIN_STOP_DISTANCE = 25.3;
+    private final double MIN_THROTTLE_DISTANCE = 28.0;
     private final double MAX_STOP_DISTANCE = 43.0;
     private final double MAX_THROTTLE_DISTANCE = 42.0;
 
@@ -48,13 +48,14 @@ public class Arm
 
     public void doLoop()
     {
-        if (gamepad2.x) //arm out
+        opModeClass.telemetry.addData("right stick y", gamepad2.right_stick_y);
+        if (gamepad2.right_stick_y > .1) //arm out
         {
-            robot.armExtender.setPower(getAdjustedSpeed(-.5));
+            robot.armExtender.setPower(getAdjustedSpeed(.8 * gamepad2.right_stick_y));
         }
-        else if (gamepad2.b) //arm in
+        else if (gamepad2.right_stick_y < .1) //arm in
         {
-            robot.armExtender.setPower(getAdjustedSpeed(.5));
+            robot.armExtender.setPower(getAdjustedSpeed(.8 * gamepad2.right_stick_y));
         }
         else
         {
@@ -89,7 +90,7 @@ public class Arm
         {
             robot.gripperRotator.setPosition(robot.gripperRotator.getPosition() - GRIPPER_ROTATOR_SPEED);
         }
-        opModeClass.telemetry.addData("Arm Distance = ", robot.armDistanceSensor.getDistance(DistanceUnit.CM));
+        //opModeClass.telemetry.addData("Arm Distance = ", robot.armDistanceSensor.getDistance(DistanceUnit.CM));
         opModeClass.telemetry.addData("Gripper Position = ", robot.gripperRotator.getPosition());
     }
 

@@ -103,10 +103,10 @@ public class Base
         }
 
         //opModeClass.telemetry.addData("BASE:  Left Front POS = ", robot.leftFront.getCurrentPosition());
-        opModeClass.telemetry.addData("BASE:  Distance = ", robot.baseDistanceSensor.getDistance(DistanceUnit.CM));
-        Location loc;
-        loc = this.scanStone();
-        opModeClass.telemetry.addData("BASE:  Location = ", loc);
+        //opModeClass.telemetry.addData("BASE:  Distance = ", robot.baseDistanceSensor.getDistance(DistanceUnit.CM));
+        //Location loc;
+        //loc = this.scanStone();
+        //opModeClass.telemetry.addData("BASE:  Location = ", loc);
         //opModeClass.telemetry.update();
     }
 
