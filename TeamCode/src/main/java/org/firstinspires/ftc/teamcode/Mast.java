@@ -16,6 +16,8 @@ public class Mast
     private Gamepad gamepad1; //Driver
     private Gamepad gamepad2; //Gunner
 
+    private boolean useDistance = false;
+
     private final double MIN_STOP_DISTANCE = 5.5;
     private final double MIN_THROTTLE_DISTANCE = 16;
     private final double MAX_STOP_DISTANCE = 60;
@@ -30,12 +32,13 @@ public class Mast
     private final double RIGHT_ANGLE = 25;
     private final double RIGHT_ARM_LENGTH = 12;
 
-    public Mast(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
+    public Mast(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2, boolean useDistance)
     {
         this.opModeClass = opModeClass;
         this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
+        this.useDistance = useDistance;
     }
 
     public void init()
@@ -75,7 +78,15 @@ public class Mast
     {
         robot.mastVertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //robot.mastVertical.setPower(speed);
-        robot.mastVertical.setPower(getAdjustedSpeed(speed));
+
+        if (useDistance)
+        {
+            robot.mastVertical.setPower(getAdjustedSpeed(speed));
+        }
+        else
+        {
+            robot.mastVertical.setPower(speed);
+        }
     }
 
     //Move counts

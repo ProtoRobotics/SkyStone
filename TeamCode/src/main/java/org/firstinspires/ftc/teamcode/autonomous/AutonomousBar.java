@@ -30,8 +30,8 @@ public class AutonomousBar
 
         base = new Base(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
         collector = new Collector(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
-        mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
-        arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
+        mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
+        arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
 
         autonomousClass.waitForStart();
 

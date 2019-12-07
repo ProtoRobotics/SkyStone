@@ -13,6 +13,8 @@ public class Arm
     private Gamepad gamepad1; //Driver
     private Gamepad gamepad2; //Gunner
 
+    private boolean useDistance;
+
     final double GRIPPER_ROTATOR_POS_1 = .12; //Also the gripper rotator initialization point
     final double GRIPPER_ROTATOR_POS_2 = .51;
     final double GRIPPER_ROTATOR_SPEED = 1.5 / 280;
@@ -26,12 +28,13 @@ public class Arm
     private final double MAX_STOP_DISTANCE = 43.0;
     private final double MAX_THROTTLE_DISTANCE = 42.0;
 
-    public Arm(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
+    public Arm(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2, boolean useDistance)
     {
         this.opModeClass = opModeClass;
         this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
+        this.useDistance = useDistance;
     }
 
     public void init()
@@ -49,28 +52,47 @@ public class Arm
     public void doLoop()
     {
         opModeClass.telemetry.addData("right stick y", gamepad2.right_stick_y);
-        if (gamepad2.right_stick_y > .1) //arm out
+
+        if (useDistance)
         {
-            robot.armExtender.setPower(getAdjustedSpeed(.8 * gamepad2.right_stick_y));
-        }
-        else if (gamepad2.right_stick_y < .1) //arm in
-        {
-            robot.armExtender.setPower(getAdjustedSpeed(.8 * gamepad2.right_stick_y));
+            if (gamepad2.right_stick_y > .1) //arm out
+            {
+                robot.armExtender.setPower(getAdjustedSpeed(.8 * gamepad2.right_stick_y));
+            }
+            else if (gamepad2.right_stick_y < .1) //arm in
+            {
+                robot.armExtender.setPower(getAdjustedSpeed(.8 * gamepad2.right_stick_y));
+            }
+            else
+            {
+                robot.armExtender.setPower(0);
+            }
         }
         else
         {
-            robot.armExtender.setPower(0);
+            if (gamepad2.right_stick_y > .1) //arm out
+            {
+                robot.armExtender.setPower(.8 * gamepad2.right_stick_y);
+            }
+            else if (gamepad2.right_stick_y < .1) //arm in
+            {
+                robot.armExtender.setPower(gamepad2.right_stick_y);
+            }
+            else
+            {
+                robot.armExtender.setPower(0);
+            }
         }
 
         opModeClass.telemetry.addData("Servo position", robot.gripperRotator.getPosition());
 
         if (gamepad2.left_bumper)
         {
-            robot.gripper.setPosition(GRIPPER_CLOSE);
+            robot.gripper.setPosition(GRIPPER_OPEN);
         }
         else if (gamepad2.right_bumper)
         {
-            robot.gripper.setPosition(GRIPPER_OPEN);
+            robot.gripper.setPosition(GRIPPER_CLOSE);
         }
 
         if (gamepad2.dpad_down)

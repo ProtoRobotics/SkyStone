@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Base;
 import org.firstinspires.ftc.teamcode.Collector;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 
+@Disabled
 @Autonomous(name="TempCrabLeft")
 public class TempCrabLeft extends LinearOpMode
 {
