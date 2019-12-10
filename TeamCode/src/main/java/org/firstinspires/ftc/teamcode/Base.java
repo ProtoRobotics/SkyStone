@@ -100,7 +100,10 @@ public class Base
             hookUp();
         }
 
-        opModeClass.telemetry.addData("Encoder position: ", robot.leftFront.getCurrentPosition());
+        opModeClass.telemetry.addData("leftFront position: ", robot.leftFront.getCurrentPosition());
+        opModeClass.telemetry.addData("rightFront position: ", robot.rightFront.getCurrentPosition());
+        opModeClass.telemetry.addData("leftBack position: ", robot.leftBack.getCurrentPosition());
+        opModeClass.telemetry.addData("rightBack position: ", robot.rightBack.getCurrentPosition());
         opModeClass.telemetry.update();
     }
 
@@ -160,7 +163,7 @@ public class Base
         encoderDriveCounts((int) (leftInches * COUNTS_PER_INCH), (int) (rightInches * COUNTS_PER_INCH), power, sequential);
     }
 
-    @Deprecated
+    //@Deprecated
     public void rotateDegreesEncoder(double degrees, double power, boolean sequential) throws InterruptedException
     {
         if (degrees > 0) //Clockwise rotation
@@ -171,6 +174,7 @@ public class Base
         {
             encoderDriveCounts((int) (-degrees * COUNTS_PER_DEGREE), (int) (degrees * COUNTS_PER_DEGREE), power, sequential);
         }
+
     }
 
     public void encoderCrabsteer(int direction, double inches, double power, boolean sequential) throws InterruptedException //left = 0, right = 1
