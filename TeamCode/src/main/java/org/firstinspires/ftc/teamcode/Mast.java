@@ -18,10 +18,14 @@ public class Mast
 
     private boolean useDistance = false;
 
+    //TODO To remove
     private final double MIN_STOP_DISTANCE = 5.5;
     private final double MIN_THROTTLE_DISTANCE = 16;
     private final double MAX_STOP_DISTANCE = 60;
     private final double MAX_THROTTLE_DISTANCE = 55;
+
+    private final int MIN_COUNTS_MAST_VERT = 0;
+    private final int MAX_COUNTS_MAST_VERT = 2000;
 
     private final double MAST_ROTATE_SPEED = .2;
     private final double SPEED = 0.5;
@@ -71,6 +75,7 @@ public class Mast
         {
             rotateSpeed(0);
         }
+        opModeClass.telemetry.addData("Mast counts: ", robot.mastVertical.getCurrentPosition());
         //opModeClass.telemetry.addData("Mast Distance = ",robot.mastDistanceSensor.getDistance(DistanceUnit.CM));
     }
 
@@ -136,6 +141,11 @@ public class Mast
             return (speed / 3.5);
 
         return speed;
+    }
+
+    public void resetMastEncoders()
+    {
+        robot.mastVertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void moveToPos(double pos) {

@@ -37,6 +37,8 @@ public class AutonomousBox
         mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
         arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
 
+        mast.resetMastEncoders();
+
         imuRotator = new ImuRotator(autonomousClass, robot);
 
         autonomousClass.waitForStart();

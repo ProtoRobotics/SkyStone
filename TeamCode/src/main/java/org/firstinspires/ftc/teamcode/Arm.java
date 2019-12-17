@@ -19,8 +19,8 @@ public class Arm
     final double GRIPPER_ROTATOR_POS_2 = .51;
     final double GRIPPER_ROTATOR_SPEED = 1.5 / 280;
 
-    final double GRIPPER_OPEN = .56;
-    final double GRIPPER_CLOSE = .71;
+    final double GRIPPER_OPEN = .60;
+    final double GRIPPER_CLOSE = .75;
 
     //TODO Find actual positions.
     private final double MIN_STOP_DISTANCE = 25.3;

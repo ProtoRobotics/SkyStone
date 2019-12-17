@@ -33,6 +33,8 @@ public class AutonomousBar
         mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
         arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
 
+        mast.resetMastEncoders();
+
         autonomousClass.waitForStart();
 
         runOpMode();
@@ -42,6 +44,7 @@ public class AutonomousBar
     {
         if(direction == 0)
         {
+
             base.encoderCrabsteer(-20,.7,0, true);
         }
         else if(direction == 1)
