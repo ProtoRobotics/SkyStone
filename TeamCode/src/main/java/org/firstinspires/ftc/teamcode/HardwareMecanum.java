@@ -21,8 +21,8 @@ public class HardwareMecanum
     public Servo hook;
 
     //Collector
-    public CRServo leftCollector;
-    public CRServo rightCollector;
+    public DcMotor leftCollector;
+    public DcMotor rightCollector;
 
     //Mast
     public DcMotor mastVertical;
@@ -31,7 +31,8 @@ public class HardwareMecanum
     //Arm
     public CRServo armExtender;
     public Servo gripperRotator;
-    public Servo gripper;
+    public Servo gripperLeft;
+    public Servo gripperRight;
 
     //Sensors
     public NormalizedColorSensor rightColorSensor;
@@ -56,8 +57,8 @@ public class HardwareMecanum
         hook = hwMap.get(Servo.class, "hook");
 
         //Collector
-        leftCollector = hwMap.get(CRServo.class, "leftCollector");
-        rightCollector = hwMap.get(CRServo.class, "rightCollector");
+        leftCollector = hwMap.get(DcMotor.class, "leftCollector");
+        rightCollector = hwMap.get(DcMotor.class, "rightCollector");
 
         //Mast
         mastVertical = hwMap.get(DcMotor.class, "mastVertical");
@@ -66,7 +67,8 @@ public class HardwareMecanum
         //Arm
         armExtender = hwMap.get(CRServo.class, "armExtender");
         gripperRotator = hwMap.get(Servo.class, "gripperRotator");
-        gripper = hwMap.get(Servo.class, "gripper");
+        gripperLeft = hwMap.get(Servo.class, "gripperLeft");
+        gripperRight = hwMap.get(Servo.class, "gripperRight");
 
         //Sensors
         leftColorSensor = hwMap.get(NormalizedColorSensor.class,"leftColorSensor");

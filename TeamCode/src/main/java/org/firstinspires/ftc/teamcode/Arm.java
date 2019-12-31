@@ -19,10 +19,13 @@ public class Arm
     final double GRIPPER_ROTATOR_POS_2 = .51;
     final double GRIPPER_ROTATOR_SPEED = 1.5 / 280;
 
-    final double GRIPPER_OPEN = .60;
-    final double GRIPPER_CLOSE = .75;
+    final double GRIPPER_LEFT_OPEN = .60;
+    final double GRIPPER__LEFT_CLOSED = .75;
+    final double GRIPPER_RIGHT_OPEN = .60;
+    final double GRIPPER_RIGHT_CLOSED = .75;
+    final double GRIPPER_LEFT_CAPSTONE = .80;
+    final double GRIPPER_RIGHT_CAPSTONE = .80;
 
-    //TODO Find actual positions.
     private final double MIN_STOP_DISTANCE = 25.3;
     private final double MIN_THROTTLE_DISTANCE = 28.0;
     private final double MAX_STOP_DISTANCE = 43.0;
@@ -37,16 +40,10 @@ public class Arm
         this.useDistance = useDistance;
     }
 
-    public void init()
+    public void initTeleop()
     {
-        //robot.gripper.setPosition(GRIPPER_INITALIZATION_POINT);
-        //robot.gripperRotator.setPosition(GRIPPER_ROTATOR_POS_1);
-        //robot.armExtender.setPosition(EXTENDER_MIN);
-        //robot.armExtender.setPosition(robot.armExtender.getPosition());
-
         robot.armDistanceSensor.initialize();
         robot.gripperRotator.setPosition(robot.gripperRotator.getPosition());
-        robot.gripper.setPosition(robot.gripper.getPosition());
     }
 
     public void doLoop()
@@ -88,11 +85,13 @@ public class Arm
 
         if (gamepad2.left_bumper)
         {
-            robot.gripper.setPosition(GRIPPER_OPEN);
+            robot.gripperLeft.setPosition(GRIPPER_LEFT_OPEN);
+            robot.gripperRight.setPosition(GRIPPER_RIGHT_OPEN);
         }
         else if (gamepad2.right_bumper)
         {
-            robot.gripper.setPosition(GRIPPER_CLOSE);
+            robot.gripperLeft.setPosition(GRIPPER__LEFT_CLOSED);
+            robot.gripperRight.setPosition(GRIPPER_RIGHT_CLOSED);
         }
 
         if (gamepad2.dpad_down)
@@ -112,6 +111,13 @@ public class Arm
         {
             robot.gripperRotator.setPosition(robot.gripperRotator.getPosition() - GRIPPER_ROTATOR_SPEED);
         }
+
+        if (gamepad1.y && gamepad2.y)
+        {
+            robot.gripperLeft.setPosition(GRIPPER_LEFT_CAPSTONE);
+            robot.gripperRight.setPosition(GRIPPER_RIGHT_CAPSTONE);
+        }
+
         //opModeClass.telemetry.addData("Arm Distance = ", robot.armDistanceSensor.getDistance(DistanceUnit.CM));
         opModeClass.telemetry.addData("Gripper Position = ", robot.gripperRotator.getPosition());
     }

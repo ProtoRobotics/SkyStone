@@ -21,10 +21,9 @@ public class Teleop2019 extends OpMode
 
         base = new Base(this, robot, gamepad1, gamepad2);
         collector = new Collector(this, robot, gamepad1, gamepad2);
-        mast = new Mast(this, robot, gamepad1, gamepad2, true);
+        mast = new Mast(this, robot, gamepad1, gamepad2);
         arm = new Arm(this, robot, gamepad1, gamepad2, true);
     }
-
 
     boolean started = false;
 
@@ -33,8 +32,8 @@ public class Teleop2019 extends OpMode
     {
         if (!started) //This code runs once after the start button is pressed.
         {
-            arm.init();
-            mast.init();
+            arm.initTeleop();
+            mast.initTeleop();
             started = true;
         }
 

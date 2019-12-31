@@ -16,18 +16,13 @@ public class Mast
     private Gamepad gamepad1; //Driver
     private Gamepad gamepad2; //Gunner
 
-    private boolean useDistance = false;
-
-    //TODO To remove
-    private final double MIN_STOP_DISTANCE = 5.5;
-    private final double MIN_THROTTLE_DISTANCE = 16;
-    private final double MAX_STOP_DISTANCE = 60;
-    private final double MAX_THROTTLE_DISTANCE = 55;
-
     private final int MIN_COUNTS_MAST_VERT = 0;
+    private final int MIN_THROTTLE_COUNTS_MAST_VERT = 200;
     private final int MAX_COUNTS_MAST_VERT = 2000;
+    private final int MAX_THROTTLE_COUNTS_MAST_VERT = 1800;
 
     private final double MAST_ROTATE_SPEED = .2;
+
     private final double SPEED = 0.5;
     private final double LEFT_ANGLE = -25;
     private final double LEFT_ARM_LENGTH = 12;
@@ -36,20 +31,19 @@ public class Mast
     private final double RIGHT_ANGLE = 25;
     private final double RIGHT_ARM_LENGTH = 12;
 
-    public Mast(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2, boolean useDistance)
+    public Mast(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
         this.opModeClass = opModeClass;
         this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
-        this.useDistance = useDistance;
     }
 
-    public void init()
+    public void initTeleop()
     {
-        //robot.mastDistanceSensor.initialize();
+        resetMastEncoders();
+        robot.mastVertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-
 
     public void doLoop()
     {
@@ -76,22 +70,11 @@ public class Mast
             rotateSpeed(0);
         }
         opModeClass.telemetry.addData("Mast counts: ", robot.mastVertical.getCurrentPosition());
-        //opModeClass.telemetry.addData("Mast Distance = ",robot.mastDistanceSensor.getDistance(DistanceUnit.CM));
     }
 
     public void moveSpeed(double speed)
     {
-        robot.mastVertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //robot.mastVertical.setPower(speed);
-
-        if (useDistance)
-        {
-            robot.mastVertical.setPower(getAdjustedSpeed(speed));
-        }
-        else
-        {
-            robot.mastVertical.setPower(speed);
-        }
+        robot.mastVertical.setPower(getAdjustedSpeedEncoder(speed));
     }
 
     //Move counts
@@ -119,9 +102,37 @@ public class Mast
         robot.mastRotator.setPower(speed);
     }
 
-    //This method will return an adjusted vertical speed based on how far away the arm is from the mast.
-    public double getAdjustedSpeed(double speed)
+    public double getAdjustedSpeedEncoder(double speed)
     {
+        boolean goingUp = true;
+        if (speed < 0)
+        {
+            goingUp = false;
+        }
+
+        int counts = robot.mastVertical.getCurrentPosition();
+
+        if (counts < MIN_COUNTS_MAST_VERT && !goingUp)
+            return 0; //Stop mast if it is
+        if (counts < MIN_THROTTLE_COUNTS_MAST_VERT && !goingUp)
+            return (speed / 3.5);
+        if (counts > MAX_COUNTS_MAST_VERT && goingUp)
+            return 0;
+        if (counts > MAX_THROTTLE_COUNTS_MAST_VERT && goingUp)
+            return (speed / 3.5);
+
+        return speed;
+    }
+
+    //This method will return an adjusted vertical speed based on how far away the arm is from the mast.
+    @Deprecated
+    public double getAdjustedSpeedDistance(double speed)
+    {
+        final double MIN_STOP_DISTANCE = 5.5;
+        final double MIN_THROTTLE_DISTANCE = 16;
+        final double MAX_STOP_DISTANCE = 60;
+        final double MAX_THROTTLE_DISTANCE = 55;
+
         boolean goingUp = true;
         if (speed < 0)
         {

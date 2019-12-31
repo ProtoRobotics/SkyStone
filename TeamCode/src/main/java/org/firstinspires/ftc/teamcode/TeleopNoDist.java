@@ -21,7 +21,7 @@ public class TeleopNoDist extends OpMode
 
         base = new Base(this, robot, gamepad1, gamepad2);
         collector = new Collector(this, robot, gamepad1, gamepad2);
-        mast = new Mast(this, robot, gamepad1, gamepad2, false);
+        mast = new Mast(this, robot, gamepad1, gamepad2);
         arm = new Arm(this, robot, gamepad1, gamepad2, false);
     }
 
@@ -33,8 +33,8 @@ public class TeleopNoDist extends OpMode
     {
         if (!started) //This code runs once after the start button is pressed.
         {
-            arm.init();
-            mast.init();
+            arm.initTeleop();
+            mast.initTeleop();
             started = true;
         }
 

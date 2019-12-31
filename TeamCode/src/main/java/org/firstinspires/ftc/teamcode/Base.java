@@ -181,7 +181,6 @@ public class Base
 
     public void encoderCrabsteer(int direction, double inches, double power, boolean sequential) throws InterruptedException //left = 0, right = 1
     {
-        //TODO Make signature = double inches, double power, boolean sequential
         robot.leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -254,7 +253,7 @@ public class Base
         NormalizedRGBA colorsRight = robot.rightColorSensor.getNormalizedColors();
         NormalizedRGBA colorsLeft = robot.leftColorSensor.getNormalizedColors();
 
-        // declare and init booleans
+        // declare and initTeleop booleans
         boolean colorSensorRight;
         boolean colorSensorLeft;
 
