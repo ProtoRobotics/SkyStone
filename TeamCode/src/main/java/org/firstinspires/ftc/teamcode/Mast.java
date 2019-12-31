@@ -41,7 +41,6 @@ public class Mast
 
     public void initTeleop()
     {
-        resetMastEncoders();
         robot.mastVertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
