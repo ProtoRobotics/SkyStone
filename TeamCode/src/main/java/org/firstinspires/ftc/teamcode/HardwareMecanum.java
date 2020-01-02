@@ -23,6 +23,8 @@ public class HardwareMecanum
     //Collector
     public DcMotor leftCollector;
     public DcMotor rightCollector;
+    public Servo leftFlapper;
+    public Servo rightFlapper;
 
     //Mast
     public DcMotor mastVertical;
@@ -35,11 +37,7 @@ public class HardwareMecanum
     public Servo gripperRight;
 
     //Sensors
-    public NormalizedColorSensor rightColorSensor;
-    public NormalizedColorSensor leftColorSensor;
-    public Rev2mDistanceSensor baseDistanceSensor;
     public Rev2mDistanceSensor armDistanceSensor;
-    public Rev2mDistanceSensor mastDistanceSensor;
 
 
     public HardwareMap hwMap;
@@ -59,6 +57,8 @@ public class HardwareMecanum
         //Collector
         leftCollector = hwMap.get(DcMotor.class, "leftCollector");
         rightCollector = hwMap.get(DcMotor.class, "rightCollector");
+        leftFlapper = hwMap.get(Servo.class, "leftFlapper");
+        rightFlapper = hwMap.get(Servo.class, "rightFlapper");
 
         //Mast
         mastVertical = hwMap.get(DcMotor.class, "mastVertical");
@@ -71,10 +71,6 @@ public class HardwareMecanum
         gripperRight = hwMap.get(Servo.class, "gripperRight");
 
         //Sensors
-        leftColorSensor = hwMap.get(NormalizedColorSensor.class,"leftColorSensor");
-        rightColorSensor = hwMap.get(NormalizedColorSensor.class,"rightColorSensor");
-        baseDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "baseDistanceSensor");
         armDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "armDistanceSensor");
-        mastDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "mastDistanceSensor");
     }
 }

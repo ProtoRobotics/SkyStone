@@ -60,10 +60,10 @@ public class AutonomousBox
         Thread.sleep(500);  //JAD 12/3/19
 
         //Pick skystone
-        Location loc = base.scanStone();
-        this.autonomousClass.telemetry.addData("Location = ", loc.toString());
+        //Location loc = base.scanStone();
+        //this.autonomousClass.telemetry.addData("Location = ", loc.toString());
         this.autonomousClass.telemetry.update();
-        mast.setMastOnSkystone(loc);
+        //mast.setMastOnSkystone(loc);
 
         Thread.sleep(2000);
 

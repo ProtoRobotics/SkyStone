@@ -22,6 +22,9 @@ public class ServoTest extends OpMode
     {
         telemetry.addData("Gripper Position: ", robot.gripperLeft.getPosition());
         telemetry.addData("Gripper Rotator Position: ", robot.gripperRotator.getPosition());
+
+        telemetry.addData("Gripper Position: ", robot.leftFlapper.getPosition());
+        telemetry.addData("Gripper Rotator Position: ", robot.rightFlapper.getPosition());
         telemetry.update();
 
         double changeInPosition = .3/270.0;
@@ -44,6 +47,22 @@ public class ServoTest extends OpMode
         if (gamepad1.y)
         {
             robot.gripperRotator.setPosition(robot.gripperRotator.getPosition() - changeInPosition);
+        }
+        if (gamepad1.left_bumper)
+        {
+            robot.leftFlapper.setPosition(robot.leftFlapper.getPosition() - changeInPosition);
+        }
+        if (gamepad1.right_bumper)
+        {
+            robot.leftFlapper.setPosition(robot.leftFlapper.getPosition() - changeInPosition);
+        }
+        if (gamepad1.a)
+        {
+            robot.rightFlapper.setPosition(robot.rightFlapper.getPosition() - changeInPosition);
+        }
+        if (gamepad1.b)
+        {
+            robot.rightFlapper.setPosition(robot.rightFlapper.getPosition() - changeInPosition);
         }
     }
 }

@@ -14,6 +14,10 @@ public class Collector
     final double COLLECTOR_SPEED = 1;
     final double COLLECTOR_OFF_SPEED = 0;
 
+    final double LEFT_FLAPPER_OPEN = 0.5;
+    final double RIGHT_FLAPPER_OPEN = 0.5;
+    final double LEFT_FLEPPER_CLOSED = 0.5;
+    final double RIGHT_FLAPPER_CLOSED = 0.5;
 
     public Collector(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
@@ -50,6 +54,16 @@ public class Collector
         {
             robot.leftCollector.setPower(COLLECTOR_OFF_SPEED);
             robot.rightCollector.setPower(COLLECTOR_OFF_SPEED);
+        }
+        if (gamepad1.left_bumper)
+        {
+            robot.leftFlapper.setPosition(LEFT_FLAPPER_OPEN);
+            robot.leftFlapper.setPosition(RIGHT_FLAPPER_OPEN);
+        }
+        if (gamepad1.right_bumper)
+        {
+            robot.rightFlapper.setPosition(LEFT_FLEPPER_CLOSED);
+            robot.rightFlapper.setPosition(RIGHT_FLAPPER_CLOSED);
         }
 
     }
