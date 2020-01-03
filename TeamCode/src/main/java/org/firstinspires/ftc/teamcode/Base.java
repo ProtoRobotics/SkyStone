@@ -4,6 +4,9 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import static java.lang.Thread.sleep;
 
@@ -19,7 +22,9 @@ public class Base
     //public static final int COUNTS_PER_INCH = (int) (784.0 / WHEEL_DIAMETER); //784 counts per wheel rotation, divided by diameter yeilds cpi.
     public static final double COUNTS_PER_INCH = 61.38;
     public static final double COUNTS_PER_INCH_CRAB = 1000.0/15; //TODO
-    public static final double COUNTS_PER_DEGREE = COUNTS_PER_INCH; //TODO
+    public static final double COUNTS_PER_INCH_DEGREE = 4000;
+    public static final double COUNTS_PER_DEGREE = COUNTS_PER_INCH_DEGREE; //TODO
+
 
     public static final double HOOK_UP_POSITION = .87;
     public static final double HOOK_DOWN_POSITION = .48;
@@ -67,7 +72,6 @@ public class Base
         double rFrontDrive = 0;
         double lRearDrive = 0;
         double rRearDrive = 0;
-
         double powerReduction = 3.0/4.0;
 
         if (Math.abs(gamepad1.left_stick_y) > 0 || Math.abs(gamepad1.right_stick_y) > 0) // forward/reverse
@@ -100,11 +104,12 @@ public class Base
             hookUp();
         }
 
-        opModeClass.telemetry.addData("leftFront position: ", robot.leftFront.getCurrentPosition());
-        opModeClass.telemetry.addData("rightFront position: ", robot.rightFront.getCurrentPosition());
-        opModeClass.telemetry.addData("leftBack position: ", robot.leftBack.getCurrentPosition());
-        opModeClass.telemetry.addData("rightBack position: ", robot.rightBack.getCurrentPosition());
-        opModeClass.telemetry.update();
+        //opModeClass.telemetry.addData("BASE:  Left Front POS = ", robot.leftFront.getCurrentPosition());
+        //opModeClass.telemetry.addData("BASE:  Distance = ", robot.baseDistanceSensor.getDistance(DistanceUnit.CM));
+        //Location loc;
+        //loc = this.scanStone();
+        //opModeClass.telemetry.addData("BASE:  Location = ", loc);
+        //opModeClass.telemetry.update();
     }
 
     /*
@@ -163,7 +168,6 @@ public class Base
         encoderDriveCounts((int) (leftInches * COUNTS_PER_INCH), (int) (rightInches * COUNTS_PER_INCH), power, sequential);
     }
 
-    //@Deprecated
     public void rotateDegreesEncoder(double degrees, double power, boolean sequential) throws InterruptedException
     {
         if (degrees > 0) //Clockwise rotation
@@ -174,7 +178,6 @@ public class Base
         {
             encoderDriveCounts((int) (-degrees * COUNTS_PER_DEGREE), (int) (degrees * COUNTS_PER_DEGREE), power, sequential);
         }
-
     }
 
     public void encoderCrabsteer(int direction, double inches, double power, boolean sequential) throws InterruptedException //left = 0, right = 1
@@ -236,31 +239,70 @@ public class Base
 
     public void hookUp()
     {
+
         robot.hook.setPosition(HOOK_UP_POSITION);
     }
 
     public void hookDown()
     {
+
         robot.hook.setPosition(HOOK_DOWN_POSITION);
     }
 
-    public int scanStone(int location)
+    public Location scanStone()
     {
+        // Read the sensor
+        NormalizedRGBA colorsRight = robot.rightColorSensor.getNormalizedColors();
+        NormalizedRGBA colorsLeft = robot.leftColorSensor.getNormalizedColors();
+
+        // declare and init booleans
         boolean colorSensorRight;
         boolean colorSensorLeft;
 
+        // The base has 2 color sensors - 1 over left wheel and 1 over right wheel (referenced from driver position)
+        // Boolean sensor value is set to 'TRUE' if it detects 'BLACK' (i.e. SkyStone)
+        // Based on trials, we find that 2 of the RGB values were consistently above 0.002 when viewing the yellow block
+        // whereas all values were around 0.002 when viewing BLACK block (i.e.) SkyStone.
 
+        if(colorsRight.red <= 0.003 && colorsRight.green <= 0.003 && colorsRight.blue <= 0.003){
+            colorSensorRight = true;
+        }
+        else
+            colorSensorRight = false;
+
+        if(colorsLeft.red <= 0.003 && colorsLeft.green <= 0.003 && colorsLeft.blue <= 0.003){
+            colorSensorLeft = true;
+        }
+        else
+            colorSensorLeft = false;
+
+        opModeClass.telemetry.addLine()
+                .addData("BASE: Color Sensor LEFT = r", "%.3f", colorsLeft.red)
+                .addData("g", "%.3f", colorsLeft.green)
+                .addData("b", "%.3f", colorsLeft.blue);
+        opModeClass.telemetry.addLine()
+                .addData("BASE: Color Sensor RIGHT = r", "%.3f", colorsRight.red)
+                .addData("g", "%.3f", colorsRight.green)
+                .addData("b", "%.3f", colorsRight.blue);
+
+        // Based on color found by each sensor, this method outputs the location of the Skystone given
+        // row of 3 stones.
+        //      0 = left stone
+        //      1 = middle stone
+        //      2 = right stone        // output location of Sky Stone
         if(colorSensorRight == true && colorSensorLeft == false){
-            location = 2;//Sky Stone on Right
+            return Location.RIGHT;
         }
         else if(colorSensorLeft == true && colorSensorRight == false){
-            location = 0;//Sky Stone on Left
+            return Location.LEFT;
         }
-        else if(colorSensorLeft == false && colorSensorRight == false){
-            location = 1;//Sky Stone in Middle
+        else {
+            return Location.CENTER;
         }
-        return location;
 
     }
 
 }
+
+
+

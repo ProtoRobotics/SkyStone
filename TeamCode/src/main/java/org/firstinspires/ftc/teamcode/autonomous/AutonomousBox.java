@@ -8,6 +8,8 @@ import org.firstinspires.ftc.teamcode.Collector;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 import org.firstinspires.ftc.teamcode.ImuRotator;
 import org.firstinspires.ftc.teamcode.Mast;
+import org.firstinspires.ftc.teamcode.Location; //JAD 12/3/19
+
 
 public class AutonomousBox
 {
@@ -32,8 +34,8 @@ public class AutonomousBox
 
         base = new Base(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
         collector = new Collector(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
-        mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
-        arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
+        mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
+        arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
 
         imuRotator = new ImuRotator(autonomousClass, robot);
 
@@ -44,6 +46,8 @@ public class AutonomousBox
 
     public void runOpMode() throws InterruptedException
     {
+        base.hookUp();
+
         base.encoderDriveInches(4, 4, .7, true);
         Thread.sleep(500); //Pause for .5 seconds to ensure full stop.
 
@@ -51,35 +55,43 @@ public class AutonomousBox
         Thread.sleep(500);
 
         base.encoderDriveInches(20, 20, .7, true);
+        Thread.sleep(500);  //JAD 12/3/19
 
         //Pick skystone
+        Location loc = base.scanStone();
+        this.autonomousClass.telemetry.addData("Location = ", loc.toString());
+        this.autonomousClass.telemetry.update();
+        mast.setMastOnSkystone(loc);
+
         Thread.sleep(2000);
 
-        base.encoderDriveInches(-23, -23, .7, true);
-        Thread.sleep(500); //Fully stop the robot by waiting .3 seconds.
+        base.encoderDriveInches(-20, -20, .7, true);
+        Thread.sleep(500); //Fully stop the robot by waiting .5 seconds.
 
-        imuRotator.rotateIMU(.5, 90);
+        imuRotator.rotateIMU(.5, 83); //90 is always overrotating
         Thread.sleep(500);
 
-        base.encoderDriveInches(100, 100, 1, true);
+        base.encoderDriveInches(110, 110, .7, true);
 
-        imuRotator.rotateIMU(.5, -90);
+        imuRotator.rotateIMU(.5, -85);
         Thread.sleep(500);
 
-        base.encoderDriveInches(24, 24, .7, true);
+        base.encoderDriveInches(23.5, 23.5, .2, true);
         Thread.sleep(500);
 
         base.hookDown();
         Thread.sleep(500);
 
-        base.encoderDriveInches(-22, 22, 1, true);
-        Thread.sleep(500);
+        base.encoderDriveInches(-35, -35, .5, true);
+        Thread.sleep(1000);
+
+        autonomousClass.stop();
 
         base.hookUp();
 
-        imuRotator.rotateIMU(.5, -90);
+        imuRotator.rotateIMU(.3, -85);
         Thread.sleep(500);
 
-        base.encoderDriveInches(22, 22, .7, true);
+        base.encoderDriveInches(44, 44, .7, true);
     }
 }

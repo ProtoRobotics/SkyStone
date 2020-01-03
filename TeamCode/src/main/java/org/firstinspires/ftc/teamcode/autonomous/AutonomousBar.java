@@ -19,19 +19,21 @@ public class AutonomousBar
 
     LinearOpMode autonomousClass;
     int direction;
+    int rotateDirection;
 
-    public AutonomousBar(LinearOpMode autonomousClass, int direction) throws InterruptedException //direction: 0 = left, 1 = right.
+    public AutonomousBar(LinearOpMode autonomousClass, int direction, int rotateDirection) throws InterruptedException //direction: 0 = left, 1 = right.
     {
         this.autonomousClass = autonomousClass;
         this.direction = direction;
+        this.rotateDirection = rotateDirection;
 
         robot = new HardwareMecanum();
         robot.init(autonomousClass.hardwareMap);
 
         base = new Base(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
         collector = new Collector(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
-        mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
-        arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
+        mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
+        arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
 
         autonomousClass.waitForStart();
 
@@ -47,6 +49,13 @@ public class AutonomousBar
         else if(direction == 1)
         {
             base.encoderCrabsteer(20,.7,0, true);
+        }
+
+        if(rotateDirection == 0){
+            base.rotateDegreesEncoder(90,.5,true);
+        }
+        else if(rotateDirection == 1){
+            base.rotateDegreesEncoder(-90,.5,true);
         }
 
         //base.crabsteer(-23, .7, true);

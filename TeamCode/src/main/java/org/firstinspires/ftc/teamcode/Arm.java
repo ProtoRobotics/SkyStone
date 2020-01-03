@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 public class Arm
 {
     private OpMode opModeClass; //Used for telemetry.
@@ -11,24 +13,28 @@ public class Arm
     private Gamepad gamepad1; //Driver
     private Gamepad gamepad2; //Gunner
 
-    final double EXTENDER_MAX = .78;
-    final double EXTENDER_MIN = .21; //.21 is furthest physically possible
-    final double EXTENDER_RATE_OF_CHANGE = 1.5 / 280;
+    private boolean useDistance;
 
     final double GRIPPER_ROTATOR_POS_1 = .12; //Also the gripper rotator initialization point
     final double GRIPPER_ROTATOR_POS_2 = .51;
     final double GRIPPER_ROTATOR_SPEED = 1.5 / 280;
 
-    final double GRIPPER_OPEN = .29;
-    final double GRIPPER_CLOSE = .55;
-    final double GRIPPER_INITALIZATION_POINT = .332; //Where we want the gripper to be on init
+    final double GRIPPER_OPEN = .56;
+    final double GRIPPER_CLOSE = .71;
 
-    public Arm(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
+    //TODO Find actual positions.
+    private final double MIN_STOP_DISTANCE = 25.3;
+    private final double MIN_THROTTLE_DISTANCE = 28.0;
+    private final double MAX_STOP_DISTANCE = 43.0;
+    private final double MAX_THROTTLE_DISTANCE = 42.0;
+
+    public Arm(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2, boolean useDistance)
     {
         this.opModeClass = opModeClass;
         this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
+        this.useDistance = useDistance;
     }
 
     public void init()
@@ -36,54 +42,57 @@ public class Arm
         //robot.gripper.setPosition(GRIPPER_INITALIZATION_POINT);
         //robot.gripperRotator.setPosition(GRIPPER_ROTATOR_POS_1);
         //robot.armExtender.setPosition(EXTENDER_MIN);
+        //robot.armExtender.setPosition(robot.armExtender.getPosition());
 
-        robot.armExtender.setPosition(robot.armExtender.getPosition());
+        robot.armDistanceSensor.initialize();
         robot.gripperRotator.setPosition(robot.gripperRotator.getPosition());
         robot.gripper.setPosition(robot.gripper.getPosition());
     }
 
     public void doLoop()
     {
-        double extenderPosition = robot.armExtender.getPosition();
-        double targetExtenderPosition = extenderPosition;
-        if (gamepad2.x)
+        opModeClass.telemetry.addData("right stick y", gamepad2.right_stick_y);
+
+        if (useDistance)
         {
-            targetExtenderPosition += EXTENDER_RATE_OF_CHANGE;
+            if (gamepad2.right_stick_y > .1) //arm out
+            {
+                robot.armExtender.setPower(getAdjustedSpeed(.8 * gamepad2.right_stick_y));
+            }
+            else if (gamepad2.right_stick_y < .1) //arm in
+            {
+                robot.armExtender.setPower(getAdjustedSpeed(.8 * gamepad2.right_stick_y));
+            }
+            else
+            {
+                robot.armExtender.setPower(0);
+            }
         }
-        else if(gamepad2.b)
+        else
         {
-            targetExtenderPosition -= EXTENDER_RATE_OF_CHANGE;
+            if (gamepad2.right_stick_y > .1) //arm out
+            {
+                robot.armExtender.setPower(.8 * gamepad2.right_stick_y);
+            }
+            else if (gamepad2.right_stick_y < .1) //arm in
+            {
+                robot.armExtender.setPower(gamepad2.right_stick_y);
+            }
+            else
+            {
+                robot.armExtender.setPower(0);
+            }
         }
 
-        if (targetExtenderPosition > EXTENDER_MAX)
-        {
-            targetExtenderPosition = EXTENDER_MAX;
-        }
-
-        if (targetExtenderPosition < EXTENDER_MIN)
-        {
-            targetExtenderPosition = EXTENDER_MIN;
-        }
-
-        if (targetExtenderPosition != extenderPosition && (gamepad2.x || gamepad2.b))
-        {
-            robot.armExtender.setPosition(targetExtenderPosition);
-        }
-        else if (!(gamepad2.x || gamepad2.b))
-        {
-            robot.armExtender.setPosition(robot.armExtender.getPosition());
-        }
-
-        opModeClass.telemetry.addData("Servo positionn", robot.gripperRotator.getPosition());
-        opModeClass.telemetry.update();
+        opModeClass.telemetry.addData("Servo position", robot.gripperRotator.getPosition());
 
         if (gamepad2.left_bumper)
         {
-            robot.gripper.setPosition(GRIPPER_CLOSE);
+            robot.gripper.setPosition(GRIPPER_OPEN);
         }
         else if (gamepad2.right_bumper)
         {
-            robot.gripper.setPosition(GRIPPER_OPEN);
+            robot.gripper.setPosition(GRIPPER_CLOSE);
         }
 
         if (gamepad2.dpad_down)
@@ -103,5 +112,31 @@ public class Arm
         {
             robot.gripperRotator.setPosition(robot.gripperRotator.getPosition() - GRIPPER_ROTATOR_SPEED);
         }
+        //opModeClass.telemetry.addData("Arm Distance = ", robot.armDistanceSensor.getDistance(DistanceUnit.CM));
+        opModeClass.telemetry.addData("Gripper Position = ", robot.gripperRotator.getPosition());
+    }
+
+    //This method will return an adjusted vertical speed based on how far away the arm is from the mast.
+    public double getAdjustedSpeed(double speed)
+    {
+        boolean goingOut = true;
+        if (speed > 0)
+        {
+            goingOut = false;
+        }
+
+        double distance = robot.armDistanceSensor.getDistance(DistanceUnit.CM);
+
+        //We have to check which direction we are going so that we can reverse course after throttling the mast.
+        if (distance < MIN_STOP_DISTANCE && !goingOut)
+            return 0; //Stop mast if it is
+        if (distance < MIN_THROTTLE_DISTANCE && !goingOut)
+            return (speed / 2.0);
+        if (distance > MAX_STOP_DISTANCE && goingOut)
+            return 0;
+        if (distance > MAX_THROTTLE_DISTANCE && goingOut)
+            return (speed / 2.0);
+
+        return speed;
     }
 }

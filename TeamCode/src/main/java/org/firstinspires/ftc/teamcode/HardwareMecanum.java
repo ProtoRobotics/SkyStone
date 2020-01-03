@@ -3,13 +3,12 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.SensorColor;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 
 public class HardwareMecanum
 {
@@ -20,8 +19,6 @@ public class HardwareMecanum
     public DcMotor rightFront;
     public BNO055IMU imu;
     public Servo hook;
-    public ColorSensor sensorColorRight;
-    public ColorSensor sensorColorLeft;
 
     //Collector
     public CRServo leftCollector;
@@ -30,40 +27,52 @@ public class HardwareMecanum
     //Mast
     public DcMotor mastVertical;
     public DcMotor mastRotator;
-    public Rev2mDistanceSensor mastDistanceSensor;
 
     //Arm
-    public Servo armExtender;
+    public CRServo armExtender;
     public Servo gripperRotator;
     public Servo gripper;
+
+    //Sensors
+    public NormalizedColorSensor rightColorSensor;
+    public NormalizedColorSensor leftColorSensor;
+    public Rev2mDistanceSensor baseDistanceSensor;
+    public Rev2mDistanceSensor armDistanceSensor;
+    public Rev2mDistanceSensor mastDistanceSensor;
+
 
     public HardwareMap hwMap;
 
     public void init(HardwareMap hwMap)
     {
-        //BASE
         this.hwMap = hwMap;
+
+        //Base
         leftFront = hwMap.get(DcMotor.class, "leftFront");
         leftBack = hwMap.get(DcMotor.class, "leftBack");
         rightBack = hwMap.get(DcMotor.class, "rightBack");
         rightFront = hwMap.get(DcMotor.class, "rightFront");
         imu = hwMap.get(BNO055IMU.class, "imu");
         hook = hwMap.get(Servo.class, "hook");
-        sensorColorLeft = hwMap.get(ColorSensor.class,"sensorColorLeft");
-        sensorColorRight = hwMap.get(ColorSensor.class,"sensorColorRight");
 
-        //COLLECTOR
+        //Collector
         leftCollector = hwMap.get(CRServo.class, "leftCollector");
         rightCollector = hwMap.get(CRServo.class, "rightCollector");
 
-        //MAST
+        //Mast
         mastVertical = hwMap.get(DcMotor.class, "mastVertical");
         mastRotator = hwMap.get(DcMotor.class, "mastRotator");
-        mastDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "mastDistaceSensor");
 
-        //ARM
-        armExtender = hwMap.get(Servo.class, "armExtender");
+        //Arm
+        armExtender = hwMap.get(CRServo.class, "armExtender");
         gripperRotator = hwMap.get(Servo.class, "gripperRotator");
         gripper = hwMap.get(Servo.class, "gripper");
+
+        //Sensors
+        leftColorSensor = hwMap.get(NormalizedColorSensor.class,"leftColorSensor");
+        rightColorSensor = hwMap.get(NormalizedColorSensor.class,"rightColorSensor");
+        baseDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "baseDistanceSensor");
+        armDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "armDistanceSensor");
+        mastDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "mastDistanceSensor");
     }
 }

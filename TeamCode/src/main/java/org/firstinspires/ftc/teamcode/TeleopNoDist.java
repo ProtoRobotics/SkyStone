@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = "Teleop 2019-2020")
-public class Teleop2019 extends OpMode
+@TeleOp(name = "Teleop No Dist")
+public class TeleopNoDist extends OpMode
 {
     Base base;
     Collector collector;
@@ -21,8 +21,8 @@ public class Teleop2019 extends OpMode
 
         base = new Base(this, robot, gamepad1, gamepad2);
         collector = new Collector(this, robot, gamepad1, gamepad2);
-        mast = new Mast(this, robot, gamepad1, gamepad2, true);
-        arm = new Arm(this, robot, gamepad1, gamepad2, true);
+        mast = new Mast(this, robot, gamepad1, gamepad2, false);
+        arm = new Arm(this, robot, gamepad1, gamepad2, false);
     }
 
 
