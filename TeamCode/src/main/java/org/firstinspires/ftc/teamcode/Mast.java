@@ -17,9 +17,9 @@ public class Mast
     private Gamepad gamepad2; //Gunner
 
     private final int MIN_COUNTS_MAST_VERT = 0;
-    private final int MIN_THROTTLE_COUNTS_MAST_VERT = 200;
-    private final int MAX_COUNTS_MAST_VERT = 2000;
-    private final int MAX_THROTTLE_COUNTS_MAST_VERT = 1800;
+    private final int MIN_THROTTLE_COUNTS_MAST_VERT = 500;
+    private final int MAX_COUNTS_MAST_VERT = 9500;
+    private final int MAX_THROTTLE_COUNTS_MAST_VERT = 9000;
 
     private final double MAST_ROTATE_SPEED = .2;
 

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.subtractExact;
 
 @TeleOp(name="MastPositionTest")
 public class MastPositionTest extends OpMode
@@ -28,8 +29,12 @@ public class MastPositionTest extends OpMode
     {
         if (abs(gamepad1.left_stick_y) >= .05)
         {
-            double speed = -gamepad2.left_stick_y;
+            double speed = -gamepad1.left_stick_y;
             robot.mastVertical.setPower(speed);
+        }
+        else
+        {
+            robot.mastVertical.setPower(0);
         }
 
         telemetry.addData("Position", robot.mastVertical.getCurrentPosition());

@@ -20,11 +20,12 @@ public class ServoTest extends OpMode
     @Override
     public void loop()
     {
-        telemetry.addData("Gripper Position: ", robot.gripperLeft.getPosition());
-        telemetry.addData("Gripper Rotator Position: ", robot.gripperRotator.getPosition());
+        telemetry.addData("Gripper Left Position: ", robot.gripperLeft.getPosition());
+        telemetry.addData("Gripper Right Position: ", robot.gripperRight.getPosition());
+        telemetry.addData("Gripper Rotator Posititon: ", robot.gripperRotator.getPosition());
 
-        telemetry.addData("Gripper Position: ", robot.leftFlapper.getPosition());
-        telemetry.addData("Gripper Rotator Position: ", robot.rightFlapper.getPosition());
+        telemetry.addData("Left flapper: ", robot.leftFlapper.getPosition());
+        telemetry.addData("Right flapper: ", robot.rightFlapper.getPosition());
         telemetry.update();
 
         double changeInPosition = .3/270.0;
@@ -33,7 +34,6 @@ public class ServoTest extends OpMode
         {
             robot.gripperLeft.setPosition(robot.gripperLeft.getPosition() + changeInPosition);
         }
-
         if (gamepad1.b)
         {
             robot.gripperLeft.setPosition(robot.gripperLeft.getPosition() - changeInPosition);
@@ -41,28 +41,38 @@ public class ServoTest extends OpMode
 
         if (gamepad1.x)
         {
-            robot.gripperRotator.setPosition(robot.gripperRotator.getPosition() + changeInPosition);
+            robot.gripperRight.setPosition(robot.gripperRight.getPosition() + changeInPosition);
         }
-
         if (gamepad1.y)
         {
-            robot.gripperRotator.setPosition(robot.gripperRotator.getPosition() - changeInPosition);
+            robot.gripperRight.setPosition(robot.gripperRight.getPosition() - changeInPosition);
         }
+
         if (gamepad1.left_bumper)
         {
             robot.leftFlapper.setPosition(robot.leftFlapper.getPosition() - changeInPosition);
         }
         if (gamepad1.right_bumper)
         {
-            robot.leftFlapper.setPosition(robot.leftFlapper.getPosition() - changeInPosition);
+            robot.leftFlapper.setPosition(robot.leftFlapper.getPosition() + changeInPosition);
         }
-        if (gamepad1.a)
+
+        if (gamepad1.dpad_down)
         {
             robot.rightFlapper.setPosition(robot.rightFlapper.getPosition() - changeInPosition);
         }
-        if (gamepad1.b)
+        if (gamepad1.dpad_up)
         {
-            robot.rightFlapper.setPosition(robot.rightFlapper.getPosition() - changeInPosition);
+            robot.rightFlapper.setPosition(robot.rightFlapper.getPosition() + changeInPosition);
+        }
+
+        if (gamepad1.dpad_left)
+        {
+            robot.gripperRotator.setPosition(robot.gripperRotator.getPosition() - changeInPosition);
+        }
+        if (gamepad1.dpad_right)
+        {
+            robot.gripperRotator.setPosition(robot.gripperRotator.getPosition() + changeInPosition);
         }
     }
 }
