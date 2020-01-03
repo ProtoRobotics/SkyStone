@@ -14,6 +14,12 @@ public class Collector
     final double COLLECTOR_SPEED = 1;
     final double COLLECTOR_OFF_SPEED = 0;
 
+    final double LEFT_FLAPPER_OPEN = 0.84;
+    final double RIGHT_FLAPPER_OPEN = 0.25;
+    final double LEFT_FLAPPER_ANGLE = 0.67;
+    final double RIGHT_FLAPPER_ANGLE = 0.39;
+    final double LEFT_FLAPPER_CLOSED = 0.40;
+    final double RIGHT_FLAPPER_CLOSED = 0.67;
 
     public Collector(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
@@ -32,13 +38,12 @@ public class Collector
     {
         if (gamepad1.right_trigger > 0) //intake
         {
-            opModeClass.telemetry.addLine("Hello, you are pressing the right trigger button.");
-            robot.leftCollector.setPower(-COLLECTOR_SPEED);
+            robot.leftCollector.setPower(COLLECTOR_SPEED);
             robot.rightCollector.setPower(COLLECTOR_SPEED);
         }
         else if (gamepad1.left_trigger > 0) //outtake
         {
-            robot.leftCollector.setPower(COLLECTOR_SPEED);
+            robot.leftCollector.setPower(-COLLECTOR_SPEED);
             robot.rightCollector.setPower(-COLLECTOR_SPEED);
         }
         else if (gamepad1.right_trigger == 0)
@@ -50,6 +55,22 @@ public class Collector
         {
             robot.leftCollector.setPower(COLLECTOR_OFF_SPEED);
             robot.rightCollector.setPower(COLLECTOR_OFF_SPEED);
+        }
+
+        if (gamepad1.left_bumper)
+        {
+            robot.leftFlapper.setPosition(LEFT_FLAPPER_OPEN);
+            robot.rightFlapper.setPosition(RIGHT_FLAPPER_OPEN);
+        }
+        if (gamepad1.right_bumper)
+        {
+            robot.leftFlapper.setPosition(LEFT_FLAPPER_ANGLE);
+            robot.rightFlapper.setPosition(RIGHT_FLAPPER_ANGLE);
+        }
+        if (gamepad1.dpad_up)
+        {
+            robot.leftFlapper.setPosition(LEFT_FLAPPER_CLOSED);
+            robot.rightFlapper.setPosition(RIGHT_FLAPPER_CLOSED);
         }
 
     }

@@ -34,8 +34,10 @@ public class AutonomousBox
 
         base = new Base(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
         collector = new Collector(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
-        mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
+        mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
         arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
+
+        mast.resetMastEncoders();
 
         imuRotator = new ImuRotator(autonomousClass, robot);
 
@@ -58,10 +60,10 @@ public class AutonomousBox
         Thread.sleep(500);  //JAD 12/3/19
 
         //Pick skystone
-        Location loc = base.scanStone();
-        this.autonomousClass.telemetry.addData("Location = ", loc.toString());
+        //Location loc = base.scanStone();
+        //this.autonomousClass.telemetry.addData("Location = ", loc.toString());
         this.autonomousClass.telemetry.update();
-        mast.setMastOnSkystone(loc);
+        //mast.setMastOnSkystone(loc);
 
         Thread.sleep(2000);
 

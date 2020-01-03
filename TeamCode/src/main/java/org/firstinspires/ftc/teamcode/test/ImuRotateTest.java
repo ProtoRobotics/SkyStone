@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 import org.firstinspires.ftc.teamcode.ImuRotator;
 
 @Autonomous(name = "ImuRotateTesttt")
+@Disabled
 public class ImuRotateTest extends LinearOpMode
 {
     @Override
