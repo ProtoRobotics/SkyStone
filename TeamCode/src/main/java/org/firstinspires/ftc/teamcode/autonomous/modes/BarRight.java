@@ -16,23 +16,6 @@ public class BarRight extends LinearOpMode
     public void runOpMode() throws InterruptedException
     {
         AutonomousBar autoBar = new AutonomousBar(this, AutonomousPosition.RIGHT);
-        HardwareMecanum robot = new HardwareMecanum();
-        robot.init(hardwareMap);
-        Base base = new Base(this, robot, gamepad1, gamepad2);
-        base.encoderDriveInches(22,22,.5,true);
-        Thread.sleep(900);
-        base.encoderCrabsteer(0,22,.5,true);
-        Thread.sleep(900);
-        base.encoderDriveInches(5,5,.2,true);
-        Thread.sleep(900);
-        base.encoderDriveInches(-5,-5,.2,true);
-        Thread.sleep(900);
-        base.encoderCrabsteer(1,80,.5,true);
-        Thread.sleep(900);
-        base.encoderDriveInches(6,6,.1,true);
-        Thread.sleep(900);
-        base.encoderDriveInches(-5,-5,.1,true);
-        Thread.sleep(900);
-        base.encoderCrabsteer(0,45,.5,true);
+
     }
 }
