@@ -172,14 +172,7 @@ public class Base
     public void rotateDegreesEncoder(double degrees, double power, boolean sequential) throws InterruptedException
     {
         double absPower = Math.abs(power);
-        if (degrees > 0) //Clockwise rotation
-        {
-            encoderDriveCounts((int) (degrees * COUNTS_PER_DEGREE), (int) (-degrees * COUNTS_PER_DEGREE), absPower, sequential);
-        }
-        if (degrees < 0) //Counter-clockwise rotation
-        {
-            encoderDriveCounts((int) (-degrees * COUNTS_PER_DEGREE), (int) (degrees * COUNTS_PER_DEGREE), absPower, sequential);
-        }
+        encoderDriveCounts((int) (degrees * COUNTS_PER_DEGREE), (int) (-degrees * COUNTS_PER_DEGREE), absPower, sequential);
     }
 
     public void encoderCrabsteer(int direction, double inches, double power, boolean sequential) throws InterruptedException //left = 0, right = 1
