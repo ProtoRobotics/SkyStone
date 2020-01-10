@@ -53,47 +53,51 @@ public class AutonomousBox
         base.encoderDriveInches(4, 4, .5, true);
         Thread.sleep(500); //Pause for .5 seconds to ensure full stop.
 
-        base.encoderCrabsteer(0, 22, .5, true);
+        int crabOneDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
+        base.encoderCrabsteer(crabOneDirection, 22, .5, true);
         Thread.sleep(500);
 
         base.encoderDriveInches(20, 20, .5, true);
         Thread.sleep(500);
 
-        //Pick skystone
-        //Location loc = base.scanStone();
-        //this.autonomousClass.telemetry.addData("Location = ", loc.toString());
-        //this.autonomousClass.telemetry.update();
-        //mast.setMastOnSkystone(loc);
-
+        //TODO Pick the skystone.
         Thread.sleep(2000);
 
         base.encoderDriveInches(-20, -20, .5, true);
         Thread.sleep(500); //Fully stop the robot by waiting .5 seconds.
 
-        base.rotateDegreesEncoder(90, .5, true); //90 is always overrotating
+        int rotationOneDegrees = (autonomousPosition == AutonomousPosition.RIGHT) ? 90 : (-90);
+        autonomousClass.telemetry.addData("rot1Degrees", rotationOneDegrees);
+        autonomousClass.telemetry.update();
+        base.rotateDegreesEncoder(rotationOneDegrees, .5, true); //90 is always overrotating
         Thread.sleep(500);
 
-        base.encoderDriveInches(110, 110, .5, true);
-
-        base.rotateDegreesEncoder(-90, .5, true);
+        base.encoderDriveInches(111, 111, .5, true);
         Thread.sleep(500);
 
-        base.encoderDriveInches(23.5, 23.5, .2, true);
+        int rotationTwoDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
+        autonomousClass.telemetry.addData("rot2Degrees", rotationTwoDegrees);
+        autonomousClass.telemetry.update();
+        base.rotateDegreesEncoder(rotationTwoDegrees, .5, true);
+        Thread.sleep(500);
+
+        base.encoderDriveInches(28.0, 28.0, .2, true);
         Thread.sleep(500);
 
         base.hookDown();
         Thread.sleep(500);
 
-        base.encoderDriveInches(-35, -35, .5, true);
+        //TODO this doesnt work, instead, just call base.rightFront.setTargetPos(blablabla);
+        base.encoderDriveCounts(0, -4300, .5, true);
         Thread.sleep(1000);
-
-        autonomousClass.stop();
 
         base.hookUp();
 
-        base.rotateDegreesEncoder(-90,.5, true);
+        int crabTwoDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
+        base.encoderCrabsteer(crabTwoDirection,6,.5,true);
         Thread.sleep(500);
 
-        base.encoderDriveInches(44, 44, .5, true);
+        base.encoderDriveInches(-36,-36,.5,true);
+        Thread.sleep(500);
     }
 }
