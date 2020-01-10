@@ -44,22 +44,41 @@ public class AutonomousBar
         if(autonomousPosition == AutonomousPosition.LEFT)
         {
 
-            base.encoderCrabsteer(-20,.7,0, true);
+            base.encoderDriveInches(22,22,.5,true);
+            Thread.sleep(900);
+            base.encoderCrabsteer(1,22,.5,true);
+            Thread.sleep(900);
+            base.encoderDriveInches(5,5,.2,true);
+            Thread.sleep(900);
+            base.encoderDriveInches(-5,-5,.2,true);
+            Thread.sleep(900);
+            base.encoderCrabsteer(0,80,.5,true);
+            Thread.sleep(900);
+            base.encoderDriveInches(6,6,.1,true);
+            Thread.sleep(900);
+            base.encoderDriveInches(-5,-5,.1,true);
+            Thread.sleep(900);
+            base.encoderCrabsteer(1,45,.5,true);
         }
         else if(autonomousPosition == AutonomousPosition.RIGHT)
         {
-            base.encoderCrabsteer(20,.7,0, true);
+            base.encoderDriveInches(22,22,.5,true);
+            Thread.sleep(900);
+            base.encoderCrabsteer(0,22,.5,true);
+            Thread.sleep(900);
+            base.encoderDriveInches(5,5,.2,true);
+            Thread.sleep(900);
+            base.encoderDriveInches(-5,-5,.2,true);
+            Thread.sleep(900);
+            base.encoderCrabsteer(1,80,.5,true);
+            Thread.sleep(900);
+            base.encoderDriveInches(6,6,.1,true);
+            Thread.sleep(900);
+            base.encoderDriveInches(-5,-5,.1,true);
+            Thread.sleep(900);
+            base.encoderCrabsteer(0,45,.5,true);
         }
 
-        //base.crabsteer(-23, .7, true);
 
-        //Thread.sleep(2000);
-        //base.rotateDegreesEncoder(90, .4, true);
-        //rotate robot and pick up skystone
-        //base.encoderDriveInches(74,74,.7,true);
-
-        //Thread.sleep(2000);
-        //put skystone on base
-        //base.encoderDriveInches(-61,-61,.7,true);
     }
 }

@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.Base;
+import org.firstinspires.ftc.teamcode.HardwareMecanum;
 import org.firstinspires.ftc.teamcode.autonomous.AutonomousBar;
 import org.firstinspires.ftc.teamcode.autonomous.AutonomousPosition;
 
@@ -14,5 +16,6 @@ public class BarRight extends LinearOpMode
     public void runOpMode() throws InterruptedException
     {
         AutonomousBar autoBar = new AutonomousBar(this, AutonomousPosition.RIGHT);
+
     }
 }
