@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Arm;
 import org.firstinspires.ftc.teamcode.Base;
@@ -18,12 +17,12 @@ public class AutonomousBar
     HardwareMecanum robot;
 
     LinearOpMode autonomousClass;
-    int direction;
+    AutonomousPosition autonomousPosition;
 
-    public AutonomousBar(LinearOpMode autonomousClass, int direction) throws InterruptedException //direction: 0 = left, 1 = right.
+    public AutonomousBar(LinearOpMode autonomousClass, AutonomousPosition autonomousPosition) throws InterruptedException //direction: 0 = left, 1 = right.
     {
         this.autonomousClass = autonomousClass;
-        this.direction = direction;
+        this.autonomousPosition = autonomousPosition;
 
         robot = new HardwareMecanum();
         robot.init(autonomousClass.hardwareMap);
@@ -42,12 +41,12 @@ public class AutonomousBar
 
     public void runOpMode() throws InterruptedException
     {
-        if(direction == 0)
+        if(autonomousPosition == AutonomousPosition.LEFT)
         {
 
             base.encoderCrabsteer(-20,.7,0, true);
         }
-        else if(direction == 1)
+        else if(autonomousPosition == AutonomousPosition.RIGHT)
         {
             base.encoderCrabsteer(20,.7,0, true);
         }

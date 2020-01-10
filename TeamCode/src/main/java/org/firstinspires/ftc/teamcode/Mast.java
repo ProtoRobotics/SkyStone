@@ -48,11 +48,11 @@ public class Mast
             this.moveSpeed(0);
         }
 
-        if (gamepad2.b) //rotate right
+        if (gamepad2.right_trigger > 0) //rotate right
         {
             rotateSpeed(-MAST_ROTATE_SPEED);
         }
-        else if (gamepad2.x) //rotate left
+        else if (gamepad2.left_trigger > 0) //rotate left
         {
             rotateSpeed(MAST_ROTATE_SPEED);
         }

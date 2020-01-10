@@ -21,8 +21,8 @@ public class Base
     //public static final double WHEEL_DIAMETER = 100.0/25.4; //Wheels are 100mm, converted to inches is ~4.
     //public static final int COUNTS_PER_INCH = (int) (784.0 / WHEEL_DIAMETER); //784 counts per wheel rotation, divided by diameter yeilds cpi.
     public static final double COUNTS_PER_INCH = 61.38;
-    public static final double COUNTS_PER_INCH_CRAB = 1000.0/15; //TODO
-    public static final double COUNTS_PER_DEGREE = COUNTS_PER_INCH; //TODO
+    public static final double COUNTS_PER_INCH_CRAB = 1000.0/15.0; //TODO
+    public static final double COUNTS_PER_DEGREE = 5700.0/360.0; //TODO
 
     public static final double HOOK_UP_POSITION = .87;
     public static final double HOOK_DOWN_POSITION = .48;
@@ -102,7 +102,10 @@ public class Base
             hookUp();
         }
 
-        //opModeClass.telemetry.addData("BASE:  Left Front POS = ", robot.leftFront.getCurrentPosition());
+        opModeClass.telemetry.addData("BASE:  Left Front POS = ", robot.leftFront.getCurrentPosition());
+        opModeClass.telemetry.addData("BASE:  Left Back POS = ", robot.leftBack.getCurrentPosition());
+        opModeClass.telemetry.addData("BASE:  Right Front POS = ", robot.rightFront.getCurrentPosition());
+        opModeClass.telemetry.addData("BASE:  Right Back POS = ", robot.rightBack.getCurrentPosition());
         //opModeClass.telemetry.addData("BASE:  Distance = ", robot.baseDistanceSensor.getDistance(DistanceUnit.CM));
         //Location loc;
         //loc = this.scanStone();
@@ -147,7 +150,7 @@ public class Base
         //While the motors are still running.
         if (sequential)
         {
-            while (robot.leftFront.isBusy() || robot.rightFront.isBusy() || robot.leftBack.isBusy() || robot.rightBack.isBusy())
+            while (robot.leftFront.isBusy() && robot.rightFront.isBusy() && robot.leftBack.isBusy() && robot.rightBack.isBusy())
             {
                 //Wait .1 seconds before executing anything else.
                 sleep(100);
@@ -168,13 +171,14 @@ public class Base
 
     public void rotateDegreesEncoder(double degrees, double power, boolean sequential) throws InterruptedException
     {
+        double absPower = Math.abs(power);
         if (degrees > 0) //Clockwise rotation
         {
-            encoderDriveCounts((int) (degrees * COUNTS_PER_DEGREE), (int) (-degrees * COUNTS_PER_DEGREE), power, sequential);
+            encoderDriveCounts((int) (degrees * COUNTS_PER_DEGREE), (int) (-degrees * COUNTS_PER_DEGREE), absPower, sequential);
         }
         if (degrees < 0) //Counter-clockwise rotation
         {
-            encoderDriveCounts((int) (-degrees * COUNTS_PER_DEGREE), (int) (degrees * COUNTS_PER_DEGREE), power, sequential);
+            encoderDriveCounts((int) (-degrees * COUNTS_PER_DEGREE), (int) (degrees * COUNTS_PER_DEGREE), absPower, sequential);
         }
     }
 
@@ -241,10 +245,8 @@ public class Base
 
     public void hookDown()
     {
-
         robot.hook.setPosition(HOOK_DOWN_POSITION);
     }
-
 }
 
 

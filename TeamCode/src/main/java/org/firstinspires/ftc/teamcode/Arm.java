@@ -19,12 +19,12 @@ public class Arm
     final double GRIPPER_ROTATOR_POS_2 = .36;
     final double GRIPPER_ROTATOR_SPEED = 1.5 / 280;
 
-    final double GRIPPER_LEFT_OPEN = .43;
+    final double GRIPPER_LEFT_OPEN = .46;
     final double GRIPPER_RIGHT_OPEN = .56;
-    final double GRIPPER__LEFT_CLOSED = .65;
+    final double GRIPPER__LEFT_CLOSED = .69;
     final double GRIPPER_RIGHT_CLOSED = .35;
     final double GRIPPER_LEFT_CAPSTONE = .28;
-    final double GRIPPER_RIGHT_CAPSTONE = .71;
+    final double GRIPPER_RIGHT_CAPSTONE = .74;
 
     private final double MIN_STOP_DISTANCE = 25.3;
     private final double MIN_THROTTLE_DISTANCE = 28.0;
@@ -54,11 +54,11 @@ public class Arm
         {
             if (gamepad2.right_stick_y > .1) //arm out
             {
-                robot.armExtender.setPower(getAdjustedSpeed(.8 * gamepad2.right_stick_y));
+                robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
             }
             else if (gamepad2.right_stick_y < .1) //arm in
             {
-                robot.armExtender.setPower(getAdjustedSpeed(.8 * gamepad2.right_stick_y));
+                robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
             }
             else
             {
@@ -119,7 +119,7 @@ public class Arm
         }
 
         //opModeClass.telemetry.addData("Arm Distance = ", robot.armDistanceSensor.getDistance(DistanceUnit.CM));
-        opModeClass.telemetry.addData("Gripper Position = ", robot.gripperRotator.getPosition());
+        opModeClass.telemetry.addData("Gripper AutonomousPosition = ", robot.gripperRotator.getPosition());
     }
 
     //This method will return an adjusted vertical speed based on how far away the arm is from the mast.
