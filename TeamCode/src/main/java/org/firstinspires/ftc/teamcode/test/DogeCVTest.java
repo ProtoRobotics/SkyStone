@@ -64,6 +64,7 @@ public class DogeCVTest extends LinearOpMode {
          * For a rear facing camera or a webcam, rotation is defined assuming the camera is facing
          * away from the user.
          */
+
         phoneCam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
 
         /*
@@ -76,8 +77,8 @@ public class DogeCVTest extends LinearOpMode {
             /*
              * Send some stats to the telemetry
              */
-            telemetry.addData("Stone Position X", skyStoneDetector.getScreenPosition().x);
-            telemetry.addData("Stone Position Y", skyStoneDetector.getScreenPosition().y);
+            telemetry.addData("Stone AutonomousPosition X", skyStoneDetector.getScreenPosition().x);
+            telemetry.addData("Stone AutonomousPosition Y", skyStoneDetector.getScreenPosition().y);
             telemetry.addData("Frame Count", phoneCam.getFrameCount());
             telemetry.addData("FPS", String.format(Locale.US, "%.2f", phoneCam.getFps()));
             telemetry.addData("Total frame time ms", phoneCam.getTotalFrameTimeMs());

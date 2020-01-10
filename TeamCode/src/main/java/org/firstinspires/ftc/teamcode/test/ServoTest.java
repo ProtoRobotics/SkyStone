@@ -20,8 +20,8 @@ public class ServoTest extends OpMode
     @Override
     public void loop()
     {
-        telemetry.addData("Gripper Left Position: ", robot.gripperLeft.getPosition());
-        telemetry.addData("Gripper Right Position: ", robot.gripperRight.getPosition());
+        telemetry.addData("Gripper Left AutonomousPosition: ", robot.gripperLeft.getPosition());
+        telemetry.addData("Gripper Right AutonomousPosition: ", robot.gripperRight.getPosition());
         telemetry.addData("Gripper Rotator Posititon: ", robot.gripperRotator.getPosition());
 
         telemetry.addData("Left flapper: ", robot.leftFlapper.getPosition());

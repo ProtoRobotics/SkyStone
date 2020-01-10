@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autonomous.tempauto;
+package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Base;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 
-@Disabled
-@Autonomous(name="Crab Right")
-public class CrabRight extends LinearOpMode
+@Autonomous(name="TestRotateEncoder")
+public class TestRotateEncoder extends LinearOpMode
 {
+    //Used to find counts per rotation/counts per degree
     @Override
     public void runOpMode() throws InterruptedException
     {
@@ -20,6 +20,14 @@ public class CrabRight extends LinearOpMode
         robot.init(hardwareMap);
         Base base = new Base(this, robot, gamepad1, gamepad2);
 
-        base.encoderCrabsteer(1, 16, .5, true);
+        base.rotateDegreesEncoder(90, .5, true);
+
+        Thread.sleep(500);
+
+        base.rotateDegreesEncoder(-90, .5, true);
+
+        Thread.sleep(500);
+
+        base.rotateDegreesEncoder(360, .5, true);
     }
 }

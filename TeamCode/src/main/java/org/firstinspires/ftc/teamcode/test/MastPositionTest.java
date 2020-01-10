@@ -37,6 +37,6 @@ public class MastPositionTest extends OpMode
             robot.mastVertical.setPower(0);
         }
 
-        telemetry.addData("Position", robot.mastVertical.getCurrentPosition());
+        telemetry.addData("AutonomousPosition", robot.mastVertical.getCurrentPosition());
     }
 }

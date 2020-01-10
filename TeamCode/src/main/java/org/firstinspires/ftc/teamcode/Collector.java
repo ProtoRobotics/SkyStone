@@ -14,11 +14,11 @@ public class Collector
     final double COLLECTOR_SPEED = 1;
     final double COLLECTOR_OFF_SPEED = 0;
 
-    final double LEFT_FLAPPER_OPEN = 0.84;
+    final double LEFT_FLAPPER_OPEN = .81;
     final double RIGHT_FLAPPER_OPEN = 0.25;
-    final double LEFT_FLAPPER_ANGLE = 0.67;
-    final double RIGHT_FLAPPER_ANGLE = 0.39;
-    final double LEFT_FLAPPER_CLOSED = 0.40;
+    final double LEFT_FLAPPER_ANGLE = 0.65;
+    final double RIGHT_FLAPPER_ANGLE = 0.42;
+    final double LEFT_FLAPPER_CLOSED = 0.37;
     final double RIGHT_FLAPPER_CLOSED = 0.67;
 
     public Collector(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
