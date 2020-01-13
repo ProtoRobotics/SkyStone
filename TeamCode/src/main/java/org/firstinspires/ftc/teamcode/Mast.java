@@ -71,9 +71,8 @@ public class Mast
     //Move counts
     public void moveCounts(int counts, double speed)
     {
-        robot.mastVertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.mastVertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.mastVertical.setTargetPosition(counts);
+        robot.mastVertical.setTargetPosition(robot.mastVertical.getCurrentPosition() + counts);
         robot.mastVertical.setPower(speed);
     }
 

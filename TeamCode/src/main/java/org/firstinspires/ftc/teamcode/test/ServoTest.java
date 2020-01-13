@@ -20,8 +20,8 @@ public class ServoTest extends OpMode
     @Override
     public void loop()
     {
-        telemetry.addData("Gripper Left AutonomousPosition: ", robot.gripperLeft.getPosition());
-        telemetry.addData("Gripper Right AutonomousPosition: ", robot.gripperRight.getPosition());
+        telemetry.addData("Gripper Left AutonomousPosition: ", robot.leftGripper.getPosition());
+        telemetry.addData("Gripper Right AutonomousPosition: ", robot.rightGripper.getPosition());
         telemetry.addData("Gripper Rotator Posititon: ", robot.gripperRotator.getPosition());
 
         telemetry.addData("Left flapper: ", robot.leftFlapper.getPosition());
@@ -32,20 +32,20 @@ public class ServoTest extends OpMode
 
         if (gamepad1.a)
         {
-            robot.gripperLeft.setPosition(robot.gripperLeft.getPosition() + changeInPosition);
+            robot.leftGripper.setPosition(robot.leftGripper.getPosition() + changeInPosition);
         }
         if (gamepad1.b)
         {
-            robot.gripperLeft.setPosition(robot.gripperLeft.getPosition() - changeInPosition);
+            robot.leftGripper.setPosition(robot.leftGripper.getPosition() - changeInPosition);
         }
 
         if (gamepad1.x)
         {
-            robot.gripperRight.setPosition(robot.gripperRight.getPosition() + changeInPosition);
+            robot.rightGripper.setPosition(robot.rightGripper.getPosition() + changeInPosition);
         }
         if (gamepad1.y)
         {
-            robot.gripperRight.setPosition(robot.gripperRight.getPosition() - changeInPosition);
+            robot.rightGripper.setPosition(robot.rightGripper.getPosition() - changeInPosition);
         }
 
         if (gamepad1.left_bumper)

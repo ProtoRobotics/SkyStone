@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.HardwareMecanum;
 
 @Autonomous(name = "distanceSensorTest")
 
-@Disabled
 public class DistanceSensorTest extends OpMode {
 
     HardwareMecanum robot;
@@ -29,13 +28,17 @@ public class DistanceSensorTest extends OpMode {
         telemetry.addData("Distance (M)", distance);
         telemetry.update();
 
-        if (distance < 10)
+        if (gamepad1.x)
         {
-            robot.leftCollector.setPower(1);
+            robot.armExtender.setPower(-1);
+        }
+        else if (gamepad1.b)
+        {
+            robot.armExtender.setPower(1);
         }
         else
         {
-            robot.leftCollector.setPower(0);
+            robot.armExtender.setPower(0);
         }
     }
 

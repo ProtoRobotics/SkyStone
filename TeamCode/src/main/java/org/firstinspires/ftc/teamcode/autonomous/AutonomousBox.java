@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Arm;
 import org.firstinspires.ftc.teamcode.Base;
 import org.firstinspires.ftc.teamcode.Collector;
@@ -50,54 +51,88 @@ public class AutonomousBox
     {
         base.hookUp();
 
-        base.encoderDriveInches(4, 4, .5, true);
+        mast.moveCounts(300, .3);
+        robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_POS_2);
+
+        base.encoderDriveInches(4, 4, .3, true);
         Thread.sleep(500); //Pause for .5 seconds to ensure full stop.
 
         int crabOneDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
-        base.encoderCrabsteer(crabOneDirection, 22, .5, true);
+        base.encoderCrabsteer(crabOneDirection, 24, .5, true);
         Thread.sleep(500);
 
         base.encoderDriveInches(20, 20, .5, true);
         Thread.sleep(500);
 
-        //TODO Pick the skystone.
+        robot.leftFlapper.setPosition(collector.LEFT_FLAPPER_ANGLE);
+        robot.rightFlapper.setPosition(collector.RIGHT_FLAPPER_ANGLE);
+        Thread.sleep(1000);
+
+        robot.leftGripper.setPosition(arm.GRIPPER_LEFT_CLOSED);
+        robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_CLOSED);
+
         Thread.sleep(2000);
 
         base.encoderDriveInches(-20, -20, .5, true);
         Thread.sleep(500); //Fully stop the robot by waiting .5 seconds.
 
-        int rotationOneDegrees = (autonomousPosition == AutonomousPosition.RIGHT) ? 90 : (-90);
-        autonomousClass.telemetry.addData("rot1Degrees", rotationOneDegrees);
-        autonomousClass.telemetry.update();
-        base.rotateDegreesEncoder(rotationOneDegrees, .5, true); //90 is always overrotating
+        int rotationThreeDegrees = (autonomousPosition == AutonomousPosition.RIGHT) ? 90 : (-90);
+        base.rotateDegreesEncoder(rotationThreeDegrees, .5, true); //90 is always overrotating
         Thread.sleep(500);
 
         base.encoderDriveInches(111, 111, .5, true);
         Thread.sleep(500);
 
-        int rotationTwoDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
-        autonomousClass.telemetry.addData("rot2Degrees", rotationTwoDegrees);
-        autonomousClass.telemetry.update();
-        base.rotateDegreesEncoder(rotationTwoDegrees, .5, true);
+        int rotationFourDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
+        base.rotateDegreesEncoder(rotationFourDegrees, .5, true);
         Thread.sleep(500);
 
-        base.encoderDriveInches(28.0, 28.0, .2, true);
+        base.encoderDriveInches(29.5, 29.5, .2, true);
         Thread.sleep(500);
 
         base.hookDown();
         Thread.sleep(500);
 
-        //TODO this doesnt work, instead, just call base.rightFront.setTargetPos(blablabla);
-        base.encoderDriveCounts(0, -4300, .5, true);
+
+        int swivelCounts = -3500;
+        if (autonomousPosition == AutonomousPosition.RIGHT)
+        {
+            robot.rightFront.setTargetPosition(robot.rightFront.getCurrentPosition() + swivelCounts);
+            robot.rightBack.setTargetPosition(robot.rightBack.getCurrentPosition() + swivelCounts);
+            robot.rightFront.setPower(.3);
+            robot.rightBack.setPower(.3);
+        }
+        else
+        {
+            robot.leftFront.setTargetPosition(robot.leftFront.getCurrentPosition() - swivelCounts);
+            robot.leftBack.setTargetPosition(robot.leftBack.getCurrentPosition() - swivelCounts);
+            robot.leftFront.setPower(.5);
+            robot.leftBack.setPower(.5);
+        }
+
+        boolean swivelBusy = true;
+        while (swivelBusy)
+        {
+            autonomousClass.telemetry.addData("booleans", robot.rightFront.isBusy() + " " + robot.rightBack.isBusy() + " " + robot.leftFront.isBusy() + " " + robot.leftBack.isBusy());
+            autonomousClass.telemetry.update();
+            Thread.sleep(100);
+            swivelBusy = (autonomousPosition == AutonomousPosition.RIGHT) ? (robot.rightFront.isBusy() && robot.rightBack.isBusy()) : (robot.leftFront.isBusy() && robot.leftBack.isBusy());
+        }
+
+        autonomousClass.telemetry.addData("Out of the loop", "yeah");
+        autonomousClass.telemetry.update();
+
         Thread.sleep(1000);
+
+        base.encoderDriveInches(20,20,0.4,true);
 
         base.hookUp();
 
-        int crabTwoDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
-        base.encoderCrabsteer(crabTwoDirection,6,.5,true);
+        int crabTwoDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
+        base.encoderCrabsteer(crabTwoDirection,16,.5,true);
         Thread.sleep(500);
 
-        base.encoderDriveInches(-36,-36,.5,true);
+        base.encoderDriveInches(-42,-42,.5,true);
         Thread.sleep(500);
     }
 }

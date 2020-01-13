@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 
 public class HardwareMecanum
 {
@@ -33,8 +32,8 @@ public class HardwareMecanum
     //Arm
     public CRServo armExtender;
     public Servo gripperRotator;
-    public Servo gripperLeft;
-    public Servo gripperRight;
+    public Servo leftGripper;
+    public Servo rightGripper;
 
     //Sensors
     public Rev2mDistanceSensor armDistanceSensor;
@@ -67,8 +66,8 @@ public class HardwareMecanum
         //Arm
         armExtender = hwMap.get(CRServo.class, "armExtender");
         gripperRotator = hwMap.get(Servo.class, "gripperRotator");
-        gripperLeft = hwMap.get(Servo.class, "gripperLeft");
-        gripperRight = hwMap.get(Servo.class, "gripperRight");
+        leftGripper = hwMap.get(Servo.class, "leftGripper");
+        rightGripper = hwMap.get(Servo.class, "rightGripper");
 
         //Sensors
         armDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "armDistanceSensor");
