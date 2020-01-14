@@ -5,6 +5,10 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class Arm
 {
     private OpMode opModeClass; //Used for telemetry.
@@ -144,6 +148,20 @@ public class Arm
             return (speed / 2.0);
 
         return speed;
+    }
+
+    public void moveSeconds(long seconds, double speed)
+    {
+        robot.armExtender.setPower(speed);
+        Runnable armTask = new Runnable()
+        {
+            public void run()
+            {
+                robot.armExtender.setPower(0);
+            }
+        };
+
+        robot.scheduler.schedule(armTask, seconds, TimeUnit.SECONDS);
     }
 
     public void moveToPos(double pos)
