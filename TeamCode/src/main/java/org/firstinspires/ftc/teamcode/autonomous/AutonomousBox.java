@@ -11,6 +11,10 @@ import org.firstinspires.ftc.teamcode.ImuRotator;
 import org.firstinspires.ftc.teamcode.Mast;
 import org.firstinspires.ftc.teamcode.Location; //JAD 12/3/19
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 
 public class AutonomousBox
 {
@@ -45,14 +49,16 @@ public class AutonomousBox
         runOpMode();
     }
 
-    //TODO Move 4050 counts with the back right wheel, move forward 12 inches, crabsteer right, then back up.
-    //That will complete the moving of the foundation for the right side.
     public void runOpMode() throws InterruptedException
     {
         base.hookUp();
 
-        mast.moveCounts(300, .3);
+        mast.moveCounts(1000, .3);
         robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_POS_2);
+        robot.armExtender.setPower(-1);
+        robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
+        robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
+        arm.moveSeconds(4.5, -1);
 
         base.encoderDriveInches(4, 4, .3, true);
         Thread.sleep(500); //Pause for .5 seconds to ensure full stop.
@@ -62,14 +68,16 @@ public class AutonomousBox
         Thread.sleep(500);
 
         base.encoderDriveInches(20, 20, .5, true);
-        Thread.sleep(500);
+        Thread.sleep(750);
 
-        robot.leftFlapper.setPosition(collector.LEFT_FLAPPER_ANGLE);
-        robot.rightFlapper.setPosition(collector.RIGHT_FLAPPER_ANGLE);
-        Thread.sleep(1000);
+        mast.moveCounts(-900, .3);
+        Thread.sleep(750); //TODO add sequential capability for mast.moveCounts
 
         robot.leftGripper.setPosition(arm.GRIPPER_LEFT_CLOSED);
         robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_CLOSED);
+        Thread.sleep(750);
+
+        mast.moveCounts(200,0.3);
 
         Thread.sleep(2000);
 
@@ -80,12 +88,17 @@ public class AutonomousBox
         base.rotateDegreesEncoder(rotationThreeDegrees, .5, true); //90 is always overrotating
         Thread.sleep(500);
 
+        arm.moveSeconds(2,1);
+
         base.encoderDriveInches(111, 111, .5, true);
         Thread.sleep(500);
 
         int rotationFourDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
         base.rotateDegreesEncoder(rotationFourDegrees, .5, true);
         Thread.sleep(500);
+
+        arm.moveSeconds(2,-1);
+        mast.moveCounts(900,0.3);
 
         base.encoderDriveInches(29.5, 29.5, .2, true);
         Thread.sleep(500);
@@ -125,6 +138,9 @@ public class AutonomousBox
         Thread.sleep(1000);
 
         base.encoderDriveInches(20,20,0.4,true);
+
+        robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
+        robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
 
         base.hookUp();
 
