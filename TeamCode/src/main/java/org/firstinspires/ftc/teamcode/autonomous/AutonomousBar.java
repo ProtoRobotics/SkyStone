@@ -41,44 +41,56 @@ public class AutonomousBar
 
     public void runOpMode() throws InterruptedException
     {
-        if(autonomousPosition == AutonomousPosition.LEFT)
         {
 
             base.encoderDriveInches(22,22,.5,true);
             Thread.sleep(900);
-            base.encoderCrabsteer(1,22,.5,true);
+
+            int crabOneDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
+            base.encoderCrabsteer(crabOneDirection,18,.5,true);
             Thread.sleep(900);
-            base.encoderDriveInches(5,5,.2,true);
+
+            mast.moveCounts(1000,.3);
+            robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_POS_2);
+            robot.armExtender.setPower(-1);
+            robot.leftGripper.setPosition((arm.GRIPPER_LEFT_OPEN));
+            arm.moveSeconds(5,-1);
+
+            base.encoderDriveInches(4,4,.2,true);
             Thread.sleep(900);
-            base.encoderDriveInches(-5,-5,.2,true);
+
+            base.encoderDriveInches(-4,-4,.2,true);//drive up to skystone and pick it up
             Thread.sleep(900);
-            base.encoderCrabsteer(0,80,.5,true);
+
+            int crabTwoDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
+            base.encoderCrabsteer(crabTwoDirection,76,.5,true);
             Thread.sleep(900);
+
             base.encoderDriveInches(6,6,.1,true);
             Thread.sleep(900);
-            base.encoderDriveInches(-5,-5,.1,true);
+
+            base.encoderDriveInches(-5,-5,.1,true);//drive up to the foundations and set block down
             Thread.sleep(900);
-            base.encoderCrabsteer(1,45,.5,true);
+
+            int crabThreeDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
+            base.encoderCrabsteer(crabThreeDirection,45,.5,true);//park on the line
         }
-        else if(autonomousPosition == AutonomousPosition.RIGHT)
+
+
+        int swivelCounts = -3500;
+        if (autonomousPosition == AutonomousPosition.RIGHT)
         {
-            base.encoderDriveInches(22,22,.5,true);
-            Thread.sleep(900);
-            base.encoderCrabsteer(0,22,.5,true);
-            Thread.sleep(900);
-            base.encoderDriveInches(5,5,.2,true);
-            Thread.sleep(900);
-            base.encoderDriveInches(-5,-5,.2,true);
-            Thread.sleep(900);
-            base.encoderCrabsteer(1,80,.5,true);
-            Thread.sleep(900);
-            base.encoderDriveInches(6,6,.1,true);
-            Thread.sleep(900);
-            base.encoderDriveInches(-5,-5,.1,true);
-            Thread.sleep(900);
-            base.encoderCrabsteer(0,45,.5,true);
+            robot.rightFront.setTargetPosition(robot.rightFront.getCurrentPosition() + swivelCounts);
+            robot.rightBack.setTargetPosition(robot.rightBack.getCurrentPosition() + swivelCounts);
+            robot.rightFront.setPower(.3);
+            robot.rightBack.setPower(.3);
         }
-
-
+        else
+        {
+            robot.leftFront.setTargetPosition(robot.leftFront.getCurrentPosition() - swivelCounts);
+            robot.leftBack.setTargetPosition(robot.leftBack.getCurrentPosition() - swivelCounts);
+            robot.leftFront.setPower(.5);
+            robot.leftBack.setPower(.5);
+        }
     }
 }
