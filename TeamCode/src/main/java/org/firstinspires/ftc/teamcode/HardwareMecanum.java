@@ -9,6 +9,9 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
 public class HardwareMecanum
 {
     //Base
@@ -39,6 +42,7 @@ public class HardwareMecanum
     public Rev2mDistanceSensor armDistanceSensor;
 
 
+    public ScheduledExecutorService scheduler;
     public HardwareMap hwMap;
 
     public void init(HardwareMap hwMap)
@@ -71,5 +75,7 @@ public class HardwareMecanum
 
         //Sensors
         armDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "armDistanceSensor");
+
+        scheduler = Executors.newSingleThreadScheduledExecutor();
     }
 }

@@ -150,7 +150,7 @@ public class Arm
         return speed;
     }
 
-    public void moveSeconds(long seconds, double speed)
+    public void moveSeconds(double seconds, double speed)
     {
         robot.armExtender.setPower(speed);
         Runnable armTask = new Runnable()
@@ -161,7 +161,7 @@ public class Arm
             }
         };
 
-        robot.scheduler.schedule(armTask, seconds, TimeUnit.SECONDS);
+        robot.scheduler.schedule(armTask, (long) (seconds * 1000), TimeUnit.MILLISECONDS);
     }
 
     public void moveToPos(double pos)
