@@ -43,38 +43,59 @@ public class AutonomousBar
     {
         {
 
-            base.encoderDriveInches(22,22,.5,true);
-            Thread.sleep(900);
-
-            int crabOneDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
-            base.encoderCrabsteer(crabOneDirection,18,.5,true);
-            Thread.sleep(900);
-
             mast.moveCounts(1000,.3);
             robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_POS_2);
             robot.armExtender.setPower(-1);
-            robot.leftGripper.setPosition((arm.GRIPPER_LEFT_OPEN));
-            arm.moveSeconds(5,-1);
+            robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
+            robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
+            arm.moveSeconds(4.5,-1);
+
+            int crabDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
+            base.encoderCrabsteer(crabDirection,10,.5,true);
+
+            base.encoderDriveInches(22,22,.3,true);
+            Thread.sleep(900);
+
+            int crabOneDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
+            base.encoderCrabsteer(crabOneDirection,8,.3,true);
+            Thread.sleep(900);
+
 
             base.encoderDriveInches(4,4,.2,true);
             Thread.sleep(900);
 
-            base.encoderDriveInches(-4,-4,.2,true);//drive up to skystone and pick it up
+            mast.moveCounts(-900,.3);
             Thread.sleep(900);
 
-            int crabTwoDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
-            base.encoderCrabsteer(crabTwoDirection,76,.5,true);
+            robot.leftGripper.setPosition(arm.GRIPPER_LEFT_CLOSED);
+            robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_CLOSED);
+            Thread.sleep(750);
+
+            base.encoderDriveInches(-10,-10,.2,true);//drive up to skystone and pick it up
             Thread.sleep(900);
 
-            base.encoderDriveInches(6,6,.1,true);
+            int rotationOneDegrees = (autonomousPosition == AutonomousPosition.RIGHT) ? 90 : (-90);
+            base.rotateDegreesEncoder(rotationOneDegrees, .3,true);
+            Thread.sleep(700);
+
+            base.encoderDriveInches(80,80,.3,true);
             Thread.sleep(900);
 
-            base.encoderDriveInches(-5,-5,.1,true);//drive up to the foundations and set block down
+            robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
+            robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
+
+            mast.moveCounts(200,.3);
+
+            base.encoderDriveInches(-15,-15,.5,true);
             Thread.sleep(900);
 
-            int crabThreeDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
-            base.encoderCrabsteer(crabThreeDirection,45,.5,true);//park on the line
+            mast.moveCounts(-200,.3);
+
+            base.encoderDriveInches(-15,-15,.3,true);
+            Thread.sleep(900);
+
         }
+
 
 
         int swivelCounts = -3500;
@@ -91,6 +112,15 @@ public class AutonomousBar
             robot.leftBack.setTargetPosition(robot.leftBack.getCurrentPosition() - swivelCounts);
             robot.leftFront.setPower(.5);
             robot.leftBack.setPower(.5);
+        }
+
+        boolean swivelBusy = true;
+        while (swivelBusy)
+        {
+            autonomousClass.telemetry.addData("booleans", robot.rightFront.isBusy() + " " + robot.rightBack.isBusy() + " " + robot.leftFront.isBusy() + " " + robot.leftBack.isBusy());
+            autonomousClass.telemetry.update();
+            Thread.sleep(100);
+            swivelBusy = (autonomousPosition == AutonomousPosition.RIGHT) ? (robot.rightFront.isBusy() && robot.rightBack.isBusy()) : (robot.leftFront.isBusy() && robot.leftBack.isBusy());
         }
     }
 }
