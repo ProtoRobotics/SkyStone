@@ -17,6 +17,6 @@ public class ArmMoveToPosTest extends LinearOpMode
 
         Arm arm = new Arm(this, robot, gamepad1, gamepad2, true);
 
-        arm.moveToPos(36);
+        //arm.moveToPos(36);
     }
 }

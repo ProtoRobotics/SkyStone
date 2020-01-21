@@ -70,7 +70,7 @@ public class AutonomousBox
         base.encoderDriveInches(20, 20, .5, true);
         Thread.sleep(750);
 
-        mast.moveCounts(-900, .3);
+        mast.moveCounts(-1100, .3);
         Thread.sleep(750); //TODO add sequential capability for mast.moveCounts
 
         robot.leftGripper.setPosition(arm.GRIPPER_LEFT_CLOSED);
@@ -98,7 +98,7 @@ public class AutonomousBox
         Thread.sleep(500);
 
         arm.moveSeconds(2,-1);
-        mast.moveCounts(900,0.3);
+        mast.moveCounts(1000,0.3);
 
         base.encoderDriveInches(29.5, 29.5, .2, true);
         Thread.sleep(500);

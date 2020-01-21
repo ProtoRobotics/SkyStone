@@ -74,7 +74,7 @@ public class HardwareMecanum
         rightGripper = hwMap.get(Servo.class, "rightGripper");
 
         //Sensors
-        armDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "armDistanceSensor");
+       // armDistanceSensor = (Rev2mDistanceSensor) hwMap.get(DistanceSensor.class, "armDistanceSensor");
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
     }

@@ -46,7 +46,7 @@ public class Arm
 
     public void initTeleop()
     {
-        robot.armDistanceSensor.initialize();
+        //robot.armDistanceSensor.initialize();
         robot.gripperRotator.setPosition(robot.gripperRotator.getPosition()); //TODO Does this line actually work?
     }
 
@@ -58,11 +58,13 @@ public class Arm
         {
             if (gamepad2.right_stick_y > .1) //arm out
             {
-                robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
+                //robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
+                robot.armExtender.setPower(gamepad2.right_stick_y);
             }
             else if (gamepad2.right_stick_y < .1) //arm in
             {
-                robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
+                //robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
+                robot.armExtender.setPower(gamepad2.right_stick_y);
             }
             else
             {
@@ -164,7 +166,7 @@ public class Arm
         robot.scheduler.schedule(armTask, (long) (seconds * 1000), TimeUnit.MILLISECONDS);
     }
 
-    public void moveToPos(double pos)
+    /*public void moveToPos(double pos)
     {
         double error;
         //double speed = SPEED;
@@ -182,5 +184,5 @@ public class Arm
             }
             error = pos - robot.armDistanceSensor.getDistance(DistanceUnit.CM);
         }
-    }
+    }*/
 }
