@@ -87,8 +87,8 @@ public class AutonomousBar
             Thread.sleep(900);
 
             //rotate robot 90 degrees to the left
-            int rotationFourDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
-            base.rotateDegreesEncoder(rotationFourDegrees, .5, true);
+            rotationDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
+            base.rotateDegreesEncoder(rotationDegrees, .5, true);
             Thread.sleep(500);
 
             //raise mast to clear the foundation edge with stone
@@ -103,9 +103,17 @@ public class AutonomousBar
             robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
 
-            base.encoderDriveInches(-15,-15,.3,true);
+            //reverse robot slightly in order to clear foundation for 90 degree turn to the left
+            base.encoderDriveInches(-4,-4,.3,true);
             Thread.sleep(900);
 
+            //turn robot 90 degrees to the left in order to drive to center line
+            rotationDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
+            base.rotateDegreesEncoder(rotationDegrees, .5, true);
+            Thread.sleep(500);
+
+            //drive robot forward to center line
+            base.encoderDriveInches(48,48,.5,true);
         }
 
 
