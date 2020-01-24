@@ -25,6 +25,9 @@ public class MastPositionTest extends OpMode
 
         robot.mastRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.mastRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        robot.rightCollector.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightCollector.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     @Override

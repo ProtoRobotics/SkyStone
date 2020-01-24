@@ -59,6 +59,8 @@ public class AutonomousBox
         robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
         robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
         arm.moveSeconds(5.5, -1);
+        robot.leftFlapper.setPosition(collector.LEFT_FLAPPER_CLOSED);
+        robot.rightFlapper.setPosition(collector.RIGHT_FLAPPER_CLOSED);
 
         base.encoderDriveInches(4, 4, .3, true);
         Thread.sleep(500); //Pause for .5 seconds to ensure full stop.
@@ -141,20 +143,17 @@ public class AutonomousBox
             swivelBusy = (autonomousPosition == AutonomousPosition.RIGHT) ? (robot.rightFront.isBusy() && robot.rightBack.isBusy()) : (robot.leftFront.isBusy() && robot.leftBack.isBusy());
         }
 
-        autonomousClass.telemetry.addData("Out of the loop", "yeah");
-        autonomousClass.telemetry.update();
-
         Thread.sleep(1000);
 
         base.encoderDriveInches(20,20,0.4,true);
 
         base.hookUp();
 
-        mast.moveCounts(-1700,0.5);
-        Thread.sleep(500);
-
         int crabTwoDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
         base.encoderCrabsteer(crabTwoDirection,20,.5,true);
+        Thread.sleep(500);
+
+        mast.moveCounts(-1700,0.5);
         Thread.sleep(500);
 
         base.encoderDriveInches(-42,-42,.5,true);

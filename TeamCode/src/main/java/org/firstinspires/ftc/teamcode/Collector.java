@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class Collector
@@ -32,6 +33,11 @@ public class Collector
     //
     public void init() {
 
+    }
+
+    public void initTeleop()
+    {
+        robot.rightCollector.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void doLoop()
