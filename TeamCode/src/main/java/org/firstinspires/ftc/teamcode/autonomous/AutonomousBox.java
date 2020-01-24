@@ -103,11 +103,18 @@ public class AutonomousBox
         base.encoderDriveInches(29.5, 29.5, .2, true);
         Thread.sleep(500);
 
+        arm.moveSeconds(0.1,0.5);
+        
+        robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
+        robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
+
         base.hookDown();
         Thread.sleep(500);
 
         robot.leftFlapper.setPosition(0.43);
         robot.rightFlapper.setPosition(0.61);
+
+        mast.moveCounts(300,0.5);
 
         int swivelCounts = -3500;
         if (autonomousPosition == AutonomousPosition.RIGHT)
@@ -141,12 +148,9 @@ public class AutonomousBox
 
         base.encoderDriveInches(20,20,0.4,true);
 
-        robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
-        robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
-
         base.hookUp();
 
-        mast.moveCounts(-1400,0.5);
+        mast.moveCounts(-1700,0.5);
         Thread.sleep(500);
 
         int crabTwoDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
