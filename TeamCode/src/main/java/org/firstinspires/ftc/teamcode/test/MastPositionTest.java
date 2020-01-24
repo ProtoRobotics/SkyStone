@@ -22,6 +22,9 @@ public class MastPositionTest extends OpMode
 
         robot.mastVertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.mastVertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        robot.mastRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.mastRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     @Override
@@ -37,6 +40,19 @@ public class MastPositionTest extends OpMode
             robot.mastVertical.setPower(0);
         }
 
-        telemetry.addData("AutonomousPosition", robot.mastVertical.getCurrentPosition());
+        if (abs(gamepad1.right_stick_y) >= .05)
+        {
+            robot.armExtender.setPower(gamepad1.right_stick_y * .5);
+        }
+        else
+        {
+            robot.armExtender.setPower(0);
+        }
+
+        telemetry.addData("Left Collector", robot.leftCollector.getCurrentPosition());
+        telemetry.addData("Right Collector", robot.rightCollector.getCurrentPosition());
+        telemetry.addData("MastRotator", robot.mastRotator.getCurrentPosition());
+        telemetry.addData("MastVertical", robot.mastVertical.getCurrentPosition());
+        telemetry.update();
     }
 }

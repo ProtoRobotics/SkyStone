@@ -40,7 +40,7 @@ public class AutonomousBox
         base = new Base(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
         collector = new Collector(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
         mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
-        arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
+        arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
 
         mast.resetMastEncoders();
 
@@ -85,7 +85,7 @@ public class AutonomousBox
         Thread.sleep(500); //Fully stop the robot by waiting .5 seconds.
 
         int rotationThreeDegrees = (autonomousPosition == AutonomousPosition.RIGHT) ? 90 : (-90);
-        base.rotateDegreesEncoder(rotationThreeDegrees, .5, true); //90 is always overrotating
+        base.rotateDegreesEncoder(rotationThreeDegrees, .5, true);
         Thread.sleep(500);
 
         arm.moveSeconds(2.5,1);
