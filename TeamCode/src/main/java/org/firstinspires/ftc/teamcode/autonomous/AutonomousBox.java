@@ -106,6 +106,8 @@ public class AutonomousBox
         base.hookDown();
         Thread.sleep(500);
 
+        robot.leftFlapper.setPosition(0.43);
+        robot.rightFlapper.setPosition(0.61);
 
         int swivelCounts = -3500;
         if (autonomousPosition == AutonomousPosition.RIGHT)
@@ -148,7 +150,7 @@ public class AutonomousBox
         Thread.sleep(500);
 
         int crabTwoDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
-        base.encoderCrabsteer(crabTwoDirection,16,.5,true);
+        base.encoderCrabsteer(crabTwoDirection,20,.5,true);
         Thread.sleep(500);
 
         base.encoderDriveInches(-42,-42,.5,true);
