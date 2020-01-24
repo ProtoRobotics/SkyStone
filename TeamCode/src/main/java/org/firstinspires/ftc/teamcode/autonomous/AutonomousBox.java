@@ -53,12 +53,12 @@ public class AutonomousBox
     {
         base.hookUp();
 
-        mast.moveCounts(1000, .3);
+        mast.moveCounts(1100, .3);
         robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_POS_2);
         robot.armExtender.setPower(-1);
         robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
         robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
-        arm.moveSeconds(4.5, -1);
+        arm.moveSeconds(5.5, -1);
 
         base.encoderDriveInches(4, 4, .3, true);
         Thread.sleep(500); //Pause for .5 seconds to ensure full stop.
@@ -70,14 +70,14 @@ public class AutonomousBox
         base.encoderDriveInches(20, 20, .5, true);
         Thread.sleep(750);
 
-        mast.moveCounts(-1100, .3);
+        mast.moveCounts(-1250, .3);
         Thread.sleep(750); //TODO add sequential capability for mast.moveCounts
 
         robot.leftGripper.setPosition(arm.GRIPPER_LEFT_CLOSED);
         robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_CLOSED);
         Thread.sleep(750);
 
-        mast.moveCounts(200,0.3);
+        mast.moveCounts(400,0.3);
 
         Thread.sleep(2000);
 
@@ -88,7 +88,7 @@ public class AutonomousBox
         base.rotateDegreesEncoder(rotationThreeDegrees, .5, true);
         Thread.sleep(500);
 
-        arm.moveSeconds(2,1);
+        arm.moveSeconds(2.5,1);
 
         base.encoderDriveInches(111, 111, .5, true);
         Thread.sleep(500);
@@ -97,7 +97,7 @@ public class AutonomousBox
         base.rotateDegreesEncoder(rotationFourDegrees, .5, true);
         Thread.sleep(500);
 
-        arm.moveSeconds(2,-1);
+        arm.moveSeconds(2.7,-1);
         mast.moveCounts(1000,0.3);
 
         base.encoderDriveInches(29.5, 29.5, .2, true);
@@ -143,6 +143,9 @@ public class AutonomousBox
         robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
 
         base.hookUp();
+
+        mast.moveCounts(-1400,0.5);
+        Thread.sleep(500);
 
         int crabTwoDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
         base.encoderCrabsteer(crabTwoDirection,16,.5,true);
