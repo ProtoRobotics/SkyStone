@@ -60,7 +60,8 @@ public class Mast
         {
             rotateSpeed(0);
         }
-        opModeClass.telemetry.addData("Mast counts: ", robot.mastVertical.getCurrentPosition());
+        opModeClass.telemetry.addData("Mast vertical counts: ", robot.mastVertical.getCurrentPosition());
+        opModeClass.telemetry.addData("Mast rotator counts: ", robot.mastRotator.getCurrentPosition());
     }
 
     public void moveSpeed(double speed)

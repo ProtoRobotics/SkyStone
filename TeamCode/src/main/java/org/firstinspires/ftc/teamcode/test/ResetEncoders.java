@@ -21,5 +21,6 @@ public class ResetEncoders extends LinearOpMode
         robot.init(hardwareMap);
 
         robot.mastVertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.mastRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 }

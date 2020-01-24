@@ -15,8 +15,10 @@ public class ArmMoveToPosTest extends LinearOpMode
         HardwareMecanum robot = new HardwareMecanum();
         robot.init(hardwareMap);
 
-        Arm arm = new Arm(this, robot, gamepad1, gamepad2, true);
+        Arm arm = new Arm(this, robot, gamepad1, gamepad2);
 
-        //arm.moveToPos(36);
+        waitForStart();
+
+        arm.moveToPosition(1000, .5, true);
     }
 }

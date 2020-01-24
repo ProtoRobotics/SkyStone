@@ -30,7 +30,7 @@ public class AutonomousBar
         base = new Base(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
         collector = new Collector(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
         mast = new Mast(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
-        arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2, true);
+        arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
 
         mast.resetMastEncoders();
 
@@ -42,58 +42,78 @@ public class AutonomousBar
     public void runOpMode() throws InterruptedException
     {
         {
+            //all directional comments based on start position of AutonomousPosition.RIGHT
+            //directions would be reversed for start on LEFT side
 
-            mast.moveCounts(1000,.3);
+            int rotationDegrees;
+            base.hookUp();
+
+            //move forward away from wall
+            base.encoderDriveInches(26,26,.3,true);
+            Thread.sleep(500);
+
+            //crabsteer to the left to align with middle stone in rightmost set of 3
+            int crabDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
+            base.encoderCrabsteer(crabDirection,18,.5,true);
+
+            //raise mast; rotate gripper; open gripper
+            mast.moveCounts(1100,.3);
             robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_POS_2);
             robot.armExtender.setPower(-1);
             robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
             arm.moveSeconds(4.5,-1);
+            Thread.sleep(1000);
 
-            int crabDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
-            base.encoderCrabsteer(crabDirection,10,.5,true);
-
-            base.encoderDriveInches(22,22,.3,true);
-            Thread.sleep(900);
-
-            int crabOneDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
-            base.encoderCrabsteer(crabOneDirection,8,.3,true);
-            Thread.sleep(900);
-
-
-            base.encoderDriveInches(4,4,.2,true);
-            Thread.sleep(900);
-
-            mast.moveCounts(-900,.3);
-            Thread.sleep(900);
+            //lower mast onto stone and close the gripper
+            mast.moveCounts(-1100,.3);
+            Thread.sleep(1000);
 
             robot.leftGripper.setPosition(arm.GRIPPER_LEFT_CLOSED);
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_CLOSED);
-            Thread.sleep(750);
+            Thread.sleep(500);
 
+            //reverse robot
             base.encoderDriveInches(-10,-10,.2,true);//drive up to skystone and pick it up
             Thread.sleep(900);
 
-            int rotationOneDegrees = (autonomousPosition == AutonomousPosition.RIGHT) ? 90 : (-90);
-            base.rotateDegreesEncoder(rotationOneDegrees, .3,true);
+            //rotate robot 90 degrees to the right
+            rotationDegrees = (autonomousPosition == AutonomousPosition.RIGHT) ? 90 : (-90);
+            base.rotateDegreesEncoder(rotationDegrees, .3,true);
             Thread.sleep(700);
 
+            //drive across the field to foundation
             base.encoderDriveInches(80,80,.3,true);
             Thread.sleep(900);
 
+            //rotate robot 90 degrees to the left
+            rotationDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
+            base.rotateDegreesEncoder(rotationDegrees, .5, true);
+            Thread.sleep(500);
+
+            //raise mast to clear the foundation edge with stone
+            mast.moveCounts(1000,.3);
+
+            // drive robot forward to the foundation
+            base.encoderDriveInches(15,15,.5,true);
+            Thread.sleep(900);
+
+            //lower mast --> open the gripper
+            mast.moveCounts(-1000,.3);
             robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
 
-            mast.moveCounts(200,.3);
-
-            base.encoderDriveInches(-15,-15,.5,true);
+            //reverse robot slightly in order to clear foundation for 90 degree turn to the left
+            base.encoderDriveInches(-4,-4,.3,true);
             Thread.sleep(900);
 
-            mast.moveCounts(-200,.3);
+            //turn robot 90 degrees to the left in order to drive to center line
+            rotationDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
+            base.rotateDegreesEncoder(rotationDegrees, .5, true);
+            Thread.sleep(500);
 
-            base.encoderDriveInches(-15,-15,.3,true);
-            Thread.sleep(900);
-
+            //drive robot forward to center line
+            base.encoderDriveInches(48,48,.5,true);
         }
 
 
