@@ -17,8 +17,6 @@ public class Arm
     private Gamepad gamepad1; //Driver
     private Gamepad gamepad2; //Gunner
 
-    private boolean useDistance;
-
     public final double GRIPPER_ROTATOR_POS_1 = .74; //Also the gripper rotator initialization point
     public final double GRIPPER_ROTATOR_POS_2 = .36;
     final double GRIPPER_ROTATOR_SPEED = 1.5 / 280;
@@ -35,13 +33,12 @@ public class Arm
     private final double MAX_STOP_DISTANCE = 43.0;
     private final double MAX_THROTTLE_DISTANCE = 42.0;
 
-    public Arm(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2, boolean useDistance)
+    public Arm(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
         this.opModeClass = opModeClass;
         this.robot = robot;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
-        this.useDistance = useDistance;
     }
 
     public void initTeleop()
@@ -54,39 +51,20 @@ public class Arm
     {
         opModeClass.telemetry.addData("right stick y", gamepad2.right_stick_y);
 
-        if (useDistance)
+        if (gamepad2.right_stick_y > .1) //arm out
         {
-            if (gamepad2.right_stick_y > .1) //arm out
-            {
-                //robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
-                robot.armExtender.setPower(gamepad2.right_stick_y);
-            }
-            else if (gamepad2.right_stick_y < .1) //arm in
-            {
-                //robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
-                robot.armExtender.setPower(gamepad2.right_stick_y);
-            }
-            else
-            {
-                robot.armExtender.setPower(0);
-            }
+            //robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
+            robot.armExtender.setPower(gamepad2.right_stick_y);
+        }
+        else if (gamepad2.right_stick_y < .1) //arm in
+        {
+            //robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
+            robot.armExtender.setPower(gamepad2.right_stick_y);
         }
         else
         {
-            if (gamepad2.right_stick_y > .1) //arm out
-            {
-                robot.armExtender.setPower(gamepad2.right_stick_y);
-            }
-            else if (gamepad2.right_stick_y < .1) //arm in
-            {
-                robot.armExtender.setPower(gamepad2.right_stick_y);
-            }
-            else
-            {
-                robot.armExtender.setPower(0);
-            }
+            robot.armExtender.setPower(0);
         }
-
         opModeClass.telemetry.addData("Servo position", robot.gripperRotator.getPosition());
 
         if (gamepad2.left_bumper)
@@ -152,6 +130,43 @@ public class Arm
         return speed;
     }
 
+    public void moveToPosition(final int targetPosition, double speed, boolean sequential) throws InterruptedException
+    {
+        final int ERROR_THRESHOLD = 300;
+        robot.armExtender.setPower(speed);
+
+        if (sequential) //Run while loop in main thread
+        {
+            while (Math.abs(targetPosition - robot.mastRotator.getCurrentPosition()) <= ERROR_THRESHOLD)
+            {
+                Thread.sleep(100);
+            }
+            robot.armExtender.setPower(0);
+        }
+        else //Run while loop in separate thread to allow other processes to begin.
+        {
+            new Thread(new Runnable() {
+
+                @Override
+                public void run()
+                {
+                    while (Math.abs(targetPosition - robot.mastRotator.getCurrentPosition()) <= ERROR_THRESHOLD)
+                    {
+                        try
+                        {
+                            Thread.sleep(100);
+                        }
+                        catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                    robot.armExtender.setPower(0);
+                }
+            }).start();
+        }
+    }
+
     public void moveSeconds(double seconds, double speed)
     {
         robot.armExtender.setPower(speed);
@@ -165,24 +180,4 @@ public class Arm
 
         robot.scheduler.schedule(armTask, (long) (seconds * 1000), TimeUnit.MILLISECONDS);
     }
-
-    /*public void moveToPos(double pos)
-    {
-        double error;
-        //double speed = SPEED;
-
-        error = pos - robot.armDistanceSensor.getDistance(DistanceUnit.CM);
-        while (Math.abs(error) > 2)
-        {
-            if (error < 0)
-            {
-                robot.armExtender.setPower(1);
-            }
-            else
-            {
-                robot.armExtender.setPower(-1);
-            }
-            error = pos - robot.armDistanceSensor.getDistance(DistanceUnit.CM);
-        }
-    }*/
 }
