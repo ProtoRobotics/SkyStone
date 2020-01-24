@@ -47,6 +47,11 @@ public class AutonomousBar
 
             int rotationDegrees;
             base.hookUp();
+            mast.moveCounts(1100,.3);
+            robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_POS_2);
+            robot.armExtender.setPower(-1);
+            robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
+            robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
 
             //move forward away from wall
             base.encoderDriveInches(26,26,.3,true);
@@ -54,16 +59,11 @@ public class AutonomousBar
 
             //crabsteer to the left to align with middle stone in rightmost set of 3
             int crabDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
-            base.encoderCrabsteer(crabDirection,18,.5,true);
+            base.encoderCrabsteer(crabDirection,15,.5,true);
 
             //raise mast; rotate gripper; open gripper
-            mast.moveCounts(1100,.3);
-            robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_POS_2);
-            robot.armExtender.setPower(-1);
-            robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
-            robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
-            arm.moveSeconds(4.5,-1);
-            Thread.sleep(1000);
+            arm.moveSeconds(3.5,-1);
+            Thread.sleep(3000);
 
             //lower mast onto stone and close the gripper
             mast.moveCounts(-1100,.3);
