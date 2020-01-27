@@ -55,7 +55,6 @@ public class AutonomousBox
 
         mast.moveCounts(1100, .3);
         robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_POS_2);
-        robot.armExtender.setPower(-1);
         robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
         robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
         arm.moveSeconds(5.5, -1);
@@ -69,11 +68,11 @@ public class AutonomousBox
         base.encoderCrabsteer(crabOneDirection, 24, .5, true);
         Thread.sleep(500);
 
-        base.encoderDriveInches(20, 20, .5, true);
+        base.encoderDriveInches(20, 20, .4, true);
         Thread.sleep(750);
 
         mast.moveCounts(-1250, .3);
-        Thread.sleep(750); //TODO add sequential capability for mast.moveCounts
+        Thread.sleep(1250); //TODO add sequential capability for mast.moveCounts
 
         robot.leftGripper.setPosition(arm.GRIPPER_LEFT_CLOSED);
         robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_CLOSED);
@@ -84,16 +83,14 @@ public class AutonomousBox
         Thread.sleep(2000);
 
         base.encoderDriveInches(-20, -20, .5, true);
-        Thread.sleep(500); //Fully stop the robot by waiting .5 seconds.
 
         int rotationThreeDegrees = (autonomousPosition == AutonomousPosition.RIGHT) ? 90 : (-90);
         base.rotateDegreesEncoder(rotationThreeDegrees, .5, true);
-        Thread.sleep(500);
+        Thread.sleep(600);
 
         arm.moveSeconds(2.5,1);
 
-        base.encoderDriveInches(111, 111, .5, true);
-        Thread.sleep(500);
+        base.encoderDriveInches(108, 108, .7, true);
 
         int rotationFourDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
         base.rotateDegreesEncoder(rotationFourDegrees, .5, true);
@@ -103,7 +100,6 @@ public class AutonomousBox
         mast.moveCounts(1000,0.3);
 
         base.encoderDriveInches(29.5, 29.5, .2, true);
-        Thread.sleep(500);
 
         arm.moveSeconds(0.1,0.5);
         
@@ -113,25 +109,23 @@ public class AutonomousBox
         base.hookDown();
         Thread.sleep(500);
 
-        robot.leftFlapper.setPosition(0.43);
-        robot.rightFlapper.setPosition(0.61);
-
         mast.moveCounts(300,0.5);
 
         int swivelCounts = -3500;
+        double swivelPower = .7;
         if (autonomousPosition == AutonomousPosition.RIGHT)
         {
             robot.rightFront.setTargetPosition(robot.rightFront.getCurrentPosition() + swivelCounts);
             robot.rightBack.setTargetPosition(robot.rightBack.getCurrentPosition() + swivelCounts);
-            robot.rightFront.setPower(.3);
-            robot.rightBack.setPower(.3);
+            robot.rightFront.setPower(swivelPower);
+            robot.rightBack.setPower(swivelPower);
         }
         else
         {
             robot.leftFront.setTargetPosition(robot.leftFront.getCurrentPosition() - swivelCounts);
             robot.leftBack.setTargetPosition(robot.leftBack.getCurrentPosition() - swivelCounts);
-            robot.leftFront.setPower(.5);
-            robot.leftBack.setPower(.5);
+            robot.leftFront.setPower(swivelPower);
+            robot.leftBack.setPower(swivelPower);
         }
 
         boolean swivelBusy = true;
@@ -143,20 +137,17 @@ public class AutonomousBox
             swivelBusy = (autonomousPosition == AutonomousPosition.RIGHT) ? (robot.rightFront.isBusy() && robot.rightBack.isBusy()) : (robot.leftFront.isBusy() && robot.leftBack.isBusy());
         }
 
-        Thread.sleep(1000);
-
-        base.encoderDriveInches(20,20,0.4,true);
+        base.encoderDriveInches(20,20,0.5,true);
 
         base.hookUp();
 
         int crabTwoDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
-        base.encoderCrabsteer(crabTwoDirection,20,.5,true);
-        Thread.sleep(500);
+        base.encoderCrabsteer(crabTwoDirection,20,.7,true);
 
         mast.moveCounts(-1700,0.5);
         Thread.sleep(500);
 
-        base.encoderDriveInches(-42,-42,.5,true);
+        base.encoderDriveInches(-42,-42,.7,true);
         Thread.sleep(500);
     }
 }

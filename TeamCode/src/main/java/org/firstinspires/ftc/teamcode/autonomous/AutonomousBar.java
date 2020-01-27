@@ -48,8 +48,8 @@ public class AutonomousBar
             int rotationDegrees;
             base.hookUp();
             mast.moveCounts(1100,.3);
+            arm.moveSeconds(5,-1);
             robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_POS_2);
-            robot.armExtender.setPower(-1);
             robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
 
@@ -59,21 +59,20 @@ public class AutonomousBar
 
             //crabsteer to the left to align with middle stone in rightmost set of 3
             int crabDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
-            base.encoderCrabsteer(crabDirection,15,.5,true);
+            base.encoderCrabsteer(crabDirection,12.5,.5,true);
+            Thread.sleep(2000);
 
-            //raise mast; rotate gripper; open gripper
-            arm.moveSeconds(3.5,-1);
-            Thread.sleep(3000);
-
-            //lower mast onto stone and close the gripper
+            //extend arm and raise mast to position gripper above stone
             mast.moveCounts(-1100,.3);
             Thread.sleep(1000);
 
+            //close grippper
             robot.leftGripper.setPosition(arm.GRIPPER_LEFT_CLOSED);
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_CLOSED);
             Thread.sleep(500);
 
-            //reverse robot
+            //raise mast to get stone off ground;  reverse robot
+            mast.moveCounts(150, .3);
             base.encoderDriveInches(-10,-10,.2,true);//drive up to skystone and pick it up
             Thread.sleep(900);
 
@@ -83,7 +82,7 @@ public class AutonomousBar
             Thread.sleep(700);
 
             //drive across the field to foundation
-            base.encoderDriveInches(80,80,.3,true);
+            base.encoderDriveInches(70,70,.3,true);
             Thread.sleep(900);
 
             //rotate robot 90 degrees to the left
@@ -93,19 +92,23 @@ public class AutonomousBar
 
             //raise mast to clear the foundation edge with stone
             mast.moveCounts(1000,.3);
+            Thread.sleep(1000);
 
             // drive robot forward to the foundation
             base.encoderDriveInches(15,15,.5,true);
             Thread.sleep(900);
 
             //lower mast --> open the gripper
-            mast.moveCounts(-1000,.3);
+            //mast.moveCounts(-1000,.3);
             robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
 
             //reverse robot slightly in order to clear foundation for 90 degree turn to the left
             base.encoderDriveInches(-4,-4,.3,true);
             Thread.sleep(900);
+
+            //lower mast to go under bar on return to center line
+            mast.moveCounts(-1000,.3);
 
             //turn robot 90 degrees to the left in order to drive to center line
             rotationDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
@@ -114,33 +117,6 @@ public class AutonomousBar
 
             //drive robot forward to center line
             base.encoderDriveInches(48,48,.5,true);
-        }
-
-
-
-        int swivelCounts = -3500;
-        if (autonomousPosition == AutonomousPosition.RIGHT)
-        {
-            robot.rightFront.setTargetPosition(robot.rightFront.getCurrentPosition() + swivelCounts);
-            robot.rightBack.setTargetPosition(robot.rightBack.getCurrentPosition() + swivelCounts);
-            robot.rightFront.setPower(.3);
-            robot.rightBack.setPower(.3);
-        }
-        else
-        {
-            robot.leftFront.setTargetPosition(robot.leftFront.getCurrentPosition() - swivelCounts);
-            robot.leftBack.setTargetPosition(robot.leftBack.getCurrentPosition() - swivelCounts);
-            robot.leftFront.setPower(.5);
-            robot.leftBack.setPower(.5);
-        }
-
-        boolean swivelBusy = true;
-        while (swivelBusy)
-        {
-            autonomousClass.telemetry.addData("booleans", robot.rightFront.isBusy() + " " + robot.rightBack.isBusy() + " " + robot.leftFront.isBusy() + " " + robot.leftBack.isBusy());
-            autonomousClass.telemetry.update();
-            Thread.sleep(100);
-            swivelBusy = (autonomousPosition == AutonomousPosition.RIGHT) ? (robot.rightFront.isBusy() && robot.rightBack.isBusy()) : (robot.leftFront.isBusy() && robot.leftBack.isBusy());
         }
     }
 }
