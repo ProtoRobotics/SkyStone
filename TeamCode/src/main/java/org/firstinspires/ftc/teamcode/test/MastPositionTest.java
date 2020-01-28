@@ -26,8 +26,8 @@ public class MastPositionTest extends OpMode
         robot.mastRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.mastRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        robot.rightCollector.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.rightCollector.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.leftCollector.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftCollector.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     @Override
@@ -50,6 +50,12 @@ public class MastPositionTest extends OpMode
         else
         {
             robot.armExtender.setPower(0);
+        }
+
+        if (gamepad1.left_trigger != 0 || gamepad1.right_trigger != 0)
+        {
+            robot.leftCollector.setPower(1);
+            robot.rightCollector.setPower(1);
         }
 
         telemetry.addData("Left Collector", robot.leftCollector.getCurrentPosition());

@@ -48,7 +48,7 @@ public class AutonomousBar
             int rotationDegrees;
             base.hookUp();
             mast.moveCounts(1100,.3);
-            arm.moveSeconds(5,-1);
+            arm.moveSeconds(5.5,-1);
             robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_POS_2);
             robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
@@ -64,17 +64,17 @@ public class AutonomousBar
 
             //lower mast to position gripper on top of stone
             mast.moveCounts(-1100,.3);
-            Thread.sleep(1000);
+            Thread.sleep(1500);
 
             //close grippper
             robot.leftGripper.setPosition(arm.GRIPPER_LEFT_CLOSED);
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_CLOSED);
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
             //raise mast to get stone off ground;  reverse robot
-            mast.moveCounts(150, .3);
+            mast.moveCounts(250, .3);
             //base.encoderDriveInches(-10,-10,.2,true);//drive up to skystone and pick it up
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
             //rotate robot 90 degrees to the right
             rotationDegrees = (autonomousPosition == AutonomousPosition.RIGHT) ? 90 : (-90);
@@ -90,6 +90,9 @@ public class AutonomousBar
             //rotate robot 90 degrees to the left
             rotationDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
             base.rotateDegreesEncoder(rotationDegrees, .5, true);
+            arm.moveSeconds(1, -1);
+            Thread.sleep(1000);
+
             //Thread.sleep(500);
 
             // drive robot forward to the foundation
@@ -100,7 +103,7 @@ public class AutonomousBar
             //mast.moveCounts(-1000,.3);
             robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
-
+            Thread.sleep(1000);
             //reverse robot slightly in order to clear foundation for 90 degree turn to the left
            // base.encoderDriveInches(-4,-4,.3,true);
             //Thread.sleep(900);
@@ -113,7 +116,7 @@ public class AutonomousBar
             Thread.sleep(500);
 
             //drive robot forward to center line
-            base.encoderDriveInches(48,48,.5,true);
+            base.encoderDriveInches(40,40,.5,true);
         }
     }
 }
