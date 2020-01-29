@@ -52,12 +52,27 @@ public class Collector
             robot.leftCollector.setPower(-COLLECTOR_SPEED);
             robot.rightCollector.setPower(-COLLECTOR_SPEED);
         }
+        else if (gamepad1.dpad_left)
+        {
+            robot.leftCollector.setPower(COLLECTOR_SPEED);
+            robot.rightCollector.setPower(-COLLECTOR_SPEED);
+        }
+        else if (gamepad1.dpad_right)
+        {
+            robot.leftCollector.setPower(-COLLECTOR_SPEED);
+            robot.rightCollector.setPower(COLLECTOR_SPEED);
+        }
         else if (gamepad1.right_trigger == 0)
         {
             robot.leftCollector.setPower(COLLECTOR_OFF_SPEED);
             robot.rightCollector.setPower(COLLECTOR_OFF_SPEED);
         }
         else if (gamepad1.left_trigger == 0)
+        {
+            robot.leftCollector.setPower(COLLECTOR_OFF_SPEED);
+            robot.rightCollector.setPower(COLLECTOR_OFF_SPEED);
+        }
+        else if (!gamepad1.dpad_left && !gamepad1.dpad_right)
         {
             robot.leftCollector.setPower(COLLECTOR_OFF_SPEED);
             robot.rightCollector.setPower(COLLECTOR_OFF_SPEED);
