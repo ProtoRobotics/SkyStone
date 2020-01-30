@@ -58,7 +58,7 @@ public class AutonomousBox
         robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_POS_2);
         robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
         robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
-        arm.moveSeconds(6.0, -1);
+        arm.moveSeconds(6.2, -1);
         robot.leftFlapper.setPosition(collector.LEFT_FLAPPER_CLOSED);
         robot.rightFlapper.setPosition(collector.RIGHT_FLAPPER_CLOSED);
         robot.mastRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -98,7 +98,7 @@ public class AutonomousBox
         base.rotateDegreesEncoder(rotationFourDegrees, .5, true);
         Thread.sleep(500);
 
-        arm.moveSeconds(2.7,-1);
+        arm.moveSeconds(2.5,-1);
         mast.moveCounts(1000,0.3);
 
         base.encoderDriveInches(29.5, 29.5, .2, true);
@@ -144,7 +144,7 @@ public class AutonomousBox
         base.hookUp();
 
         int crabTwoDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
-        base.encoderCrabsteer(crabTwoDirection,18,.7,true);
+        base.encoderCrabsteer(crabTwoDirection,15,.7,true);
 
         mast.moveCounts(-1700,0.5);
         Thread.sleep(500);

@@ -54,7 +54,7 @@ public class AutonomousBar
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
 
             //move forward away from wall
-            base.encoderDriveInches(26,26,.3,true);
+            base.encoderDriveInches(25,25,.3,true);
             Thread.sleep(500);
 
             //crabsteer to the left to align with middle stone in rightmost set of 3
@@ -78,7 +78,7 @@ public class AutonomousBar
 
             //rotate robot 90 degrees to the right
             rotationDegrees = (autonomousPosition == AutonomousPosition.RIGHT) ? 90 : (-90);
-            base.rotateDegreesEncoder(rotationDegrees, .3,true);
+            base.rotateDegreesEncoder(rotationDegrees, .4,true);
             Thread.sleep(700);
 
             //drive across the field to foundation
@@ -96,7 +96,7 @@ public class AutonomousBar
             //Thread.sleep(500);
 
             // drive robot forward to the foundation
-            //base.encoderDriveInches(15,15,.5,true);
+            base.encoderDriveInches(3,3,.5,true);
             //Thread.sleep(900);
 
             //lower mast --> open the gripper
@@ -108,6 +108,9 @@ public class AutonomousBar
            // base.encoderDriveInches(-4,-4,.3,true);
             //Thread.sleep(900);
 
+            // drive robot backwards away from foundation
+            base.encoderDriveInches(-3,-3,.5,true);
+            Thread.sleep(500);
             //turn robot 90 degrees to the left in order to drive to center line
             rotationDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
             base.rotateDegreesEncoder(rotationDegrees, .5, true);
@@ -117,6 +120,11 @@ public class AutonomousBar
 
             //drive robot forward to center line
             base.encoderDriveInches(40,40,.5,true);
+            Thread.sleep(1000);
+            //crabsteer to the left to move robot against center structure
+            crabDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
+            base.encoderCrabsteer(crabDirection,4,4,true);
+
         }
     }
 }
