@@ -8,12 +8,12 @@ import org.firstinspires.ftc.teamcode.autonomous.AutonomousBox;
 import org.firstinspires.ftc.teamcode.autonomous.AutonomousPosition;
 import org.firstinspires.ftc.teamcode.autonomous.BackUpLineWall;
 
-@Autonomous(name="BackupLineCloseLeft")
-public class BackupLineCloseLeft extends LinearOpMode
+@Autonomous(name="BackupLineCloseRight")
+public class BackupLineWallRight extends LinearOpMode
 {
     @Override
     public void runOpMode() throws InterruptedException
     {
-        BackUpLineWall Backup = new BackUpLineWall(this, AutonomousPosition.LEFT);
+        BackUpLineWall Backup = new BackUpLineWall(this, AutonomousPosition.RIGHT);
     }
 }
