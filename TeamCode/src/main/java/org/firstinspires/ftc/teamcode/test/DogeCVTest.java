@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.test;
 
 
 import com.disnodeteam.dogecv.detectors.skystone.SkystoneDetector;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -18,8 +19,9 @@ import java.util.Locale;
  * Original Work Copright(c) 2019 OpenFTC Team
  * Derived Work Copyright(c) 2019 DogeDevs
  */
-@TeleOp(name = "Skystone Detector OpMode DogeCV")
 
+@Disabled
+@TeleOp(name = "Skystone Detector OpMode DogeCV")
 public class DogeCVTest extends LinearOpMode {
     private OpenCvCamera phoneCam;
     private SkystoneDetector skyStoneDetector;

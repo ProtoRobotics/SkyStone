@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Arm;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 
+@Disabled
 @Autonomous(name = "ArmMoveToPosTest")
 public class ArmMoveToPosTest extends LinearOpMode
 {

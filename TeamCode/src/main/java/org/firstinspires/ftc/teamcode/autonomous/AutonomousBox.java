@@ -28,7 +28,10 @@ public class AutonomousBox
     ImuRotator imuRotator;
 
     LinearOpMode autonomousClass;
-    AutonomousPosition autonomousPosition;;
+    AutonomousPosition autonomousPosition;
+
+    SkystoneSensor skystoneSensor;
+    SkystonePosition skystonePosition;
 
     public AutonomousBox(LinearOpMode autonomousClass, AutonomousPosition autonomousPosition) throws InterruptedException
     {
@@ -45,7 +48,11 @@ public class AutonomousBox
 
         mast.resetMastEncoders();
 
+        skystoneSensor = new SkystoneSensor(autonomousClass.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", autonomousClass.hardwareMap.appContext.getPackageName()));
+
         autonomousClass.waitForStart();
+
+        skystonePosition = skystoneSensor.getSkystonePosition();
 
         runOpMode();
     }

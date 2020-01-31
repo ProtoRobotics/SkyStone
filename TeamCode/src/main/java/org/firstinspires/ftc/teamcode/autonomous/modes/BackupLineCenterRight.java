@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.autonomous.AutonomousBox;
 import org.firstinspires.ftc.teamcode.autonomous.AutonomousPosition;
 import org.firstinspires.ftc.teamcode.autonomous.BackupLineCenter;
 
-@Autonomous(name="BackupLineCenter")
+@Autonomous(name="BackupLineCenterRight")
 public class BackupLineCenterRight extends LinearOpMode
 {
     @Override

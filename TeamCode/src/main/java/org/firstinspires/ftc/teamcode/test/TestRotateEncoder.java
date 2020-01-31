@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Base;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 
+@Disabled
 @Autonomous(name="TestRotateEncoder")
 public class TestRotateEncoder extends LinearOpMode
 {

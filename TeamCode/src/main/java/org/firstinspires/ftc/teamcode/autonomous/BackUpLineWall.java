@@ -1,22 +1,13 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
 import org.firstinspires.ftc.teamcode.Base;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Arm;
-import org.firstinspires.ftc.teamcode.Base;
 import org.firstinspires.ftc.teamcode.Collector;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
-import org.firstinspires.ftc.teamcode.ImuRotator;
 import org.firstinspires.ftc.teamcode.Mast;
-import org.firstinspires.ftc.teamcode.Location; //JAD 12/3/19
-import org.firstinspires.ftc.teamcode.autonomous.modes.BackupLineCloseLeft;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class BackUpLineWall {
     Base base;

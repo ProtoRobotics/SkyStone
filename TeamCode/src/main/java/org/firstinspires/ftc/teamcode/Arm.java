@@ -5,8 +5,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Arm
@@ -28,11 +26,6 @@ public class Arm
     public final double GRIPPER_LEFT_CAPSTONE = .28;
     public final double GRIPPER_RIGHT_CAPSTONE = .74;
 
-    private final double MIN_STOP_DISTANCE = 25.3;
-    private final double MIN_THROTTLE_DISTANCE = 28.0;
-    private final double MAX_STOP_DISTANCE = 43.0;
-    private final double MAX_THROTTLE_DISTANCE = 42.0;
-
     public Arm(OpMode opModeClass, HardwareMecanum robot, Gamepad gamepad1, Gamepad gamepad2)
     {
         this.opModeClass = opModeClass;
@@ -53,13 +46,11 @@ public class Arm
 
         if (gamepad2.right_stick_y > .1) //arm out
         {
-            //robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
-            robot.armExtender.setPower(gamepad2.right_stick_y);
+            robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
         }
         else if (gamepad2.right_stick_y < .1) //arm in
         {
-            //robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
-            robot.armExtender.setPower(gamepad2.right_stick_y);
+            robot.armExtender.setPower(getAdjustedSpeed(1.0 * gamepad2.right_stick_y));
         }
         else
         {
@@ -109,22 +100,27 @@ public class Arm
     //This method will return an adjusted vertical speed based on how far away the arm is from the mast.
     public double getAdjustedSpeed(double speed)
     {
+        final int MIN_STOP_COUNTS = 0;
+        final int MIN_THROTTLE_COUNTS = 8000;
+        final int MAX_THROTTLE_COUNTS = 48000;
+        final int MAX_STOP_COUNTS = 56000;
+
         boolean goingOut = true;
         if (speed > 0)
         {
             goingOut = false;
         }
 
-        double distance = robot.armDistanceSensor.getDistance(DistanceUnit.CM);
+        int currentCount = robot.rightCollector.getCurrentPosition();
 
         //We have to check which direction we are going so that we can reverse course after throttling the mast.
-        if (distance < MIN_STOP_DISTANCE && !goingOut)
+        if (currentCount < MIN_STOP_COUNTS && !goingOut)
             return 0; //Stop mast if it is
-        if (distance < MIN_THROTTLE_DISTANCE && !goingOut)
+        if (currentCount < MIN_THROTTLE_COUNTS && !goingOut)
             return (speed / 2.0);
-        if (distance > MAX_STOP_DISTANCE && goingOut)
+        if (currentCount > MAX_STOP_COUNTS && goingOut)
             return 0;
-        if (distance > MAX_THROTTLE_DISTANCE && goingOut)
+        if (currentCount > MAX_THROTTLE_COUNTS && goingOut)
             return (speed / 2.0);
 
         return speed;
