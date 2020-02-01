@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.autonomous.old;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,9 +9,12 @@ import org.firstinspires.ftc.teamcode.Collector;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 import org.firstinspires.ftc.teamcode.ImuRotator;
 import org.firstinspires.ftc.teamcode.Mast;
+import org.firstinspires.ftc.teamcode.autonomous.AutonomousPosition;
+import org.firstinspires.ftc.teamcode.autonomous.SkystonePosition;
+import org.firstinspires.ftc.teamcode.autonomous.SkystoneSensor;
 
 
-public class AutonomousBox
+public class OldAutonomousBox
 {
     Base base;
     Collector collector;
@@ -27,7 +30,7 @@ public class AutonomousBox
     SkystoneSensor skystoneSensor;
     SkystonePosition skystonePosition;
 
-    public AutonomousBox(LinearOpMode autonomousClass, AutonomousPosition autonomousPosition) throws InterruptedException
+    public OldAutonomousBox(LinearOpMode autonomousClass, AutonomousPosition autonomousPosition) throws InterruptedException
     {
         this.autonomousClass = autonomousClass;
         this.autonomousPosition = autonomousPosition;
@@ -46,8 +49,7 @@ public class AutonomousBox
 
         autonomousClass.waitForStart();
 
-        Thread.sleep(300); //Give the robot time to grab the camera info before moving.
-        skystonePosition = SkystonePosition.RIGHT; //TODO remove and replace
+        skystonePosition = skystoneSensor.getSkystonePosition();
 
         runOpMode();
     }
@@ -57,16 +59,15 @@ public class AutonomousBox
         base.hookUp();
 
         mast.moveCounts(1100, .3);
-        robot.gripperRotator.setPosition(skystonePosition.gripperRotatorPos);
+        robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_HORIZONTAL);
         robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
         robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
+        arm.moveSeconds(6.2, -1);
         robot.leftFlapper.setPosition(collector.LEFT_FLAPPER_CLOSED);
         robot.rightFlapper.setPosition(collector.RIGHT_FLAPPER_CLOSED);
         robot.mastRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        arm.moveToPosition(skystonePosition.armCounts, 1, false);
-
-        base.encoderDriveInches(7, 7, .3, true);
+        base.encoderDriveInches(4, 4, .3, true);
         Thread.sleep(500); //Pause for .5 seconds to ensure full stop.
 
         int crabOneDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
@@ -75,10 +76,6 @@ public class AutonomousBox
 
         base.encoderDriveInches(20, 20, .4, true);
         Thread.sleep(750);
-
-        robot.mastRotator.setTargetPosition(skystonePosition.mastRotatorCounts);
-        robot.mastRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.mastRotator.setPower(.5);
 
         mast.moveCounts(-1100, .3);
         Thread.sleep(1250); //TODO add sequential capability for mast.moveCounts
@@ -89,20 +86,15 @@ public class AutonomousBox
 
         mast.moveCounts(400,0.3);
 
-        Thread.sleep(500);
+        Thread.sleep(2000);
 
         base.encoderDriveInches(-20, -20, .5, true);
-
-        robot.mastRotator.setTargetPosition(0);
-        robot.mastRotator.setPower(.5);
-        Thread.sleep(500);
 
         int rotationThreeDegrees = (autonomousPosition == AutonomousPosition.RIGHT) ? 90 : (-90);
         base.rotateDegreesEncoder(rotationThreeDegrees, .5, true);
         Thread.sleep(600);
 
-        robot.gripperRotator.setPosition(Arm.GRIPPER_ROTATOR_HORIZONTAL);
-        arm.moveToPosition(29000, 1, false);
+        arm.moveSeconds(2.5,1);
 
         base.encoderDriveInches(108, 108, .7, true);
 
@@ -110,12 +102,12 @@ public class AutonomousBox
         base.rotateDegreesEncoder(rotationFourDegrees, .5, true);
         Thread.sleep(500);
 
-        arm.moveToPosition(41000, 1, false);
+        arm.moveSeconds(2.5,-1);
         mast.moveCounts(1000,0.3);
 
         base.encoderDriveInches(29.5, 29.5, .2, true);
 
-        arm.moveToPosition(38000, 1, true);
+        arm.moveSeconds(0.1,0.5);
         
         robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
         robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);

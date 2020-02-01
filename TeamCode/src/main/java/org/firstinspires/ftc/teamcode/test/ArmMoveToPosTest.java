@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Arm;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 
-@Disabled
 @Autonomous(name = "ArmMoveToPosTest")
 public class ArmMoveToPosTest extends LinearOpMode
 {
@@ -21,6 +20,6 @@ public class ArmMoveToPosTest extends LinearOpMode
 
         waitForStart();
 
-        arm.moveToPosition(1000, .5, true);
+        arm.moveToPosition(20000, .5, true);
     }
 }

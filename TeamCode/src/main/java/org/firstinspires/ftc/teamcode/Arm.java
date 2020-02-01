@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 import java.util.concurrent.TimeUnit;
 
 public class Arm
@@ -15,8 +13,10 @@ public class Arm
     private Gamepad gamepad1; //Driver
     private Gamepad gamepad2; //Gunner
 
-    public final double GRIPPER_ROTATOR_POS_1 = .74; //Also the gripper rotator initialization point
-    public final double GRIPPER_ROTATOR_POS_2 = .36;
+    public static final double GRIPPER_ROTATOR_VERTICAL = .76; //Also the gripper rotator initialization point
+    public static final double GRIPPER_ROTATOR_HORIZONTAL = .36;
+    public static final double GRIPPER_ROTATOR_MAST_LEFT = .27; //Grip rotator pos used in autonomous for left skystone.
+    public static final double GRIPPER_ROTATOR_MAST_RIGHT = .47; //Grip rotator pos used in autonomous for right skystone.
     final double GRIPPER_ROTATOR_SPEED = 1.5 / 280;
 
     public final double GRIPPER_LEFT_OPEN = .46;
@@ -71,11 +71,11 @@ public class Arm
 
         if (gamepad2.dpad_up)
         {
-            robot.gripperRotator.setPosition(GRIPPER_ROTATOR_POS_1);
+            robot.gripperRotator.setPosition(GRIPPER_ROTATOR_VERTICAL);
         }
         else if(gamepad2.dpad_down)
         {
-            robot.gripperRotator.setPosition(GRIPPER_ROTATOR_POS_2);
+            robot.gripperRotator.setPosition(GRIPPER_ROTATOR_HORIZONTAL);
         }
 
         if (gamepad2.dpad_left)
@@ -128,13 +128,18 @@ public class Arm
 
     public void moveToPosition(final int targetPosition, double speed, boolean sequential) throws InterruptedException
     {
-        final int ERROR_THRESHOLD = 300;
+        final int ERROR_THRESHOLD = 1000;
+
+        final boolean extendingOutwards = (targetPosition > robot.rightCollector.getCurrentPosition()); //is arm moving out or in
+        speed = extendingOutwards ? (-Math.abs(speed)) : (Math.abs(speed)); //If going out, speed = negative, retracting = positive speed.
         robot.armExtender.setPower(speed);
 
         if (sequential) //Run while loop in main thread
         {
-            while (Math.abs(targetPosition - robot.mastRotator.getCurrentPosition()) <= ERROR_THRESHOLD)
+            boolean reached = false;
+            while (!reached)
             {
+                reached = extendingOutwards ? (robot.rightCollector.getCurrentPosition() > targetPosition) : (robot.rightCollector.getCurrentPosition() < targetPosition);
                 Thread.sleep(100);
             }
             robot.armExtender.setPower(0);
@@ -146,10 +151,12 @@ public class Arm
                 @Override
                 public void run()
                 {
-                    while (Math.abs(targetPosition - robot.mastRotator.getCurrentPosition()) <= ERROR_THRESHOLD)
+                    boolean reached = false;
+                    while (!reached)
                     {
                         try
                         {
+                            reached = extendingOutwards ? (robot.rightCollector.getCurrentPosition() > targetPosition) : (robot.rightCollector.getCurrentPosition() < targetPosition);
                             Thread.sleep(100);
                         }
                         catch (InterruptedException e)
@@ -163,6 +170,7 @@ public class Arm
         }
     }
 
+    @Deprecated
     public void moveSeconds(double seconds, double speed)
     {
         robot.armExtender.setPower(speed);

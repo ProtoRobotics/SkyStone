@@ -52,10 +52,17 @@ public class MastPositionTest extends OpMode
             robot.armExtender.setPower(0);
         }
 
-        if (gamepad1.left_trigger != 0 || gamepad1.right_trigger != 0)
+        if (gamepad1.left_trigger > 0)
         {
-            robot.leftCollector.setPower(1);
-            robot.rightCollector.setPower(1);
+            robot.mastRotator.setPower(.5 * gamepad1.left_trigger);
+        }
+        else if (gamepad1.right_trigger > 0)
+        {
+            robot.mastRotator.setPower(-.5 * gamepad1.right_trigger);
+        }
+        else
+        {
+            robot.mastRotator.setPower(0);
         }
 
         telemetry.addData("Left Collector", robot.leftCollector.getCurrentPosition());

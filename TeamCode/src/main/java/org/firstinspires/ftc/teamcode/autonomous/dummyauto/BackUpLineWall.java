@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.autonomous.dummyauto;
 
 import org.firstinspires.ftc.teamcode.Base;
 
@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Arm;
 import org.firstinspires.ftc.teamcode.Collector;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 import org.firstinspires.ftc.teamcode.Mast;
+import org.firstinspires.ftc.teamcode.autonomous.AutonomousPosition;
 
 public class BackUpLineWall {
     Base base;

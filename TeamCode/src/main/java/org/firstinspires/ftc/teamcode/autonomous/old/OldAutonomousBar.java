@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.autonomous.old;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Arm;
@@ -6,8 +6,9 @@ import org.firstinspires.ftc.teamcode.Base;
 import org.firstinspires.ftc.teamcode.Collector;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 import org.firstinspires.ftc.teamcode.Mast;
+import org.firstinspires.ftc.teamcode.autonomous.AutonomousPosition;
 
-public class AutonomousBar
+public class OldAutonomousBar
 {
     Base base;
     Collector collector;
@@ -19,7 +20,7 @@ public class AutonomousBar
     LinearOpMode autonomousClass;
     AutonomousPosition autonomousPosition;
 
-    public AutonomousBar(LinearOpMode autonomousClass, AutonomousPosition autonomousPosition) throws InterruptedException //direction: 0 = left, 1 = right.
+    public OldAutonomousBar(LinearOpMode autonomousClass, AutonomousPosition autonomousPosition) throws InterruptedException //direction: 0 = left, 1 = right.
     {
         this.autonomousClass = autonomousClass;
         this.autonomousPosition = autonomousPosition;

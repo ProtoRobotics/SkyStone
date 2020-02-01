@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.autonomous.dummyauto;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Arm;
 import org.firstinspires.ftc.teamcode.Base;
 import org.firstinspires.ftc.teamcode.Collector;
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 import org.firstinspires.ftc.teamcode.Mast;
+import org.firstinspires.ftc.teamcode.autonomous.AutonomousPosition;
 
 public class BackupLineCenter
 {
@@ -50,7 +50,7 @@ public class BackupLineCenter
             base.hookUp();
             mast.moveCounts(1100,.3);
             arm.moveSeconds(5.5,-1);
-            robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_POS_2);
+            robot.gripperRotator.setPosition(arm.GRIPPER_ROTATOR_HORIZONTAL);
             robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
 

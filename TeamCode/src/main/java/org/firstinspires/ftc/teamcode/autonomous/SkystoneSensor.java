@@ -61,6 +61,11 @@ public class SkystoneSensor {    private ElapsedTime runtime = new ElapsedTime()
 
     public SkystonePosition getSkystonePosition()
     {
+        if (valLeft == 0 && valMid == 0 && valRight == 0)
+        {
+            return SkystonePosition.UNKNOWN;
+        }
+
         if (valLeft == 0)
         {
             return SkystonePosition.LEFT;

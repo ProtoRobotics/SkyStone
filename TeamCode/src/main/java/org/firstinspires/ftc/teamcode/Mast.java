@@ -34,6 +34,13 @@ public class Mast
     public void initTeleop()
     {
         robot.mastVertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.mastRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void resetMastEncoders()
+    {
+        robot.mastVertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.mastRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void doLoop()
@@ -80,16 +87,12 @@ public class Mast
     //Rotate (degrees) positive right, negative left
     public void rotateCounts(int counts, double speed)
     {
-        robot.mastRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.mastRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.mastRotator.setTargetPosition(counts);
+        robot.mastRotator.setTargetPosition(robot.mastRotator.getCurrentPosition() + counts);
         robot.mastRotator.setPower(speed);
     }
 
     public void rotateSpeed(double speed)
     {
-        robot.mastRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.mastRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.mastRotator.setPower(speed);
     }
 
@@ -114,12 +117,6 @@ public class Mast
 
         return speed;
     }
-
-    public void resetMastEncoders()
-    {
-        robot.mastVertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
 
     public void setMastOnSkystone(Location loc) {
         switch (loc) {
