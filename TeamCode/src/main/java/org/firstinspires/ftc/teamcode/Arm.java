@@ -15,8 +15,8 @@ public class Arm
 
     public static final double GRIPPER_ROTATOR_VERTICAL = .76; //Also the gripper rotator initialization point
     public static final double GRIPPER_ROTATOR_HORIZONTAL = .36;
-    public static final double GRIPPER_ROTATOR_MAST_LEFT = .25; //Grip rotator pos used in autonomous for left skystone.
-    public static final double GRIPPER_ROTATOR_MAST_RIGHT = .49; //Grip rotator pos used in autonomous for right skystone.
+    public static final double GRIPPER_ROTATOR_MAST_LEFT = .23; //Grip rotator pos used in autonomous for left skystone.
+    public static final double GRIPPER_ROTATOR_MAST_RIGHT = .51; //Grip rotator pos used in autonomous for right skystone.
     final double GRIPPER_ROTATOR_SPEED = 1.5 / 280;
 
     public final double GRIPPER_LEFT_OPEN = .46;

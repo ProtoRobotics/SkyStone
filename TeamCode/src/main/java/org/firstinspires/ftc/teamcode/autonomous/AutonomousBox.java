@@ -80,6 +80,7 @@ public class AutonomousBox
         robot.mastRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.mastRotator.setPower(.5);
 
+        Thread.sleep(700);
         mast.moveCounts(-1100, .3);
         Thread.sleep(1250); //TODO add sequential capability for mast.moveCounts
 
@@ -113,7 +114,7 @@ public class AutonomousBox
         arm.moveToPosition(41000, 1, false);
         mast.moveCounts(1000,0.3);
 
-        base.encoderDriveInches(29.5, 29.5, .2, true);
+        base.encoderDriveInches(27, 27, .2, true);
 
         arm.moveToPosition(38000, 1, true);
         
