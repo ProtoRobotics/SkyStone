@@ -73,7 +73,7 @@ public class AutonomousBox
         base.encoderCrabsteer(crabOneDirection, 24, .5, true);
         Thread.sleep(500);
 
-        base.encoderDriveInches(20, 20, .4, true);
+        base.encoderDriveInches(19, 19, .4, true);
         Thread.sleep(750);
 
         robot.mastRotator.setTargetPosition(skystonePosition.mastRotatorCounts);
@@ -114,7 +114,7 @@ public class AutonomousBox
         arm.moveToPosition(41000, 1, false);
         mast.moveCounts(1000,0.3);
 
-        base.encoderDriveInches(27, 27, .2, true);
+        base.encoderDriveInches(28.5, 28.5, .2, true);
 
         arm.moveToPosition(38000, 1, true);
         
@@ -157,7 +157,7 @@ public class AutonomousBox
         base.hookUp();
 
         int crabTwoDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
-        base.encoderCrabsteer(crabTwoDirection,15,.7,true);
+        base.encoderCrabsteer(crabTwoDirection,17,.7,true);
 
         mast.moveCounts(-1700,0.5);
         Thread.sleep(500);
