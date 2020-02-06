@@ -47,7 +47,7 @@ public class AutonomousBox
         autonomousClass.waitForStart();
 
         Thread.sleep(300); //Give the robot time to grab the camera info before moving.
-        skystonePosition = SkystonePosition.RIGHT; //TODO remove and replace
+        skystonePosition = SkystonePosition.LEFT; //TODO remove and replace
 
         runOpMode();
     }
@@ -111,15 +111,14 @@ public class AutonomousBox
         base.rotateDegreesEncoder(rotationFourDegrees, .5, true);
         Thread.sleep(500);
 
-        arm.moveToPosition(41000, 1, false);
+        arm.moveToPosition(38000, 1, false);
         mast.moveCounts(1000,0.3);
 
-        base.encoderDriveInches(28.5, 28.5, .2, true);
+        base.encoderDriveInches(28.5, 28.5, .3, true);
 
-        arm.moveToPosition(38000, 1, true);
-        
         robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
         robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
+        Thread.sleep(250);
 
         base.hookDown();
         Thread.sleep(500);
@@ -157,7 +156,7 @@ public class AutonomousBox
         base.hookUp();
 
         int crabTwoDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
-        base.encoderCrabsteer(crabTwoDirection,17,.7,true);
+        base.encoderCrabsteer(crabTwoDirection,16,.7,true);
 
         mast.moveCounts(-1700,0.5);
         Thread.sleep(500);

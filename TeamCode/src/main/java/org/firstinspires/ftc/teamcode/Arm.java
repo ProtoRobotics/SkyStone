@@ -15,12 +15,12 @@ public class Arm
 
     public static final double GRIPPER_ROTATOR_VERTICAL = .76; //Also the gripper rotator initialization point
     public static final double GRIPPER_ROTATOR_HORIZONTAL = .36;
-    public static final double GRIPPER_ROTATOR_MAST_LEFT = .23; //Grip rotator pos used in autonomous for left skystone.
+    public static final double GRIPPER_ROTATOR_MAST_LEFT = .26; //Grip rotator pos used in autonomous for left skystone.
     public static final double GRIPPER_ROTATOR_MAST_RIGHT = .51; //Grip rotator pos used in autonomous for right skystone.
     final double GRIPPER_ROTATOR_SPEED = 1.5 / 280;
 
-    public final double GRIPPER_LEFT_OPEN = .46;
-    public final double GRIPPER_RIGHT_OPEN = .56;
+    public final double GRIPPER_LEFT_OPEN = .49;
+    public final double GRIPPER_RIGHT_OPEN = .53;
     public final double GRIPPER_LEFT_CLOSED = .69;
     public final double GRIPPER_RIGHT_CLOSED = .35;
     public final double GRIPPER_LEFT_CAPSTONE = .28;
@@ -179,6 +179,8 @@ public class Arm
             public void run()
             {
                 robot.armExtender.setPower(0);
+                opModeClass.telemetry.addData("Arm position ", robot.rightCollector.getCurrentPosition());
+                opModeClass.telemetry.update();
             }
         };
 
