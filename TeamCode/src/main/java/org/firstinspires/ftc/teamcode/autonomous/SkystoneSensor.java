@@ -18,6 +18,17 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import java.util.ArrayList;
 import java.util.List;
 
+//  This class uses OpenCV to detect the skystone among a set of 3 stones within
+//  the camera frame of the Robot Controller phone.  The detection points can be
+//  modified to fit on the blocks based on where your robot will be for detection.
+
+//  We would like to give credit to YouTube user "AzirNA" of the FTC Team
+//  3939 - Bolts of Steel.  User provided a tutorial video as well as link
+//  to the code on GitHub.  Thank you!
+//
+//  YouTube:  https://www.youtube.com/watch?v=w_ZNR_o-Tac
+//  GitHub:   https://github.com/uhs3939/SkyStone/blob/master/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/opencvSkystoneDetector.java
+
 public class SkystoneSensor {    private ElapsedTime runtime = new ElapsedTime();
 
     //0 means skystone, 1 means yellow stone
