@@ -46,8 +46,8 @@ public class AutonomousBox
 
         autonomousClass.waitForStart();
 
-        Thread.sleep(300); //Give the robot time to grab the camera info before moving.
-        skystonePosition = SkystonePosition.LEFT; //TODO remove and replace
+        Thread.sleep(200); //Give the robot time to grab the camera info before moving.
+        skystonePosition = skystoneSensor.getSkystonePosition(); //TODO remove and replace
 
         runOpMode();
     }

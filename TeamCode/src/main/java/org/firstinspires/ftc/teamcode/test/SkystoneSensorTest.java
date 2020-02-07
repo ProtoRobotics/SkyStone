@@ -13,15 +13,15 @@ public class SkystoneSensorTest extends OpMode
 {
     SkystoneSensor skystoneSensor;
 
-
-
     @Override
-    public void init() {
-        skystoneSensor = new SkystoneSensor(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()), AutonomousPosition.LEFT);
+    public void init()
+    {
+        skystoneSensor = new SkystoneSensor(hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName()), AutonomousPosition.RIGHT);
     }
 
     @Override
-    public void loop() {
+    public void loop()
+    {
 
         if (skystoneSensor.getSkystonePosition() == SkystonePosition.LEFT)
         {

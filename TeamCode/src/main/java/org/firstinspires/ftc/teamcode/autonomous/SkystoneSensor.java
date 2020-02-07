@@ -42,15 +42,19 @@ public class SkystoneSensor {    private ElapsedTime runtime = new ElapsedTime()
 
     OpenCvCamera phoneCam;
     private static int cameraMonitorViewId;
-    private AutonomousPosition position;
+    private AutonomousPosition autonomousPosition;
 
     public SkystoneSensor(int cameraMonitorViewId, AutonomousPosition autonomousPosition)
     {
         //P.S. if you're using the latest version of easyopencv, you might need to change the next line to the following:
         //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
 
-        this.position = autonomousPosition;
+        this.autonomousPosition = autonomousPosition;
         SkystoneSensor.cameraMonitorViewId = cameraMonitorViewId;
+
+        midPos = (autonomousPosition == AutonomousPosition.LEFT) ? new float[]{.560f, .634f} : new float[]{.528f, .619f};
+        leftPos = (autonomousPosition == AutonomousPosition.LEFT) ? new float[]{.352f, .643f} : new float[]{.361f, .622f};
+        rightPos = (autonomousPosition == AutonomousPosition.LEFT) ? new float[]{.734f, .628f} : new float[]{.738f, .619f};
 
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
 
@@ -59,10 +63,6 @@ public class SkystoneSensor {    private ElapsedTime runtime = new ElapsedTime()
         phoneCam.startStreaming(rows, cols, OpenCvCameraRotation.UPRIGHT);//display on RC
         //width, height
         //width = height in this case, because camera is in portrait mode.
-
-        midPos = (position == AutonomousPosition.LEFT) ? new float[]{.560f, .634f} : new float[]{.528f, .619f};
-        leftPos = (position == AutonomousPosition.LEFT) ? new float[]{.352f, .643f} : new float[]{.361f, .622f};
-        midPos = (position == AutonomousPosition.LEFT) ? new float[]{.734f, .628f} : new float[]{.738f, .619f};
     }
 
     public SkystonePosition getSkystonePosition()
