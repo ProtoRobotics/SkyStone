@@ -28,6 +28,15 @@ public class Teleop2019 extends OpMode
 
     boolean started = false;
 
+	//********************************************************************************
+	//  Based on our initial design goal to encapsulate code into different classes
+	//  that would comprise the robot, we did not place any execution in the Teleop
+	//  class.  We created a "doLoop" inside each robot class (i.e. Arm, Base, 
+	//  Collector, Mast) where all of the Teleop functions could exist.
+	//
+	//  The Teleop mode simply calls the doLoop for each Robot class to execute the 
+	//  necessary action based on input from the controllers.
+	
     @Override
     public void loop()
     {
