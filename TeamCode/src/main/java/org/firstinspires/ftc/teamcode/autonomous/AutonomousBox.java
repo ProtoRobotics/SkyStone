@@ -42,7 +42,7 @@ public class AutonomousBox
 
         mast.resetMastEncoders();
 
-        skystoneSensor = new SkystoneSensor(autonomousClass.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", autonomousClass.hardwareMap.appContext.getPackageName()));
+        skystoneSensor = new SkystoneSensor(autonomousClass.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", autonomousClass.hardwareMap.appContext.getPackageName()), autonomousPosition);
 
         autonomousClass.waitForStart();
 

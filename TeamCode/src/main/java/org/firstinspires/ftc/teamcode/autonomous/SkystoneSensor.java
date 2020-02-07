@@ -32,9 +32,9 @@ public class SkystoneSensor {    private ElapsedTime runtime = new ElapsedTime()
     private static float offsetX = 0f/8f;//changing this moves the three rects and the three circles left or right, range : (-2, 2) not inclusive
     private static float offsetY = 0f/8f;//changing this moves the three rects and circles up or down, range: (-4, 4) not inclusive
 
-    private static float[] midPos = {4f/8f+offsetX, 4f/8f+offsetY};//0 = col, 1 = row
-    private static float[] leftPos = {2f/8f+offsetX, 4f/8f+offsetY};
-    private static float[] rightPos = {6f/8f+offsetX, 4f/8f+offsetY};
+    private static float[] midPos; //0 = col, 1 = row
+    private static float[] leftPos;
+    private static float[] rightPos;
     //moves all rectangles right or left by amount. units are in ratio to monitor
 
     private final int rows = 640;
@@ -42,12 +42,14 @@ public class SkystoneSensor {    private ElapsedTime runtime = new ElapsedTime()
 
     OpenCvCamera phoneCam;
     private static int cameraMonitorViewId;
+    private AutonomousPosition position;
 
-    public SkystoneSensor(int cameraMonitorViewId)
+    public SkystoneSensor(int cameraMonitorViewId, AutonomousPosition autonomousPosition)
     {
         //P.S. if you're using the latest version of easyopencv, you might need to change the next line to the following:
         //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
 
+        this.position = autonomousPosition;
         SkystoneSensor.cameraMonitorViewId = cameraMonitorViewId;
 
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
@@ -57,6 +59,10 @@ public class SkystoneSensor {    private ElapsedTime runtime = new ElapsedTime()
         phoneCam.startStreaming(rows, cols, OpenCvCameraRotation.UPRIGHT);//display on RC
         //width, height
         //width = height in this case, because camera is in portrait mode.
+
+        midPos = (position == AutonomousPosition.LEFT) ? new float[]{.560f, .634f} : new float[]{.528f, .619f};
+        leftPos = (position == AutonomousPosition.LEFT) ? new float[]{.352f, .643f} : new float[]{.361f, .622f};
+        midPos = (position == AutonomousPosition.LEFT) ? new float[]{.734f, .628f} : new float[]{.738f, .619f};
     }
 
     public SkystonePosition getSkystonePosition()
