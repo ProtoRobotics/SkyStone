@@ -40,7 +40,7 @@ public class AutonomousBar
         arm = new Arm(autonomousClass, robot, autonomousClass.gamepad1, autonomousClass.gamepad2);
 
         mast.resetMastEncoders();
-        skystoneSensor = new SkystoneSensor(autonomousClass.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", autonomousClass.hardwareMap.appContext.getPackageName()));
+        skystoneSensor = new SkystoneSensor(autonomousClass.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", autonomousClass.hardwareMap.appContext.getPackageName()),autonomousPosition);
 
         autonomousClass.waitForStart();
 
@@ -70,7 +70,7 @@ public class AutonomousBar
             robot.mastRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             //move forward away from wall
-            base.encoderDriveInches(26,26,.3,true);
+            base.encoderDriveInches(27,27,.3,true);
             Thread.sleep(500);
 
             //crabsteer to the left to align with middle stone in rightmost set of 3
@@ -95,7 +95,7 @@ public class AutonomousBar
 
             //raise mast to get stone off ground;  reverse robot
             mast.moveCounts(400, .3);
-            base.encoderDriveInches(-5,-5,.2,true);//drive up to skystone and pick it up
+            //base.encoderDriveInches(-5,-5,.2,true);//drive up to skystone and pick it up
             robot.mastRotator.setTargetPosition(0);
             robot.mastRotator.setPower(.5);
 
@@ -107,34 +107,34 @@ public class AutonomousBar
             Thread.sleep(500);
 
             //drive across the field to foundation
-            base.encoderDriveInches(52,52,.5,true);
+            base.encoderDriveInches(56,56,.5,true);
             //raise mast to clear the foundation edge with stone
             mast.moveCounts(1000,.3);
             Thread.sleep(3000);  //TODO reduce back down to 500
             //rotate gripper to vertical position because robot will be approaching foundation from side
             robot.gripperRotator.setPosition(GRIPPER_ROTATOR_VERTICAL);
-            //arm.moveSeconds(3, -1);
-            
+
             //for consistency, always move arm to the MIDDLE position count
             skystonePosition = SkystonePosition.MIDDLE;
-            arm.moveToPosition(skystonePosition.armCounts, 1,false);
+            arm.moveToPosition(45000, 1,false);
 
             crabDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
-            base.encoderCrabsteer(crabDirection,16,.3,true);
-            Thread.sleep(500);
+            base.encoderCrabsteer(crabDirection,24,.3,true);
+            Thread.sleep(1500);
 
             //open the gripper to drop stone
             robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
             Thread.sleep(500);
 
-            crabDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
-            base.encoderCrabsteer(crabDirection,14,.3,true);
-            Thread.sleep(500);
+            crabDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
+            base.encoderCrabsteer(crabDirection,20,.3,true);
+            mast.moveCounts(-1000, .3);
+            Thread.sleep(1000); //TODO - reduce to 500
 
             //drive robot backwardsto center line
             base.encoderDriveInches(-12,-12,.3,true);
-            Thread.sleep(1000);
+            //Thread.sleep(1000);
             //crabsteer to the left to move robot against center structure
             //crabDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
             //base.encoderCrabsteer(crabDirection,4,4,true);
