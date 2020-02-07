@@ -95,7 +95,7 @@ public class AutonomousBar
 
             //raise mast to get stone off ground;  reverse robot
             mast.moveCounts(400, .3);
-            //base.encoderDriveInches(-5,-5,.2,true);//drive up to skystone and pick it up
+            base.encoderDriveInches(-6,-6,.2,true);//drive up to skystone and pick it up
             robot.mastRotator.setTargetPosition(0);
             robot.mastRotator.setPower(.5);
 
@@ -105,6 +105,8 @@ public class AutonomousBar
             rotationDegrees = (autonomousPosition == AutonomousPosition.RIGHT) ? 90 : (-90);
             base.rotateDegreesEncoder(rotationDegrees, .4,true);
             Thread.sleep(500);
+            crabDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 0 : 1;
+            base.encoderCrabsteer(crabDirection,6,.5,true);
 
             //drive across the field to foundation
             base.encoderDriveInches(56,56,.5,true);
