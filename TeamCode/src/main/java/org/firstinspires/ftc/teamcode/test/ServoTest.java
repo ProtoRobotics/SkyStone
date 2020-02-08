@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.HardwareMecanum;
 
-@Disabled
 @TeleOp(name="ServoTest")
 public class ServoTest extends OpMode
 {

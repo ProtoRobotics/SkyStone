@@ -14,15 +14,15 @@ public class Arm
     private Gamepad gamepad2; //Gunner
 
     public static final double GRIPPER_ROTATOR_VERTICAL = .76; //Also the gripper rotator initialization point
-    public static final double GRIPPER_ROTATOR_HORIZONTAL = .36;
+    public static final double GRIPPER_ROTATOR_HORIZONTAL = .378;
     public static final double GRIPPER_ROTATOR_MAST_LEFT = .26; //Grip rotator pos used in autonomous for left skystone.
     public static final double GRIPPER_ROTATOR_MAST_RIGHT = .51; //Grip rotator pos used in autonomous for right skystone.
     final double GRIPPER_ROTATOR_SPEED = 1.5 / 280;
 
-    public final double GRIPPER_LEFT_OPEN = .49;
-    public final double GRIPPER_RIGHT_OPEN = .53;
-    public final double GRIPPER_LEFT_CLOSED = .69;
-    public final double GRIPPER_RIGHT_CLOSED = .35;
+    public final double GRIPPER_LEFT_OPEN = .54;
+    public final double GRIPPER_RIGHT_OPEN = .47;
+    public final double GRIPPER_LEFT_CLOSED = .71;
+    public final double GRIPPER_RIGHT_CLOSED = .30;
     public final double GRIPPER_LEFT_CAPSTONE = .28;
     public final double GRIPPER_RIGHT_CAPSTONE = .74;
 

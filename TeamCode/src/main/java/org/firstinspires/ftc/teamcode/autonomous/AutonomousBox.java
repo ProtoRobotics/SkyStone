@@ -47,7 +47,7 @@ public class AutonomousBox
         autonomousClass.waitForStart();
 
         Thread.sleep(200); //Give the robot time to grab the camera info before moving.
-        skystonePosition = skystoneSensor.getSkystonePosition(); //TODO remove and replace
+        skystonePosition = skystoneSensor.getSkystonePosition();
 
         runOpMode();
     }
@@ -100,16 +100,16 @@ public class AutonomousBox
 
         int rotationThreeDegrees = (autonomousPosition == AutonomousPosition.RIGHT) ? 90 : (-90);
         base.rotateDegreesEncoder(rotationThreeDegrees, .5, true);
-        Thread.sleep(600);
+        Thread.sleep(300);
 
         robot.gripperRotator.setPosition(Arm.GRIPPER_ROTATOR_HORIZONTAL);
-        arm.moveToPosition(29000, 1, false);
+        arm.moveToPosition(25000, 1, false);
 
         base.encoderDriveInches(108, 108, .7, true);
 
         int rotationFourDegrees = (autonomousPosition == autonomousPosition.RIGHT) ? (-90) : 90;
         base.rotateDegreesEncoder(rotationFourDegrees, .5, true);
-        Thread.sleep(500);
+        Thread.sleep(300);
 
         arm.moveToPosition(38000, 1, false);
         mast.moveCounts(1000,0.3);
