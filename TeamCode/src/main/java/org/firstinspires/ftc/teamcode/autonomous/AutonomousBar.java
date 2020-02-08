@@ -110,11 +110,11 @@ public class AutonomousBar
             //base.encoderCrabsteer(crabDirection,6,.5,true);
 
             //drive across the field to foundation
-            base.encoderDriveInches(54,54,.7,true);
+            base.encoderDriveInches(53,53,.7,true);
             //raise mast to clear the foundation edge with stone
-            arm.moveToPosition(55000, 1,false);
+            arm.moveToPosition(60000, 1,false);
             mast.moveCounts(1100,.5);
-            //Thread.sleep(500);
+            Thread.sleep(500);
             //rotate gripper to vertical position because robot will be approaching foundation from side
             robot.gripperRotator.setPosition(GRIPPER_ROTATOR_VERTICAL);
 
@@ -127,7 +127,7 @@ public class AutonomousBar
             //open the gripper to drop stone
             robot.leftGripper.setPosition(arm.GRIPPER_LEFT_OPEN);
             robot.rightGripper.setPosition(arm.GRIPPER_RIGHT_OPEN);
-            Thread.sleep(250);
+            Thread.sleep(500);
 
             crabDirection = (autonomousPosition == AutonomousPosition.RIGHT) ? 1 : 0;
             base.encoderCrabsteer(crabDirection,25,.5,true);
